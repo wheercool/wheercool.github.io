@@ -369,6 +369,8 @@ function prop(nm) {
             this.__widgets[name] = widget;
         },
         drawAll: function() {
+            var el = this.el;
+            var widgets = 
             d3.json(this.url, function(err, data) {
                 debugger;
                 var sizes = {
@@ -383,13 +385,24 @@ function prop(nm) {
                     .append('div')
                     .classed('row', true);
 
-                row.selectAll('.widget')
+                var panel = row.selectAll('.widget')
                     .data(data.widgets)
                     .enter()
                     .append('div')
-                        .attr('class', 'widget')
+                        .attr('class', function(d) {
+                            return 'widget ' + sizes[d.settings.size];
+                        })
+                        .append('div')
+                        .attr('class', 'panel panel-default');
 
+                        panel.append('div')
+                            .attr('class', 'panel-heading')
+                            .html(function(d) { return '<h5>'+ d.settings.title + '</h5>';})
 
+                        panel.append('panel-body')
+                            .each(function(d) {
+                                widgets[d.name](this, d.dataset, d.settings);
+                            })
 
             });
             
@@ -399,7 +412,10 @@ function prop(nm) {
         __widgets: []
     };
 
-// widgetRegister.drawAll();
+widgetRegister.register["Departament Insight"] = function() {
+    console.log(arguments);
+};
+widgetRegister.drawAll();
 
 var widget = function(el, data, config) {
     
