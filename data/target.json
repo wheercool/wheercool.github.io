@@ -2,6 +2,10 @@
 	"widgets": [
 	{
 		"name": "Departament Insight",
+		"setting": {
+			"size": "large",
+			"title": "Departament"
+		},
 		"generalData": {
 			"month": "April",
 			"year": 2015

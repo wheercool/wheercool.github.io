@@ -360,24 +360,46 @@ function prop(nm) {
 
 //Download the data and pass it to the widgets
 //Also provide the container for each widget
-var widgetRegister = {
-    url: 'data/target.json',
-    el: '#dashboard',
-    register: function(name, widget) {
-        this.__widgets[name] = widget;
-    },
-    drawAll: function() {
-        d3.json(this.url, function(err, data) {
-            debugger;
-        });
-        
-        dc.renderAll();
-    },
 
-    __widgets: []
-};
 
-widgetRegister.drawAll();
+    var widgetRegister = {
+        url: 'data/target.json',
+        el: '#dashboard',
+        register: function(name, widget) {
+            this.__widgets[name] = widget;
+        },
+        drawAll: function() {
+            d3.json(this.url, function(err, data) {
+                debugger;
+                var sizes = {
+                    "large": "col-md-12",
+                    "medium": "col-md-6",
+                    "small": "col-md-4"
+                };
+
+                var row = d3.select(el)
+                    .append('div')
+                    .classed('container', true)
+                    .append('div')
+                    .classed('row', true);
+
+                row.selectAll('.widget')
+                    .data(data.widgets)
+                    .enter()
+                    .append('div')
+                        .attr('class', 'widget')
+
+
+
+            });
+            
+            dc.renderAll();
+        },
+
+        __widgets: []
+    };
+
+// widgetRegister.drawAll();
 
 var widget = function(el, data, config) {
     
