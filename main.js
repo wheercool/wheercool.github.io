@@ -361,7 +361,7 @@ function prop(nm) {
 //Download the data and pass it to the widgets
 //Also provide the container for each widget
 var widgetRegister = {
-    url: 'target.json',
+    url: 'data/target.json',
     el: '#dashboard',
     register: function(name, widget) {
         this.__widgets[name] = widget;
