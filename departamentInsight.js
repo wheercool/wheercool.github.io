@@ -46,7 +46,6 @@
 
 
 		var perType = dc.pieChart(d3.select(el).select('.departament-per-type'))
-
 		    .width(widthPerType)
 		    .height(widthPerType)
 		    .dimension(departamentPerType)
@@ -62,6 +61,7 @@
 		    }) 
 		    .legend(dc.legend().x(0.3 * widthPerType).y(6/7 * widthPerType).itemHeight(13).gap(5))
 
+		 debugger;
 
 		var perEmployee = dc.pieChart(d3.select(el).select('.departament-per-employee'))
 		    .width(widthPerEmployee)
@@ -104,10 +104,7 @@
 			        .innerRadius(widthPerEmployee / 6)   
 			        .legend(dc.legend().x(0.3 * widthPerEmployee).y(6/7 * widthPerEmployee).itemHeight(13).gap(5))
 
-
-			    dc.renderAll();
 			});
-
 
 	    return {
 	    	render: {
