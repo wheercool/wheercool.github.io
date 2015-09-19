@@ -37,7 +37,7 @@ var widgetRegister = {
                     panel.append('div')
                         .attr('class', 'panel-body')
                         .each(function(d) {
-                            widgets[d.name](this, d.dataset, d.settings);
+                            widgets[d.name](this, d.dataset, d.generalData, d.settings);
                         })
         });
         

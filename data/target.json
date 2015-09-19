@@ -8,7 +8,9 @@
 		},
 		"generalData": {
 			"month": "April",
-			"year": 2015
+			"year": 2015,
+			"total": 200,
+			"avg": 50
 		},
 		"dataset":     [
 		{"DepartmentName":"Radiology B","RoomName":"Bucky 1","ExaminationTypeName":"A.CARD","Radiologist":"Whitney Hanstein","Examination":"1"},

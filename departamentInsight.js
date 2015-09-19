@@ -1,6 +1,6 @@
 (function() {
 
-	widgetRegister.register("Departament Insight", function(el, data, config) {
+	widgetRegister.register("Departament Insight", function(el, data, general, config) {
 	    
 	   	/* Default settings */
 	   	var legendItemHeight = 13,
@@ -26,7 +26,7 @@
 					<div class="text-center">
 						
 						<div class="col-xs-4">	
-							<div class="huge v-mid ">100</div>
+							<div class="huge v-mid departament-total">100</div>
 							
 						</div>
 
@@ -36,7 +36,7 @@
 						</div>
 						
 						<div class="col-xs-4">	
-							<div class="huge v-mid ">5</div>
+							<div class="huge v-mid departament-avg">5</div>
 							
 						</div>
 					</div>	
@@ -89,6 +89,9 @@
 			legendHeigthEmployee = totalEmployees * (legendItemHeight + legendGap),
 			heightPerEmployee = widthPerEmployee + legendHeigthEmployee;
 
+
+		d3.select(el).select('.departament-total').text(general.total)
+		d3.select(el).select('.departament-avg').text(general.avg)
 
 		var perType = dc.pieChart(d3.select(el).select('.departament-per-type').node())
 		    .width(widthPerType)
