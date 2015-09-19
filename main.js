@@ -367,7 +367,7 @@ var widgetRegister = {
         this.__widgets[name] = widget;
     },
     drawAll: function() {
-        fetch('target.json').then(function(target) {
+        fetch(this.url).then(function(target) {
             debugger;
         });
         
