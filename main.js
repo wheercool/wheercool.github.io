@@ -650,13 +650,14 @@ var perType = dc.pieChart('#departament-per-type')
     .height(widthPerType)
     .dimension(departamentPerType)
     .group(departamentPerTypeGroup)
+    .minAngleForLabel(0.5)
     .radius(widthPerType / 3)
     .slicesCap(20)
     .innerRadius(widthPerType / 6)   
     .label(function(d) {
         var names = d.key.split(' ');
         // return names[0][0] + '. ' + names[1][0] + '.';
-        return d.value;
+        return d.value || '';
     }) 
     .legend(dc.legend().x(0.3 * widthPerType).y(6/7 * widthPerType).itemHeight(13).gap(5))
 
@@ -666,13 +667,14 @@ var perEmployee = dc.pieChart('#departament-per-employee')
     .height(widthPerEmployee)
     .radius(widthPerEmployee / 3)
     .slicesCap(20)
+    .minAngleForLabel(0.5)
     .innerRadius(widthPerEmployee / 6)  
     .colors(d3.scale.category20b())
-    // .renderLabel(false)
+    //.renderLabel(false)
     .label(function(d) {
         var names = d.key.split(' ');
         // return names[0][0] + '. ' + names[1][0] + '.';
-        return d.value;
+        return d.value || '';
     })
     .dimension(departamentPerEmployee)
     .group(departamentPerEmployeeGroup)
