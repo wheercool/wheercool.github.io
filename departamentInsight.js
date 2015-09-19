@@ -108,7 +108,7 @@
 			});
 
 	    return {
-	    	render: {
+	    	render: function() {
 	    		perType.render();
 	    		perEmployee.render();
 	    	}
