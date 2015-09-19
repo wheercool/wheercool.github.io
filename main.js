@@ -362,68 +362,56 @@ function prop(nm) {
 //Also provide the container for each widget
 
 
-    var widgetRegister = {
-        url: 'data/target.json',
-        el: '#dashboard',
-        register: function(name, widget) {
-            this.__widgets[name] = widget;
-        },
-        drawAll: function() {
-            var el = this.el;
-            var widgets = this.__widgets;
-            d3.json(this.url, function(err, data) {
-                debugger;
-                var sizes = {
-                    "large": "col-md-12",
-                    "medium": "col-md-6",
-                    "small": "col-md-4"
-                };
+var widgetRegister = {
+    url: 'data/target.json',
+    el: '#dashboard',
+    register: function(name, widget) {
+        this.__widgets[name] = widget;
+    },
+    drawAll: function() {
+        var el = this.el;
+        var widgets = this.__widgets;
+        d3.json(this.url, function(err, data) {
+            var sizes = {
+                "large": "col-md-12",
+                "medium": "col-md-6",
+                "small": "col-md-4"
+            };
 
-                var row = d3.select(el)
-                    .append('div')
-                    .classed('container', true)
-                    .append('div')
-                    .classed('row', true);
+            var row = d3.select(el)
+                .append('div')
+                .classed('container', true)
+                .append('div')
+                .classed('row', true);
 
-                var panel = row.selectAll('.widget')
-                    .data(data.widgets)
-                    .enter()
+            var panel = row.selectAll('.widget')
+                .data(data.widgets)
+                .enter()
+                .append('div')
+                    .attr('class', function(d) {
+                        return 'widget ' + sizes[d.settings.size];
+                    })
                     .append('div')
-                        .attr('class', function(d) {
-                            return 'widget ' + sizes[d.settings.size];
+                    .attr('class', 'panel panel-default');
+
+                    panel.append('div')
+                        .attr('class', 'panel-heading')
+                        .html(function(d) { return '<h5>'+ d.settings.title + '</h5>';})
+
+                    panel.append('panel-body')
+                        .each(function(d) {
+                            widgets[d.name](this, d.dataset, d.settings);
                         })
-                        .append('div')
-                        .attr('class', 'panel panel-default');
 
-                        panel.append('div')
-                            .attr('class', 'panel-heading')
-                            .html(function(d) { return '<h5>'+ d.settings.title + '</h5>';})
+        });
+        
+        dc.renderAll();
+    },
 
-                        panel.append('panel-body')
-                            .each(function(d) {
-                                widgets[d.name](this, d.dataset, d.settings);
-                            })
-
-            });
-            
-            dc.renderAll();
-        },
-
-        __widgets: []
-    };
-
-widgetRegister.register("Departament Insight", function() {
-    console.log(arguments);
-});
-widgetRegister.drawAll();
-
-var widget = function(el, data, config) {
-    
-
-    return {
-        render: function() {}
-    };
+    __widgets: []
 };
+
+
 
 // examinationId.filter('1');
 // var process = dc.barChart('#process-chart')
@@ -451,26 +439,26 @@ var widget = function(el, data, config) {
 
 
 
-var totalNumber = dc.numberDisplay("#departament-total")
-    .valueAccessor(function(d) {        
-        return d;
-    })
-    .html({
-     one:'%number record',
-     some:'%number records',
-     none:'no records'})
-    .group(all);
+// var totalNumber = dc.numberDisplay("#departament-total")
+//     .valueAccessor(function(d) {        
+//         return d;
+//     })
+//     .html({
+//      one:'%number record',
+//      some:'%number records',
+//      none:'no records'})
+//     .group(all);
 
-var totalEmployeeNumber = dc.numberDisplay("#departament-total-employee")
-    .valueAccessor(function(d) { 
+// var totalEmployeeNumber = dc.numberDisplay("#departament-total-employee")
+//     .valueAccessor(function(d) { 
 
-        return d;
-    })
-    .html({
-     one:'%number record',
-     some:'%number records',
-     none:'no records'})
-    .group(averageEmployeeGroup);
+//         return d;
+//     })
+//     .html({
+//      one:'%number record',
+//      some:'%number records',
+//      none:'no records'})
+//     .group(averageEmployeeGroup);
 
 
 
@@ -509,43 +497,43 @@ d3.select(window).on('resize', function() {
 // perType.root()
 //     .style('margin', 0)
 
-var perType = dc.pieChart('#departament-per-type')
+// var perType = dc.pieChart('#departament-per-type')
 
-    .width(widthPerType)
-    .height(widthPerType)
-    .dimension(departamentPerType)
-    .group(departamentPerTypeGroup)
-    .minAngleForLabel(0.5)
-    .radius(widthPerType / 3)
-    .slicesCap(20)
-    .innerRadius(widthPerType / 6)   
-    .label(function(d) {
-        var names = d.key.split(' ');
-        // return names[0][0] + '. ' + names[1][0] + '.';
-        return d.value || '';
-    }) 
-    .legend(dc.legend().x(0.3 * widthPerType).y(6/7 * widthPerType).itemHeight(13).gap(5))
-
-
-var perEmployee = dc.pieChart('#departament-per-employee')
-    .width(widthPerEmployee)
-    .height(widthPerEmployee)
-    .radius(widthPerEmployee / 3)
-    .slicesCap(20)
-    .minAngleForLabel(0.5)
-    .innerRadius(widthPerEmployee / 6)  
-    .colors(d3.scale.category20b())
-    //.renderLabel(false)
-    .label(function(d) {
-        var names = d.key.split(' ');
-        // return names[0][0] + '. ' + names[1][0] + '.';
-        return d.value || '';
-    })
-    .dimension(departamentPerEmployee)
-    .group(departamentPerEmployeeGroup)
+//     .width(widthPerType)
+//     .height(widthPerType)
+//     .dimension(departamentPerType)
+//     .group(departamentPerTypeGroup)
+//     .minAngleForLabel(0.5)
+//     .radius(widthPerType / 3)
+//     .slicesCap(20)
+//     .innerRadius(widthPerType / 6)   
+//     .label(function(d) {
+//         var names = d.key.split(' ');
+//         // return names[0][0] + '. ' + names[1][0] + '.';
+//         return d.value || '';
+//     }) 
+//     .legend(dc.legend().x(0.3 * widthPerType).y(6/7 * widthPerType).itemHeight(13).gap(5))
 
 
-    .legend(dc.legend().x(0.3 * widthPerEmployee).y(6/7 * widthPerEmployee).itemHeight(13).gap(5))
+// var perEmployee = dc.pieChart('#departament-per-employee')
+//     .width(widthPerEmployee)
+//     .height(widthPerEmployee)
+//     .radius(widthPerEmployee / 3)
+//     .slicesCap(20)
+//     .minAngleForLabel(0.5)
+//     .innerRadius(widthPerEmployee / 6)  
+//     .colors(d3.scale.category20b())
+//     //.renderLabel(false)
+//     .label(function(d) {
+//         var names = d.key.split(' ');
+//         // return names[0][0] + '. ' + names[1][0] + '.';
+//         return d.value || '';
+//     })
+//     .dimension(departamentPerEmployee)
+//     .group(departamentPerEmployeeGroup)
 
 
-dc.renderAll();
+//     .legend(dc.legend().x(0.3 * widthPerEmployee).y(6/7 * widthPerEmployee).itemHeight(13).gap(5))
+
+
+// dc.renderAll();
