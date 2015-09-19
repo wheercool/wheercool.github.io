@@ -2,6 +2,10 @@
 
 	widgetRegister.register("Departament Insight", function(el, data, config) {
 	    
+	   	/* Default settings */
+	   	var legendItemHeight = 13,
+	   		legendGap = 5;
+
 		var departament = crossfilter(data),
 		    all = departament.groupAll(),
 		    departamentPerType = departament.dimension(prop('ExaminationTypeName')),
@@ -12,6 +16,10 @@
 		    averageEmployeeGroup = departamentPerEmployee.groupAll();
 		    
 		
+		var totalTypes = departamentPerTypeGroup.all().length,
+			totalEmployees = departamentPerEmployeeGroup.all().length;
+
+
 		var tpl = uncomment(function() {/*
 				<div class="row">
 									
@@ -42,11 +50,16 @@
 
 		var ws = getCurrentWidth();
 			widthPerType = ws[0],
-			widthPerEmployee = ws[1];
+			widthPerEmployee = ws[1],
+			legendHeightType = totalTypes * (legendItemHeight + legendGap),
+			heightPerType = widthPerType + legendHeightType,
+			legendHeigthEmployee = totalEmployees * (legendItemHeight + legendGap),
+			heightPerEmployee = widthPerEmployee + legendHeigthEmployee;
+
 
 		var perType = dc.pieChart(d3.select(el).select('.departament-per-type').node())
 		    .width(widthPerType)
-		    .height(widthPerType)
+		    .height(heightPerType)
 		    .dimension(departamentPerType)
 		    .group(departamentPerTypeGroup)
 		    .minAngleForLabel(0.5)
@@ -58,11 +71,12 @@
 		        // return names[0][0] + '. ' + names[1][0] + '.';
 		        return d.value || '';
 		    }) 
-		    .legend(dc.legend().x(0.3 * widthPerType).y(6/7 * widthPerType).itemHeight(13).gap(5))
+		    .legend(dc.legend().x(0.3 * widthPerType).y(widthPerType).itemHeight(legendItemHeight).gap(legendGap))
 
 		var perEmployee = dc.pieChart(d3.select(el).select('.departament-per-employee').node())
+		
 		    .width(widthPerEmployee)
-		    .height(widthPerEmployee)
+		    .height(heightPerEmployee)
 		    .radius(widthPerEmployee / 3)
 		    .slicesCap(20)
 		    .minAngleForLabel(0.5)
@@ -77,36 +91,38 @@
 		    .dimension(departamentPerEmployee)
 		    .group(departamentPerEmployeeGroup)
 
-		    .legend(dc.legend().x(0.3 * widthPerEmployee).y(6/7 * widthPerEmployee).itemHeight(13).gap(5));
-
-
-
+		    .legend(dc.legend().x(0.3 * widthPerEmployee).y(widthPerEmployee).itemHeight(legendItemHeight).gap(legendGap))
 
 		
 			d3.select(window).on('resize', function() {
 			    var ws = getCurrentWidth();
 					widthPerType = ws[0],
-					widthPerEmployee = ws[1];
+					widthPerEmployee = ws[1],
+					legendHeightType = totalTypes * (legendItemHeight + legendGap),
+					heightPerType = widthPerType + legendHeightType,
+					legendHeigthEmployee = totalEmployees * (legendItemHeight + legendGap),
+					heightPerEmployee = widthPerEmployee + legendHeigthEmployee;
 
 			    perType
 			        .width(widthPerType)
-			        .height(widthPerType)
+			        .height(heightPerType)
 			        .radius(widthPerType / 3)
 			        .innerRadius(widthPerType / 6)   
-			        .legend(dc.legend().x(0.3 * widthPerType).y(6/7 * widthPerType).itemHeight(13).gap(5))
+			        .legend(dc.legend().x(0.3 * widthPerType).y(widthPerType).itemHeight(legendItemHeight).gap(legendGap))
 
 			    perEmployee
 			        .width(widthPerEmployee)
-			        .height(widthPerEmployee)
+			        .height(heightPerEmployee)
 			        .radius(widthPerEmployee / 3)
 			        .innerRadius(widthPerEmployee / 6)   
-			        .legend(dc.legend().x(0.3 * widthPerEmployee).y(6/7 * widthPerEmployee).itemHeight(13).gap(5))
+			        .legend(dc.legend().x(0.3 * widthPerEmployee).y(widthPerEmployee).itemHeight(legendItemHeight).gap(legendGap))
 
 			    render();
 
 			});
 
 		render();
+
 	    return {
     		render: render
 	    };
