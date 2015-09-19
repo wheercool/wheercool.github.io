@@ -21,26 +21,58 @@
 
 
 		var tpl = uncomment(function() {/*
-				<div class="row">
-									
+				<div class="row ">
+								
 					<div class="text-center">
-						<div>
-							<h3>April, 2015</h3>
-							<h4>Total examinations: <span class="text-right">100</span></h4>
-							<h4>Examinations per FTE: 5</h4>
+						
+						<div class="col-xs-4">	
+							<div class="huge v-mid ">100</div>
+							
+						</div>
+
+						<div class="col-xs-4">
+							<img src="factory.svg" />
+							
+						</div>
+						
+						<div class="col-xs-4">	
+							<div class="huge v-mid ">5</div>
+							
 						</div>
 					</div>	
 				
 				</div>
 
-				<div class="row">
-					<div class="col-md-6 panel panel-default">
-						<h5 class="text-center">Examinations per type</h5>
+				<div class="row first-row">
+								
+					<div class="text-center">
+						
+						<div class="col-xs-4">	
+							
+							<h4>Total</h4>
+						</div>
+
+						<div class="col-xs-4">
+							
+							<h3>April, 2015</h3>	
+						</div>
+						
+						<div class="col-xs-4">	
+							
+							<h4>Average per FTE</h4>
+						</div>
+					</div>	
+				
+				</div>
+
+				<div class="row last-row">
+					<div class="col-md-6 ">
+						<h5 class="text-center section-title">Per type</h5>
 						<div class="departament-per-type"></div>
 					</div>
 						
-					<div class="col-md-6 panel panel-default">
-						<h5 class="text-center">Examinations per employee</h5>
+					<div class="col-md-6">
+						<h5 class="text-center section-title">Per employee</h5>
 						<div class="departament-per-employee"></div>
 					</div>
 				</div>*/});
