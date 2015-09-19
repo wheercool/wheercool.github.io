@@ -367,7 +367,7 @@ var widgetRegister = {
         this.__widgets[name] = widget;
     },
     drawAll: function() {
-        fetch(this.url).then(function(target) {
+        d3.json(this.url, function(err, data) {
             debugger;
         });
         
