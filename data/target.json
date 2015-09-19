@@ -2,7 +2,7 @@
 	"widgets": [
 	{
 		"name": "Departament Insight",
-		"setting": {
+		"settings": {
 			"size": "large",
 			"title": "Departament"
 		},
