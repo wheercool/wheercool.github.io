@@ -112,7 +112,15 @@
 	    		perType.render();
 	    		perEmployee.render();
 	    	}
-	    }
+	    };
+
+
+	    function getCurrentWidth() {
+			return [
+				parseInt(d3.select(el).select('.departament-per-type').style('width'), 10),
+				parseInt(d3.select(el).select('.departament-per-employee').style('width'), 10)
+			];
+		}
 	});
 
 
@@ -122,14 +130,10 @@
 	    };
 	}
 
-	function getCurrentWidth() {
-		return [
-			parseInt(d3.select(el).select('.departament-per-type').style('width'), 10),
-			parseInt(d3.select(el).select('.departament-per-employee').style('width'), 10)
-		];
-	}
+	
 
 	function uncomment(fn){
-	  return fn.toString().split(/\/\*\n|\n\*\//g).slice(1,-1).join();
+		var str = fn.toString();
+	  return str.slice(str.indexOf('/*') + 2, str.indexOf('*/'));
 	};
 })();
