@@ -44,8 +44,8 @@
 						<div class="departament-per-employee"></div>
 					</div>
 				</div>*/});
-		document.write('TPL');
-		document.write(tpl);
+		// document.write('TPL');
+		// document.write(tpl);
 		d3.select(el)
 			.html(tpl);
 
