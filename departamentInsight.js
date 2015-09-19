@@ -2,7 +2,7 @@
 
 	widgetRegister.register("Departament Insight", function(el, data, config) {
 	    
-		var departament = crossfilter(departamentInsight),
+		var departament = crossfilter(data),
 		    all = departament.groupAll(),
 		    departamentPerType = departament.dimension(prop('ExaminationTypeName')),
 		    departamentPerTypeGroup = departamentPerType.group(),
@@ -43,10 +43,8 @@
 		var ws = getCurrentWidth();
 			widthPerType = ws[0],
 			widthPerEmployee = ws[1];
- 
 
-
-		var perType = dc.pieChart(d3.select(el).select('.departament-per-type'))
+		var perType = dc.pieChart(d3.select(el).select('.departament-per-type').node())
 		    .width(widthPerType)
 		    .height(widthPerType)
 		    .dimension(departamentPerType)
@@ -62,9 +60,7 @@
 		    }) 
 		    .legend(dc.legend().x(0.3 * widthPerType).y(6/7 * widthPerType).itemHeight(13).gap(5))
 
-		 debugger;
-
-		var perEmployee = dc.pieChart(d3.select(el).select('.departament-per-employee'))
+		var perEmployee = dc.pieChart(d3.select(el).select('.departament-per-employee').node())
 		    .width(widthPerEmployee)
 		    .height(widthPerEmployee)
 		    .radius(widthPerEmployee / 3)
@@ -81,15 +77,16 @@
 		    .dimension(departamentPerEmployee)
 		    .group(departamentPerEmployeeGroup)
 
+		    .legend(dc.legend().x(0.3 * widthPerEmployee).y(6/7 * widthPerEmployee).itemHeight(13).gap(5));
 
-		    .legend(dc.legend().x(0.3 * widthPerEmployee).y(6/7 * widthPerEmployee).itemHeight(13).gap(5))
+
 
 
 		
 			d3.select(window).on('resize', function() {
 			    var ws = getCurrentWidth();
-				widthPerType = ws[0],
-				widthPerEmployee = ws[1];
+					widthPerType = ws[0],
+					widthPerEmployee = ws[1];
 
 			    perType
 			        .width(widthPerType)
@@ -105,13 +102,13 @@
 			        .innerRadius(widthPerEmployee / 6)   
 			        .legend(dc.legend().x(0.3 * widthPerEmployee).y(6/7 * widthPerEmployee).itemHeight(13).gap(5))
 
+			    render();
+
 			});
 
+		render();
 	    return {
-	    	render: function() {
-	    		perType.render();
-	    		perEmployee.render();
-	    	}
+    		render: render
 	    };
 
 
@@ -121,6 +118,11 @@
 				parseInt(d3.select(el).select('.departament-per-employee').style('width'), 10)
 			];
 		}
+
+		function render() {
+    		perType.render();
+    		perEmployee.render();
+    	}
 	});
 
 
