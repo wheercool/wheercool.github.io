@@ -4,18 +4,47 @@
 	<meta charset="UTF-8">
 	<title>Second widget</title>
 	<link rel="stylesheet" href="dc.css">
+	<link rel="stylesheet" href="bootstrap.min.css">
+	<style>
+		.tile {
+			border: 1px solid black;
+			background-color: #ddd;
+		}
+		div.dc-chart {
+			float: none;
+		}
+	</style>
 </head>
 <body>
-	
-	Total:<span id="departament-total"></span>
-	Total employee:	<span id="departament-total-employee"></span>
 
-	<div>
+	<div class="container">
+			<h3 class="text-center">Departament</h3>
+			
+			<div class="row">
+				
+				<div class="text-center">
+					
+					<div class="tile">
+						<h3>April, 2015</h3>
+						<h4>Total examinations: <span class="text-right">100</span></h4>
+						<h4>Examinations per FTE: 5</h4>
+					</div>
+				</div>	
+			
+			</div>
+
+			<div class="row">
+				<div class="col-md-6 tile">
+					<h4 class="text-center">Examinations per type</h4>
+					<div id="departament-per-type"></div>
+				</div>
+
+				<div class="col-md-6 tile">
+					<h4 class="text-center">Examinations per employee</h4>
+					<div id="departament-per-employee"></div>
+				</div>
+			</div>
 		
-		<div id="departament-per-type"></div>
-		<div id="departament-per-employee">
-			<h5>Examinations per employee</h5>
-		</div>
 	</div>
 
 	<script src="crossfilter.min.js"></script>
