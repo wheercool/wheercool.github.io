@@ -44,7 +44,8 @@
 						<div class="departament-per-employee"></div>
 					</div>
 				</div>*/});
-
+		document.write('TPL');
+		document.write(tpl);
 		d3.select(el)
 			.html(tpl);
 
@@ -74,7 +75,7 @@
 		    .legend(dc.legend().x(0.3 * widthPerType).y(widthPerType).itemHeight(legendItemHeight).gap(legendGap))
 
 		var perEmployee = dc.pieChart(d3.select(el).select('.departament-per-employee').node())
-		
+
 		    .width(widthPerEmployee)
 		    .height(heightPerEmployee)
 		    .radius(widthPerEmployee / 3)
