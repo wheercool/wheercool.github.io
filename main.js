@@ -609,35 +609,64 @@ var totalEmployeeNumber = dc.numberDisplay("#departament-total-employee")
 
 
 
-dc.pieChart('#examination-type-chart')
-    .width(400)
-    .height(300)
-    .dimension(examinationType)
-    .group(examinationTypeGroup)
-    .radius(80)
-   
 
-dc.pieChart('#departament-per-type')
-    .width(400)
-    .height(300)
+var widthPerType = parseInt(d3.select('#departament-per-type').style('width'), 10);
+var widthPerEmployee = parseInt(d3.select('#departament-per-employee').style('width'), 10);
+
+d3.select(window).on('resize', function() {
+    console.log('resize');
+    var width = parseInt(d3.select('#departament-per-type').style('width'), 10);
+
+    perType
+        .width(width)
+        .height(width)
+        .radius(width / 3)
+        .innerRadius(width / 6)   
+        .legend(dc.legend().x(0.3 * width).y(6/7 * width).itemHeight(13).gap(5))
+
+    width = parseInt(d3.select('#departament-per-employee').style('width'), 10);
+    perEmployee
+        .width(width)
+        .height(width)
+        .radius(width / 3)
+        .innerRadius(width / 6)   
+        .legend(dc.legend().x(0.3 * width).y(6/7 * width).itemHeight(13).gap(5))
+
+
+    dc.renderAll();
+})
+// var perType = dc.pieChart('#examination-type-chart')
+//     .width(400)
+//     .height(300)
+//     .dimension(examinationType)
+//     .group(examinationTypeGroup)
+//     .radius(80)
+// perType.root()
+//     .style('margin', 0)
+
+var perType = dc.pieChart('#departament-per-type')
+
+    .width(widthPerType)
+    .height(widthPerType)
     .dimension(departamentPerType)
     .group(departamentPerTypeGroup)
-    .radius(80)
+    .radius(widthPerType / 3)
     .slicesCap(20)
-    .innerRadius(40)   
+    .innerRadius(widthPerType / 6)   
     .label(function(d) {
         var names = d.key.split(' ');
         // return names[0][0] + '. ' + names[1][0] + '.';
         return d.value;
     }) 
-    .legend(dc.legend().x(300).y(100).itemHeight(13).gap(5))
+    .legend(dc.legend().x(0.3 * widthPerType).y(6/7 * widthPerType).itemHeight(13).gap(5))
 
 
 var perEmployee = dc.pieChart('#departament-per-employee')
-    .width(400)
-    .height(300)
-    .radius(80)
-    .innerRadius(40)
+    .width(widthPerEmployee)
+    .height(widthPerEmployee)
+    .radius(widthPerEmployee / 3)
+    .slicesCap(20)
+    .innerRadius(widthPerEmployee / 6)  
     .colors(d3.scale.category20b())
     // .renderLabel(false)
     .label(function(d) {
@@ -649,7 +678,7 @@ var perEmployee = dc.pieChart('#departament-per-employee')
     .group(departamentPerEmployeeGroup)
 
 
-    .legend(dc.legend().x(300).y(100).itemHeight(13).gap(5))
+    .legend(dc.legend().x(0.3 * widthPerEmployee).y(6/7 * widthPerEmployee).itemHeight(13).gap(5))
 
 
 dc.renderAll();
