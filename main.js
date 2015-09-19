@@ -412,9 +412,9 @@ function prop(nm) {
         __widgets: []
     };
 
-widgetRegister.register["Departament Insight"] = function() {
+widgetRegister.register("Departament Insight", function() {
     console.log(arguments);
-};
+});
 widgetRegister.drawAll();
 
 var widget = function(el, data, config) {
