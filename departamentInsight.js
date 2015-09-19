@@ -12,29 +12,30 @@
 		    averageEmployeeGroup = departamentPerEmployee.groupAll();
 		    
 		
-		var tpl = '<div class="row">
+		var tpl = uncomment(function() {/*
+				<div class="row">
 									
-				<div class="text-center">
-					<div>
-						<h3>April, 2015</h3>
-						<h4>Total examinations: <span class="text-right">100</span></h4>
-						<h4>Examinations per FTE: 5</h4>
-					</div>
-				</div>	
-			
-			</div>
+					<div class="text-center">
+						<div>
+							<h3>April, 2015</h3>
+							<h4>Total examinations: <span class="text-right">100</span></h4>
+							<h4>Examinations per FTE: 5</h4>
+						</div>
+					</div>	
+				
+				</div>
 
-			<div class="row">
-				<div class="col-md-6 panel panel-default">
-					<h5 class="text-center">Examinations per type</h5>
-					<div class="departament-per-type"></div>
-				</div>
-					
-				<div class="col-md-6 panel panel-default">
-					<h5 class="text-center">Examinations per employee</h5>
-					<div class="departament-per-employee"></div>
-				</div>
-			</div>';
+				<div class="row">
+					<div class="col-md-6 panel panel-default">
+						<h5 class="text-center">Examinations per type</h5>
+						<div class="departament-per-type"></div>
+					</div>
+						
+					<div class="col-md-6 panel panel-default">
+						<h5 class="text-center">Examinations per employee</h5>
+						<div class="departament-per-employee"></div>
+					</div>
+				</div>*/});
 
 		d3.select(el)
 			.html(tpl);
@@ -127,4 +128,8 @@
 			parseInt(d3.select(el).select('.departament-per-employee').style('width'), 10)
 		];
 	}
+
+	function uncomment(fn){
+	  return fn.toString().split(/\/\*\n|\n\*\//g).slice(1,-1).join();
+	};
 })();
