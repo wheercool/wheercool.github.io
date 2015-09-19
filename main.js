@@ -370,7 +370,7 @@ function prop(nm) {
         },
         drawAll: function() {
             var el = this.el;
-            var widgets = 
+            var widgets = this.__widgets;
             d3.json(this.url, function(err, data) {
                 debugger;
                 var sizes = {
