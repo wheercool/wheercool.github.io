@@ -1,0 +1,60 @@
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900|Dosis:300,400,600,700,800|Droid+Sans:400,700|Lato:300,400,700,900|PT+Sans:400,700|Ubuntu:300,400,500,700|Open+Sans:400,300,600,700|Roboto:400,300,500,700,900|Roboto+Condensed:400,300,700|Open+Sans+Condensed:300,700|Play:400,700|Maven+Pro:400,500,700,900&subset=latin,latin-ext);
+
+@import url(https://fonts.googleapis.com/css?family=Orbitron:500);
+
+	
+
+.clock {
+	font-family: 'Open Sans';
+	font-weight: 600;
+	font-size:15rem;
+}
+.clock span {
+	vertical-align: middle;
+
+}
+
+.container {
+	background-color: white;
+}
+.ct-head {
+	background-color: #EABB63 !important;
+	color: white !important;
+
+}
+.ct {
+	color: #EABB63;
+}
+.buddy {
+	color: #1B901B;
+}
+.buddy-head {
+	background-color: #1B901B !important;
+	color: white !important;
+}
+
+.mr {
+	color: #DA3A3A;
+}
+.mr-head {
+	background-color: #DA3A3A !important;
+	color: white !important;
+
+}
+.row.no-gutter {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.row.no-gutter [class*='col-']:not(:first-child),
+.row.no-gutter [class*='col-']:not(:last-child) {
+  padding-right: 0;
+  padding-left: 0;
+}
+.waiting-room table {
+	font-family: 'Orbitron';
+	font-size: 24px;		
+}
+.waiting-room table thead {
+	font-family: 'Source+Sans+Pro'
+}

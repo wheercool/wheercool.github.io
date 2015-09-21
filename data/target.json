@@ -1,5 +1,52 @@
 {
 	"widgets": [
+    {
+        "name": "Waiting Room",
+        "settings": {
+            "size": "large",
+            "title": "Waiting Room"
+        },
+        "dataset": []
+    },
+    {
+            "name": "Process Insight",
+            "settings": {
+                "size": "medium",
+                "title": "Process Insight"
+            },
+
+            "dataset":  [
+        {
+         "name": "Booking",
+         "value": 0,
+         "measure": "days"
+        },
+        {
+         "name": "Planning",
+         "value": 10,
+         "measure": "days"
+        },
+        {
+         "name": "Waiting",
+         "value": 3,
+         "measure": "hours"
+        },
+        {
+         "name": "Examination",
+         "value": 10,
+         "measure": "minutes"
+        },
+        {
+         "name": "Reporting",
+         "value": 4,
+         "measure": "day"
+        }, {
+         "name": "Invoicing",
+         "value": 8,
+         "measure": "hours"
+        }
+        ]
+        },
 	{
 		"name": "Departament Insight",
 		"settings": {
