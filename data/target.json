@@ -1,14 +1,6 @@
 {
 	"widgets": [
-    {
-        "name": "Waiting Room",
-        "settings": {
-            "size": "large",
-            "title": "Waiting Room"
-        },
-        "dataset": []
-    },
-    {
+     {
             "name": "Process Insight",
             "settings": {
                 "size": "medium",
@@ -47,6 +39,9 @@
         }
         ]
         },
+
+    
+   
 	{
 		"name": "Departament Insight",
 		"settings": {
@@ -261,5 +256,13 @@
     {"DepartmentName":"Radiology E","RoomName":"S3CT 2","ExaminationTypeName":"CT Abdomen","Radiologist":"Josh Carini","Examination":"1"},
     {"DepartmentName":"Radiology E","RoomName":"S3CT 2","ExaminationTypeName":"CT Abdomen","Radiologist":"Josh Carini","Examination":"1"}
     ]
-	}]
+	},
+    {
+        "name": "Waiting Room",
+        "settings": {
+            "size": "large",
+            "title": "Waiting Room"
+        },
+        "dataset": []
+    }]
 }

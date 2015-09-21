@@ -116,7 +116,8 @@
 				<div class="panel panel-default">
 					<div class="panel-heading ct-head">CT</div>
 					<div class="panel-body">
-						In Progress...
+						<img src="speedo.svg" width="100%" height="100%"/>
+						<h4 class="text-center">-5 min</h4>
 					</div>
 				</div>				
 				
@@ -125,7 +126,8 @@
 				<div class="panel panel-default">
 					<div class="panel-heading buddy-head">Buddy</div>
 					<div class="panel-body">
-						In Progress...
+						<img src="speedo.svg" width="100%" height="100%"/>
+						<h4 class="text-center">-5 min</h4>
 					</div>
 				</div>	
 			</div>
@@ -133,7 +135,8 @@
 				<div class="panel panel-default">
 					<div class="panel-heading mr-head">MR</div>
 					<div class="panel-body">
-						In Progress...
+						<img src="speedo.svg" width="100%" height="100%"/>
+						<h4 class="text-center">-5 min</h4>
 					</div>
 				</div>	
 			</div>

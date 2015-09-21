@@ -53,7 +53,8 @@
 }
 .waiting-room table {
 	font-family: 'Orbitron';
-	font-size: 24px;		
+	font-size: 200%;		
+	/*font-size: 24px;		*/
 }
 .waiting-room table thead {
 	font-family: 'Source+Sans+Pro'
