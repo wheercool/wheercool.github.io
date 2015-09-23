@@ -2,17 +2,31 @@
 
 @import url(https://fonts.googleapis.com/css?family=Orbitron:500);
 
-	
+html { font-size: 100%; } 	
+
+
+ 
+
+
 
 .clock {
 	font-family: 'Open Sans';
 	font-weight: 600;
-	font-size:15rem;
+	font-size: 5rem;
 }
 .clock span {
 	vertical-align: middle;
 
 }
+
+ @media screen and (min-width: 480px) {
+    .clock {
+		font-family: 'Open Sans';
+		font-weight: 600;
+		font-size: 11rem;
+	}
+}
+
 
 .container {
 	background-color: white;

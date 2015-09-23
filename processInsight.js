@@ -41,7 +41,7 @@
 						<text font-size="32px" font-weight="bold" fill="#353535"  y="75" x="-40" ></text>
 					</g>
 				</svg>
-				
+				<h4 class="text text-center"></h4>
 				</div>
 
 		</div>*/});
@@ -56,14 +56,14 @@
 		var cols = d3.select(el)
 		.append('div')
 		.classed('row', true)
-		.selectAll('.col-md-4')
+		.selectAll('.col-sm-4')
 
 		.data(data);
 
 		cols
 		.enter()
 		.append('div')
-		.classed('col-md-4', true)
+		.classed('col-sm-4', true)
 		.html(tpl)
 
 		cols.select('.panel-heading > h4')
@@ -75,17 +75,45 @@
 				return d.link || 'imgs/' + d.name + '.svg';
 			});
 
-		cols.select('.panel-body svg path')
-			.transition()
-			.duration(1000)
-			.attr('fill', function(d) {
-				return scale(d.value);
-			});
+		
 
-		cols.select('.panel-body svg text')
+		cols.select('.panel-body .text')
 			.text(function(d) {
 				return d.value + ' ' + d.measure;
 			})
+
+
+		d3.select(window).on('scroll', animate);
+
+		function animate() {
+			var w = window,
+			    d = document,
+			    e = d.documentElement,
+			    g = d.getElementsByTagName('body')[0],
+			    x = w.innerWidth || e.clientWidth || g.clientWidth,
+			    y = w.innerHeight|| e.clientHeight|| g.clientHeight;
+
+			    cols.each(function(d) {
+			    	var rect = this.getBoundingClientRect();
+			    	var height = parseInt(d3.select(this).style('width'), 10);
+
+			    	if (rect.top + height < y) {
+			    		var data = d3.select(this).datum();
+			    		if (data.animated) return;
+			    		data.animated = true;
+			    		d3.select(this).datum(data);
+			    		
+			    		d3.select(this)
+			    		.select('.panel-body svg path')
+			    		.attr('fill', 'gray')
+			    		.transition()
+						.duration(1000)
+						.attr('fill', function(d) {
+							return scale(d.value);
+						});
+			    	}
+			    });
+		};
 	}
 	
 

@@ -21,28 +21,49 @@
 
 
 		var tpl = uncomment(function() {/*
-				<div class="row text-center">
+				<div class="row ">
 								
+					<div class="text-center">
 						
-						<div class="col-xs-41">	
-							<div class="huge departament-total">100</div>
-							<h4><small>Total</small></h4>
+						<div class="col-xs-4">	
+							<div class="huge v-mid departament-total">100</div>
+							
 						</div>
 
-						<div class="col-xs-41">
+						<div class="col-xs-4">
 							<img src="factory.svg" />
-							<h3><small>April, 2015</small></h3>
+							
 						</div>
 						
-						<div class="col-xs-41">	
-							<div class="huge departament-avg">5</div>
-							<h4><small>Average per FTE</small></h4>
+						<div class="col-xs-4">	
+							<div class="huge v-mid departament-avg">5</div>
+							
 						</div>
-					
+					</div>	
 				
 				</div>
 
+				<div class="row first-row">
+								
+					<div class="text-center">
+						
+						<div class="col-xs-4">	
+							
+							<h4>Total</h4>
+						</div>
+
+						<div class="col-xs-4">
+							
+							<h3>April, 2015</h3>	
+						</div>
+						
+						<div class="col-xs-4">	
+							
+							<h4>Average per FTE</h4>
+						</div>
+					</div>	
 				
+				</div>
 
 				<div class="row last-row">
 					<div class="col-md-6 ">
