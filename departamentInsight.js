@@ -46,14 +46,16 @@
 
 				<div class="row last-row">
 					<div class="col-md-6 ">						
-						<div class="departament-per-type departament-pie">
+						<div class="departament-per-type departament-pie text-center">
 
 						<h5 class="text-center ">Per type <a class='reset'
           href='javascript:perType.filterAll();dc.redrawAll();'
           style='display: none;'>reset</a></h5>
 
-						<span class="h6">
-				          Current filter: <span class='default-value'>none</span><span class='filter'></span>				          
+						<span class="h5">
+						<small>
+				          Current filter: <span class='default-value'>none</span><span class='filter'></span>	
+				          </small>			          
 				        </span>
 				        </div>
 							
@@ -61,14 +63,15 @@
 					</div>
 						
 					<div class="col-md-6">
-						<div class="departament-per-employee departament-pie">
+						<div class="departament-per-employee departament-pie text-center">
 						<h5 class="text-center">Per employee
 							<a class='reset'
 					          href='javascript:perEmployee.filterAll();dc.redrawAll();'
 					          style='display: none;'>reset</a>
 						</h5>
-						<span class="h6">
-				          Current filter: <span class="default-value">none</span> <span class='filter'></span>				          
+						<span class="h5">
+						<small>
+				          Current filter: <span class="default-value">none</span> <span class='filter'></span>	</small>			          
 				        </span>
 
 						</div>
