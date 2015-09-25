@@ -3,42 +3,27 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Second widget</title>
-	<link rel="stylesheet" href="dc.css">
-	<link rel="stylesheet" href="bootstrap.min.css">
-	<link rel="stylesheet" href="flip.css">
-	<link rel="stylesheet" href="processInsight.css">
-	<link rel="stylesheet" href="departamentInsight.css">
-	<link rel="stylesheet" href="waitingRoom.css">
+	
+	<link rel="stylesheet" href="css/dc.css">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/sticky-footer-navbar.css">
+
+	<!-- Widget styles -->
+	<link rel="stylesheet" href="css/processInsight.css">
+	<link rel="stylesheet" href="css/departamentInsight.css">
+	<link rel="stylesheet" href="css/waitingRoom.css">
+	<!-- Put new widget style here ... -->
+
 	<style>
-		.col-xs-41 {
-			display: inline-block;
-			vertical-align: middle;
-			text-align: center;
-			width: 30%;
-		}
+		
 		body {
-			background-color: gray;
+			background-color: #ccc;
 		}
-		.huge {
-			font-size: 52px;
-		}
+		
 		div.dc-chart {
 			float: none;
 		}
-		.section-title {
-			border-bottom: 1px solid #B5B0B0;
-			padding-bottom: 15px;
-			padding-top: 5px;
-			margin-bottom: -35px;
-		}
-		.first-col {
-			border-right: 1px solid #B5B0B0;
-		}
-		.v-mid  {
-		  position: relative;
-		  top: 50%;
-		  transform: translateY(50%);
-		}
+				
 		.panel .panel-heading {
 			background-color: white;
 		}
@@ -46,23 +31,80 @@
 	</style>
 </head>
 <body>
-	<div id="dashboard"></div>	
+	  <nav id="navigation" class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#"></a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+        	 <ul class="nav navbar-nav navbar-left">
+        	 	 <li class="active"><a href="#">Dashboard</a></li>
+        	 </ul>
+          <ul class="nav navbar-nav navbar-right">
+           
+            <li>
+            	<div class="btn-group navbar-form" data-toggle="buttons">
+				  <label class="btn btn-default active">
+				    <input type="radio" name="options" id="size-small" autocomplete="off" checked> <span class="glyphicon glyphicon-resize-small"/>
+				  </label>
+				  <label class="btn btn-default">
+				    <input type="radio" name="options" id="size-big" autocomplete="off"> <span class="glyphicon glyphicon-fullscreen"/>
+				  </label>  
+				</div>
+ 			</li>
+            <li class="dropdown widget-search">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-search"></span> Widgets <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+               <!--  <li><a href="#Process Insight">Process Insight</a></li>
+                <li><a href="#Departament Insight">Departament Insight</a></li>
+                <li><a href="#Waiting Room">Waiting Room</a></li>        -->        
+              </ul>
+            </li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+	
+
+	
+	<div id="dashboard" class="container"></div>	
+		
+	
+
 
 </div>
-	<script src="crossfilter.min.js"></script>
-	<script src="d3.min.js"></script>
-	<script src="dc.min.js"></script>
-	<script src="main.js"></script>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+
+	<script src="js/crossfilter.min.js"></script>
+	<script src="js/d3.min.js"></script>
+	<script src="js/dc.min.js"></script>
+	<script src="js/widgetRegistry.js"></script>
 
 	<!-- Widgets -->
-	<script src="departamentInsight.js"></script>
-	<script src="processInsight.js"></script>
-	<script src="waitingRoom.js"></script>
+	<script src="js/departamentInsight.js"></script>
+	<script src="js/processInsight.js"></script>
+	<script src="js/waitingRoom.js"></script>
 
-	<!-- Put new widgets here ... -->
+	<!-- Put new widget here ... -->
 	
 	<script type="text/javascript">
+		$(document).on('change', 'input:radio[id^="size-"]', function (event) {
+		    $('#dashboard')
+		    	.toggleClass('container-fluid')
+		    	.toggleClass('container');
+
+		    window.dispatchEvent(new Event('resize'));
+		});
+
 		widgetRegister.drawAll();
+
 	</script>
 </body>
 </html>

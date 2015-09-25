@@ -1,4 +1,7 @@
 {
+    "generalSettings": {
+        "client": "Proof of Concept"
+    },
 	"widgets": [
      {
             "name": "Process Insight",
@@ -63,7 +66,7 @@
 		"name": "Departament Insight",
 		"settings": {
 			"size": "medium",
-			"title": "Departament examinations"
+			"title": "Departament Insight"
 		},
 		"generalData": {
 			"month": "April",
@@ -278,8 +281,23 @@
         "name": "Waiting Room",
         "settings": {
             "size": "large",
-            "title": "Waiting Room"
+            "title": "Waiting Room",
+            "min": -10,
+            "max": 10
         },
-        "dataset": []
+        "dataset": [
+        {
+            "name": "CT",
+            "value": 0          
+        },
+        {
+            "name": "Buddy",
+            "value": 0   
+        },
+        {
+            "name": "MR",
+            "value": 0   
+        }
+        ]
     }]
 }
