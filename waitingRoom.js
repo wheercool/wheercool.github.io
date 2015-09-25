@@ -15,7 +15,7 @@
 				<div class="panel panel-default ct-speedo" >
 					<div class="panel-heading ">CT</div>
 					<div class="panel-body">
-						<svg  xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%"><defs></defs>
+						<!-- svg  xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%"><defs></defs>
 							<circle cx="125" cy="100" r="100" opacity="1" fill="gray"></circle>
 							<circle cx="125" cy="100" r="40" fill="white"></circle>
 
@@ -26,7 +26,7 @@
 
 							<path fill="none" d="M 45 99.99999999999999 C 44.999999999999986 71.41875280734692 60.24791385931975 45.00859129357144 84.99999999999999 30.717967697244916" stroke="#31a354" stroke-width="18px" stroke-linecap="round"></path>
 
-							<!-- <circle cx="125" cy="100" r="5" transform="rotate(30.036490127433755 125 100)" fill="#F0F0F0"></circle> -->
+							
 							
 							<g class="arrow-indicator" transform="rotate(110 125 100)" fill="black">
 								
@@ -34,10 +34,11 @@
 
 								<rect fill="red" x="42" y="100" width="80" height="2" stroke-width="0.000001" ></rect>
 
-								<!-- <rect fill="#585858" x="135" y="97" width="6" height="6" stroke-width="0.000001" ></rect> -->
+								
 								
 							</g>
-						</svg>
+						</svg -->
+						<img src="imgs/speedo.svg" width="100%" height="100%"/>
 						<h4 class="text-center">-5 min</h4>
 					</div>
 				</div>				
@@ -62,8 +63,8 @@
 				</div>	
 			</div>
 		</div>
-
-	*/})
+*/
+	})
 
 		d3.select(el)
 			.html(tpl);
