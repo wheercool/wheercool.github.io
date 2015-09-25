@@ -4,7 +4,7 @@
 	var containerTpl = uncomment(function (){/*
 		<div class="waiting-room">
 			<div class="col-md-12 clock text-center">	
-				test							
+											
 				<span>--:--</span>
 			</div>	
 
@@ -63,7 +63,7 @@
 			// })
 
 		var svg = body.append('svg')
-					.attr('preserveAspectRatio', 'xMinYMin meet')
+					// .attr('preserveAspectRatio', 'xMinYMin meet')
 					.attr('viewBox', '0 0 255 125')
 
 			svg.html(ringTpl)
