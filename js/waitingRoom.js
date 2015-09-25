@@ -3,7 +3,8 @@
 
 	var containerTpl = uncomment(function (){/*
 		<div class="waiting-room">
-			<div class="col-md-12 clock text-center">								
+			<div class="col-md-12 clock text-center">	
+				test							
 				<span>--:--</span>
 			</div>	
 
