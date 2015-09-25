@@ -13,7 +13,10 @@ var widgetRegister = {
                 "medium": "col-md-6",
                 "small": "col-md-4"
             };
+            d3.select('.waiting')
+                .style('display', 'none');
 
+                
             buildDynamicMenu(el, data);
 
             var row = d3.select(el)
