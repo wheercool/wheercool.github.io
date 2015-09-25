@@ -1,0 +1,32 @@
+Hi guys,
+
+I can provide you following settings:
+
+Each widget will have 3 mandatory fields:
+* name - identity of the widget
+* title - the title of the panel
+
+Process Insight Widget:
+* Path to the process icon (by default we can use name convention: the name of the step equals to the name of the icon) 
+* The color of the delay value (per type) 
+* The background color of the header (per type) 
+* The background color of the step
+* Path to the status icon (per type)
+P.S. type can take the following values: ok, bad and good depends on the duration value of the step.
+
+Departament Insight Widget:
+* Path to the hospital icon
+* Color palette for the "per type"/ "per employee" pie charts
+* Max number of the splices visible on "per type"/"per employee" pie charts (other will be grouped in category "Other")
+
+Waiting Room Widget:
+* Color for each sector of the speedo
+
+Please, add to the list what you want to see more or remove unnecessary features.
+
+To simplify all the settings I will use default value for each setting (except 3 mandatory) and you can omit all of them to get the current design.
+
+Unfortunately, I will not be available online up to the Sunday, but will keep working on this.
+
+BR, 
+Alex

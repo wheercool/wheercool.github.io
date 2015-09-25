@@ -2,7 +2,7 @@
 	widgetRegister.register("Waiting Room", function(el, data, general, config) {
 
 	var containerTpl = uncomment(function (){/*
-		<div class="row waiting-room">
+		<div class="waiting-room">
 			<div class="col-md-12 clock text-center">								
 				<span>--:--</span>
 			</div>	
