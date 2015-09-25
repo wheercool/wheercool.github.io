@@ -89,8 +89,16 @@
 		var indicators = svg.append('g')
 			.classed('arrow-indicator', true)
 
-			indicators.html(indicatorTpl)
+			indicators.append('path')
+				.attr('d', 'M 138 98 L40 100 138 102')
 
+			indicators.append('circle')
+				.attr('cx', 125)
+				.attr('cy', 100)
+				.attr('r', 6)
+				.attr('stroke', 'black')
+				.attr('fill', '#ccc')
+				
 		body.append('h4')		
 			.text(function(d) {
 				if (d.value == 0) return 'in time';
