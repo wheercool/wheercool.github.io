@@ -4,7 +4,7 @@
 	var containerTpl = uncomment(function (){/*
 		<div class="waiting-room">
 			<div class="col-md-12 clock text-center">	
-											
+
 				<span>--:--</span>
 			</div>	
 
@@ -66,7 +66,11 @@
 					// .attr('preserveAspectRatio', 'xMinYMin meet')
 					.attr('viewBox', '0 0 255 125')
 
-			svg.html(ringTpl)
+			svg.append('text')
+				.attr('y', 50)
+				.text('Testing')
+
+			// svg.html(ringTpl)
 
 		var indicators = svg.append('g')
 			.classed('arrow-indicator', true)
