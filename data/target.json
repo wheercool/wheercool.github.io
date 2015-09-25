@@ -6,36 +6,53 @@
                 "size": "medium",
                 "title": "Process Insight"
             },
-
             "dataset":  [
         {
          "name": "Booking",
          "value": 0,
-         "measure": "days"
+         "measure": "days",
+          "min": 0,
+         "max": 10,
+         "avg": 4
         },
         {
          "name": "Planning",
          "value": 10,
-         "measure": "days"
+         "measure": "days",
+         "min": 0,
+         "max": 10,
+         "avg": 4
         },
         {
          "name": "Waiting",
          "value": 3,
-         "measure": "hours"
+         "measure": "hours",
+          "min": 0,
+         "max": 10,
+         "avg": 4
         },
         {
          "name": "Examination",
          "value": 10,
-         "measure": "minutes"
+         "measure": "minutes",
+          "min": 0,
+         "max": 10,
+         "avg": 4
         },
         {
          "name": "Reporting",
          "value": 4,
-         "measure": "day"
+         "measure": "day",
+          "min": 0,
+         "max": 10,
+         "avg": 4
         }, {
          "name": "Invoicing",
          "value": 8,
-         "measure": "hours"
+         "measure": "hours",
+          "min": 0,
+         "max": 10,
+         "avg": 4
         }
         ]
         },

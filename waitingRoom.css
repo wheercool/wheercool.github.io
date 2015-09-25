@@ -33,25 +33,31 @@ html { font-size: 100%; }
 }
 .ct-head {
 	background-color: #EABB63 !important;
+	background-color: #f0ad4e !important;
 	color: white !important;
 
 }
 .ct {
 	color: #EABB63;
+	color: #f0ad4e;
 }
 .buddy {
 	color: #1B901B;
+	color: #5cb85c;
 }
 .buddy-head {
 	background-color: #1B901B !important;
+	background-color: #5cb85c !important;
 	color: white !important;
 }
 
 .mr {
 	color: #DA3A3A;
+	color: #d9534f;
 }
 .mr-head {
 	background-color: #DA3A3A !important;
+	background-color: #d9534f !important;
 	color: white !important;
 
 }

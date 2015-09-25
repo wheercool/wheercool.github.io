@@ -1,0 +1,12 @@
+{
+	"widgets": [
+ 
+    {
+        "name": "Waiting Room",
+        "settings": {
+            "size": "large",
+            "title": "Waiting Room"
+        },
+        "dataset": []
+    }]
+}

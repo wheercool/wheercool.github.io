@@ -1,47 +1,61 @@
 (function() {
 	widgetRegister.register("Process Insight", function(el, data, general, config) {
 
-		var scale = d3.scale.linear().domain([0, 5, 10]).range(['#31a354', '#ff9800' , '#e51c23']);
-		// var data = [
-		// {
-		// 	name: 'Booking',
-		// 	value: 0
-		// },
-		// {
-		// 	name: 'Planning',
-		// 	value: 10
-		// },
-		// {
-		// 	name: 'Waiting',
-		// 	value: 3
-		// },
-		// {
-		// 	name: 'Examination',
-		// 	value: 10
-		// },
-		// {
-		// 	name: 'Reporting',
-		// 	value: 4
-		// }, {
-		// 	name: 'Invoicing',
-		// 	value: 8
-		// }
-		// ];
+		var statusIndicatorIcons = {
+			"ok": 'imgs/neutral_trading.svg',
+			"bad": 'imgs/bearish.svg',
+			'good': 'imgs/bullish.svg'
+		};
+
+		var statusColorTable = {
+			'ok': 'black',
+			'bad': '#e51c23',
+			'good': '#31a354'
+		};
+		var statusBackgroundColorTable = {
+			'ok': '#9E9B9B',
+			'bad': '#d9534f',
+			'good': '#31a354'
+		};
+
+		var statusOpacityBackgroundColorTable = {
+			'ok': 'rgba(158, 155, 155, 0.06)',
+			'bad': 'rgba(217, 83, 79, 0.09)',
+			'good': 'rgba(49, 163, 84, 0.09)'
+		};
+
+		
+		data.forEach(function(d, i) {
+				var total = d.max - d.min;
+				var epsilonStart = d.avg - 0.25 * total,
+					epsilonEnd = d.avg + 0.25 * total;
+				if (d.value > epsilonStart && d.value < epsilonEnd) {
+					d.status = 'ok';
+					return
+				}
+
+				if (d.value < epsilonStart) {
+					d.status = 'good';
+					return
+				}
+
+				if (d.value > epsilonEnd) {
+					d.status = 'bad';
+					return
+				}
+		});
+
 
 		var tpl = uncomment(function() {/*
 				
 			<div class="panel panel-default">
-				<div class="panel-heading"><h4>Booking</h4>
+				<div class="panel-heading process-header"><h4>Booking</h4>				
 				</div>
-				<div class="panel-body">
-					<svg width="100%" height="100%" viewBox="-5 -30 210 210">
-					<g transform="translate(100,100)"><path id="planning" stroke="gray" stroke-width="7" fill="#353535" d="M-86.60254037844388,49.99999999999997A100,100 0 1,1 86.60254037844388,49.999999999999986L69.2820323027551,39.999999999999986A80,80 0 1,0 -69.28203230275511,39.99999999999998Z"></path>
+				<div class="panel-body text-center">
+					<img width="90%" />
+					<img width="50%"  class="status-indicator"/>
+					<h4 class="text text-center"></h4>
 
-						<image x="-35" y="-30" height="75px" width="75px"/>
-						<text font-size="32px" font-weight="bold" fill="#353535"  y="75" x="-40" ></text>
-					</g>
-				</svg>
-				<h4 class="text text-center"></h4>
 				</div>
 
 		</div>*/});
@@ -67,19 +81,37 @@
 		.html(tpl)
 
 		cols.select('.panel-heading > h4')
-			.text(function(d) {return d.name})
-	
+			.text(function(d) {return d.name})	
 
-		cols.select('.panel-body svg image')
-			.attr('xlink:href', function(d, i) {
+		cols.select('.panel-heading')
+			.style('color', 'white')
+			.style('background-color', function(d) {
+				return statusBackgroundColorTable[d.status];
+			})
+
+		cols.select('.panel-body')
+			.style('background-color', function(d) {
+				return statusOpacityBackgroundColorTable[d.status];
+			})			
+
+
+		cols.select('.panel-body img')
+			.attr('src', function(d, i) {
 				return d.link || 'imgs/' + d.name + '.svg';
 			});
 
-		
+		cols.select('.panel-body img.status-indicator')
+			.attr('src', function(d, i) {				
+				return statusIndicatorIcons[d.status];
+			})
+
 
 		cols.select('.panel-body .text')
 			.text(function(d) {
 				return d.value + ' ' + d.measure;
+			})
+			.style('color', function(d, i) {
+				return statusColorTable[d.status];
 			})
 
 
@@ -93,26 +125,26 @@
 			    x = w.innerWidth || e.clientWidth || g.clientWidth,
 			    y = w.innerHeight|| e.clientHeight|| g.clientHeight;
 
-			    cols.each(function(d) {
-			    	var rect = this.getBoundingClientRect();
-			    	var height = parseInt(d3.select(this).style('width'), 10);
+			   //  cols.each(function(d) {
+			   //  	var rect = this.getBoundingClientRect();
+			   //  	var height = parseInt(d3.select(this).style('width'), 10);
 
-			    	if (rect.top + height < y) {
-			    		var data = d3.select(this).datum();
-			    		if (data.animated) return;
-			    		data.animated = true;
-			    		d3.select(this).datum(data);
+			   //  	if (rect.top + height < y) {
+			   //  		var data = d3.select(this).datum();
+			   //  		if (data.animated) return;
+			   //  		data.animated = true;
+			   //  		d3.select(this).datum(data);
 			    		
-			    		d3.select(this)
-			    		.select('.panel-body svg path')
-			    		.attr('fill', 'gray')
-			    		.transition()
-						.duration(1000)
-						.attr('fill', function(d) {
-							return scale(d.value);
-						});
-			    	}
-			    });
+			   //  		d3.select(this)
+			   //  		.select('.panel-body svg path')
+			   //  		.attr('fill', 'gray')
+			   //  		.transition()
+						// .duration(1000)
+						// .attr('fill', function(d) {
+						// 	return scale(d.value);
+						// });
+			   //  	}
+			   //  });
 		};
 	}
 	

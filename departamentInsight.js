@@ -30,7 +30,7 @@
 						</div>
 
 						<div class="col-xs-41">
-							<img src="factory.svg" />
+							<img src="imgs/hospital.svg" width="90%"/>
 							<h3><small>April, 2015</small></h3>
 						</div>
 						
@@ -45,14 +45,33 @@
 				
 
 				<div class="row last-row">
-					<div class="col-md-6 ">
-						<h5 class="text-center section-title">Per type</h5>
-						<div class="departament-per-type"></div>
+					<div class="col-md-6 ">						
+						<div class="departament-per-type departament-pie">
+
+						<h5 class="text-center ">Per type <a class='reset'
+          href='javascript:perType.filterAll();dc.redrawAll();'
+          style='display: none;'>reset</a></h5>
+
+						<span class="h6">
+				          Current filter: <span class='default-value'>none</span><span class='filter'></span>				          
+				        </span>
+				        </div>
+							
+						
 					</div>
 						
 					<div class="col-md-6">
-						<h5 class="text-center section-title">Per employee</h5>
-						<div class="departament-per-employee"></div>
+						<div class="departament-per-employee departament-pie">
+						<h5 class="text-center">Per employee
+							<a class='reset'
+					          href='javascript:perEmployee.filterAll();dc.redrawAll();'
+					          style='display: none;'>reset</a>
+						</h5>
+						<span class="h6">
+				          Current filter: <span class="default-value">none</span> <span class='filter'></span>				          
+				        </span>
+
+						</div>
 					</div>
 				</div>*/});
 		// document.write('TPL');
@@ -71,8 +90,10 @@
 
 		d3.select(el).select('.departament-total').text(general.total)
 		d3.select(el).select('.departament-avg').text(general.avg)
+		var onFiltered = seq(makeRadioButton(), addDefaultFilterValue);
 
-		var perType = dc.pieChart(d3.select(el).select('.departament-per-type').node())
+
+		perType = dc.pieChart(d3.select(el).select('.departament-per-type').node())
 		    .width(widthPerType)
 		    .height(heightPerType)
 		    .dimension(departamentPerType)
@@ -86,9 +107,11 @@
 		        // return names[0][0] + '. ' + names[1][0] + '.';
 		        return d.value || '';
 		    }) 
+		    .on('filtered', onFiltered)
 		    .legend(dc.legend().x(0.3 * widthPerType).y(widthPerType).itemHeight(legendItemHeight).gap(legendGap))
-
-		var perEmployee = dc.pieChart(d3.select(el).select('.departament-per-employee').node())
+		    
+		    
+		perEmployee = dc.pieChart(d3.select(el).select('.departament-per-employee').node())
 
 		    .width(widthPerEmployee)
 		    .height(heightPerEmployee)
@@ -105,7 +128,7 @@
 		    })
 		    .dimension(departamentPerEmployee)
 		    .group(departamentPerEmployeeGroup)
-
+ 			.on('filtered', onFiltered)
 		    .legend(dc.legend().x(0.3 * widthPerEmployee).y(widthPerEmployee).itemHeight(legendItemHeight).gap(legendGap))
 
 		
@@ -169,4 +192,31 @@
 		var str = fn.toString();
 	  return str.slice(str.indexOf('/*') + 2, str.indexOf('*/'));
 	};
+
+	function addDefaultFilterValue(chart) {	
+				
+			chart.root()
+				.select('.default-value')
+				.style('display', function(){ return chart.hasFilter()?'none': 'inline' });
+		
+	}
+
+	function seq(f1, f2) {
+		return function(d, i) {
+			f1(d, i);
+			return f2(d, i);
+		};
+	}
+	function makeRadioButton() {
+		var filtered = false;
+		return function(chart, value) {
+		    	if (filtered) return;
+		    	filtered = true;
+		    	chart.filterAll();
+		    	chart.filter(value);
+		    	filtered = false;
+	    }
+	}
+
+
 })();
