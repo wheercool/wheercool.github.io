@@ -13,22 +13,7 @@
 	<link rel="stylesheet" href="css/departamentInsight.css">
 	<link rel="stylesheet" href="css/waitingRoom.css">
 	<!-- Put new widget style here ... -->
-
-	<style>
-		
-		body {
-			background-color: #ccc;
-		}
-		
-		div.dc-chart {
-			float: none;
-		}
-				
-		.panel .panel-heading {
-			background-color: white;
-		}
-
-	</style>
+	<link rel="stylesheet" href="css/general.css">	
 </head>
 <body>
 	  <nav id="navigation" class="navbar navbar-default navbar-fixed-top">
@@ -48,15 +33,18 @@
         	 </ul>
           <ul class="nav navbar-nav navbar-right">
            
-            <li>
-            	<div class="btn-group navbar-form" data-toggle="buttons">
-				  <label class="btn btn-default active">
-				    <input type="radio" name="options" id="size-small" autocomplete="off" checked> <span class="glyphicon glyphicon-resize-small"/>
-				  </label>
-				  <label class="btn btn-default">
-				    <input type="radio" name="options" id="size-big" autocomplete="off"> <span class="glyphicon glyphicon-fullscreen"/>
-				  </label>  
-				</div>
+            <li class="visible-md visible-lg visible-sm">
+            	<form class="navbar-form form-inline">
+	            	<div class="btn-group" data-toggle="buttons">
+					  <label class="btn btn-default active">					  	
+					    <input type="radio" name="options" id="size-small" autocomplete="off" checked> <span class="glyphicon glyphicon-resize-small"/>
+					  </label>
+					  <label class="btn btn-default">
+					    <input type="radio" name="options" id="size-big" autocomplete="off"> <span class="glyphicon glyphicon-fullscreen"/>
+					  </label>  
+					</div>
+
+				</form>
  			</li>
             <li class="dropdown widget-search">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-search"></span> Widgets <span class="caret"></span></a>

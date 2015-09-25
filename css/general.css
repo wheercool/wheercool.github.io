@@ -1,0 +1,17 @@
+body {
+	background-color: #ddd;
+}
+
+html { font-size: 100%; } 	
+
+
+div.dc-chart {
+	float: none;
+}
+		
+.panel .panel-heading {
+	background-color: white;
+}
+.panel .panel-heading {
+	font-family: 'Open Sans'
+}
