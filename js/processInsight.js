@@ -1,27 +1,26 @@
 (function() {
 	widgetRegister.register("Process Insight", function(el, data, general, config) {
-
-		var statusIndicatorIcons = {
-			"ok": 'imgs/neutral_trading.svg',
-			"bad": 'imgs/bearish.svg',
-			'good': 'imgs/bullish.svg'
+		var statusIndicatorIcons = config.stepIndicatorIcons || {
+			"ok": "imgs/neutral_trading.svg",
+			"bad": "imgs/bearish.svg",
+			"good": "imgs/bullish.svg"
 		};
 
-		var statusColorTable = {
-			'ok': 'black',
-			'bad': '#e51c23',
-			'good': '#31a354'
+		var statusColorTable = config.stepTextColor  || {
+			"ok": "black",
+			"bad": "#e51c23",
+			"good": "#31a354"
 		};
-		var statusBackgroundColorTable = {
-			'ok': '#9E9B9B',
-			'bad': '#d9534f',
-			'good': '#31a354'
+		var statusBackgroundColorTable = config.stepHeaderBackgroundColor || {
+			"ok": "#9E9B9B",
+			"bad": "#d9534f",
+			"good": "#31a354"
 		};
 
-		var statusOpacityBackgroundColorTable = {
-			'ok': 'rgba(158, 155, 155, 0.06)',
-			'bad': 'rgba(217, 83, 79, 0.09)',
-			'good': 'rgba(49, 163, 84, 0.09)'
+		var statusOpacityBackgroundColorTable = config.stepBackgroundColor || {
+			"ok": "rgba(158, 155, 155, 0.06)",
+			"bad": "rgba(217, 83, 79, 0.09)",
+			"good": "rgba(49, 163, 84, 0.09)"
 		};
 
 		
@@ -29,17 +28,17 @@
 				var total = d.max - d.min;
 				var epsilonStart = d.avg - 0.25 * total,
 					epsilonEnd = d.avg + 0.25 * total;
-				if (d.value > epsilonStart && d.value < epsilonEnd) {
+				if (d.duration > epsilonStart && d.duration < epsilonEnd) {
 					d.status = 'ok';
 					return
 				}
 
-				if (d.value < epsilonStart) {
+				if (d.duration < epsilonStart) {
 					d.status = 'good';
 					return
 				}
 
-				if (d.value > epsilonEnd) {
+				if (d.duration > epsilonEnd) {
 					d.status = 'bad';
 					return
 				}
@@ -81,7 +80,7 @@
 		.html(tpl)
 
 		cols.select('.panel-heading > h4')
-			.text(function(d) {return d.name})	
+			.text(function(d) {return d.step})	
 
 		cols.select('.panel-heading')
 			.style('color', 'white')
@@ -97,7 +96,7 @@
 
 		cols.select('.panel-body img')
 			.attr('src', function(d, i) {
-				return d.link || 'imgs/' + d.name + '.svg';
+				return d.link || 'imgs/' + d.step + '.svg';
 			});
 
 		cols.select('.panel-body img.status-indicator')
@@ -108,7 +107,7 @@
 
 		cols.select('.panel-body .text')
 			.text(function(d) {
-				return d.value + ' ' + d.measure;
+				return d.duration + ' ' + d.measure;
 			})
 			.style('color', function(d, i) {
 				return statusColorTable[d.status];
@@ -141,7 +140,7 @@
 			   //  		.transition()
 						// .duration(1000)
 						// .attr('fill', function(d) {
-						// 	return scale(d.value);
+						// 	return scale(d.duration);
 						// });
 			   //  	}
 			   //  });

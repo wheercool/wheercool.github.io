@@ -30,7 +30,7 @@
 						</div>
 
 						<div class="col-xs-41">
-							<img src="imgs/hospital.svg" width="90%"/>
+							<img class="hospital-icon" src="imgs/hospital.svg" width="90%"/>
 							<h3><small>April, 2015</small></h3>
 						</div>
 						
@@ -82,6 +82,11 @@
 		d3.select(el)
 			.html(tpl);
 
+		if (config.iconPath) {
+			d3.select('.hospital-icon')
+				.attr('src', config.iconPath);
+		}
+
 		var ws = getCurrentWidth();
 			widthPerType = ws[0],
 			widthPerEmployee = ws[1],
@@ -91,11 +96,14 @@
 			heightPerEmployee = widthPerEmployee + legendHeigthEmployee;
 
 
-		d3.select(el).select('.departament-total').text(general.total)
-		d3.select(el).select('.departament-avg').text(general.avg)
+		d3.select(el).select('.departament-total').text(config.total)
+		d3.select(el).select('.departament-avg').text(config.avg)
 		var onFiltered = seq(makeRadioButton(), addDefaultFilterValue);
 
-
+		var perTypeSlices = config.perType? (config.perType.maxSlices || 20): 20;
+		var perEmployeeSlices = config.perEmployee? (config.perEmployee.maxSlices || 20): 20;
+		var perTypeColorPalette = config.perType? (config.perType.colorPalette || d3.scale.category20c().range()): d3.scale.category20c().range();
+		var perEmployeeColorPalette = config.perEmployee? (config.perEmployee.colorPalette || d3.scale.category20b().range()): d3.scale.category20b().range();
 		perType = dc.pieChart(d3.select(el).select('.departament-per-type').node())
 		    .width(widthPerType)
 		    .height(heightPerType)
@@ -103,8 +111,9 @@
 		    .group(departamentPerTypeGroup)
 		    .minAngleForLabel(0.5)
 		    .radius(widthPerType / 3)
-		    .slicesCap(20)
+		    .slicesCap(perTypeSlices)
 		    .innerRadius(widthPerType / 6)   
+		    .colors(d3.scale.ordinal().range(perTypeColorPalette))
 		    .label(function(d) {
 		        var names = d.key.split(' ');
 		        // return names[0][0] + '. ' + names[1][0] + '.';
@@ -113,16 +122,16 @@
 		    .on('filtered', onFiltered)
 		    .legend(dc.legend().x(0.3 * widthPerType).y(widthPerType).itemHeight(legendItemHeight).gap(legendGap))
 		    
-		    
+		   
 		perEmployee = dc.pieChart(d3.select(el).select('.departament-per-employee').node())
 
 		    .width(widthPerEmployee)
 		    .height(heightPerEmployee)
 		    .radius(widthPerEmployee / 3)
-		    .slicesCap(20)
+		    .slicesCap(perEmployeeSlices)
 		    .minAngleForLabel(0.5)
 		    .innerRadius(widthPerEmployee / 6)  
-		    .colors(d3.scale.category20b())
+		    .colors(d3.scale.ordinal().range(perEmployeeColorPalette))
 		    //.renderLabel(false)
 		    .label(function(d) {
 		        var names = d.key.split(' ');

@@ -1,0 +1,305 @@
+callback({
+    "generalSettings": {
+       
+    },
+	  "widgets": [
+     {
+            "name": "Process Insight",
+            "settings": {
+                "title": "Process Insight" //Caption of the widget
+            },
+            "dataset":  [ //Array of the steps
+        {
+         "step": "Booking", //Name of the step
+         "duration": 0,  // Duration of the step
+         "measure": "days", //Measure of the step duration
+          "min": 0, //Min duration of the current step
+         "max": 10, //Max duration of the current step
+         "avg": 4 //Average duration of the current step
+        },
+        {
+         "step": "Planning",
+         "duration": 10,
+         "measure": "days",
+         "min": 0,
+         "max": 10,
+         "avg": 4
+        },
+        {
+         "step": "Waiting",
+         "duration": 3,
+         "measure": "hours",
+          "min": 0,
+         "max": 10,
+         "avg": 4
+        },
+        {
+         "step": "Examination",
+         "duration": 10,
+         "measure": "minutes",
+          "min": 0,
+         "max": 10,
+         "avg": 4
+        },
+        {
+         "step": "Reporting",
+         "duration": 4,
+         "measure": "day",
+          "min": 0,
+         "max": 10,
+         "avg": 4
+        }, {
+         "step": "Invoicing",
+         "duration": 8,
+         "measure": "hours",
+          "min": 0,
+         "max": 10,
+         "avg": 4
+        }
+        ]
+        },
+
+    
+   
+	{
+		"name": "Departament Insight",
+		"settings": {
+			"title": "Department Insight",
+      "month": "April", //[mandatory]The month of the dataset
+      "year": 2015, // [mandatory]The year of the data
+      "total": 200, // [mandatory] Total count
+      "avg": 50 // [mandatory] Average count per FTE
+		},
+		"dataset":     [
+
+		{
+      "DepartmentName":"Radiology B", //Not used, can be omitted.
+      "RoomName":"Bucky 1", //Not used, can be omitted.
+      "ExaminationTypeName":"A.CARD", //Type of the department
+      "Radiologist":"Whitney Hanstein", //The name of the employee
+      "Examination":"1" //Not used, can be omitted.
+    },
+    {"DepartmentName":"Radiology B","RoomName":"Bucky 2","ExaminationTypeName":"A.CARD","Radiologist":"Whitney Hanstein","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"Bucky 3","ExaminationTypeName":"A.CARD","Radiologist":"Whitney Hanstein","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"Bucky 4","ExaminationTypeName":"A.CARD","Radiologist":"Whitney Hanstein","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"Bucky 5","ExaminationTypeName":"A.CARD","Radiologist":"Whitney Hanstein","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"Bucky 6","ExaminationTypeName":"A.CARD","Radiologist":"Whitney Hanstein","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"Bucky 7","ExaminationTypeName":"A.CARD","Radiologist":"Whitney Hanstein","Examination":"1"},
+    {"DepartmentName":"Radiology C","RoomName":"S1Bucky 1","ExaminationTypeName":"A.CARD","Radiologist":"Whitney Hanstein","Examination":"1"},
+    {"DepartmentName":"Radiology C","RoomName":"S1Bucky 2","ExaminationTypeName":"A.CARD","Radiologist":"Whitney Hanstein","Examination":"1"},
+    {"DepartmentName":"Radiology C","RoomName":"S1Bucky 3","ExaminationTypeName":"A.CARD","Radiologist":"Whitney Hanstein","Examination":"1"},
+    {"DepartmentName":"Radiology D","RoomName":"S2Bucky 1","ExaminationTypeName":"A.CARD","Radiologist":"Whitney Hanstein","Examination":"1"},
+    {"DepartmentName":"Radiology D","RoomName":"S2Bucky 2","ExaminationTypeName":"A.CARD","Radiologist":"Whitney Hanstein","Examination":"1"},
+    {"DepartmentName":"Radiology D","RoomName":"S2Bucky 3","ExaminationTypeName":"A.CARD","Radiologist":"Whitney Hanstein","Examination":"1"},
+    {"DepartmentName":"Radiology E","RoomName":"S3Bucky 1","ExaminationTypeName":"A.CARD","Radiologist":"Whitney Hanstein","Examination":"1"},
+    {"DepartmentName":"Radiology E","RoomName":"S3Bucky 2","ExaminationTypeName":"A.CARD","Radiologist":"Whitney Hanstein","Examination":"1"},
+    {"DepartmentName":"Radiology E","RoomName":"S3Bucky 3","ExaminationTypeName":"A.CARD","Radiologist":"Whitney Hanstein","Examination":"1"},
+    {"DepartmentName":"Radiology E","RoomName":"S3Bucky 4","ExaminationTypeName":"A.CARD","Radiologist":"Whitney Hanstein","Examination":"1"},
+    {"DepartmentName":"Radiology A","RoomName":"CT 1","ExaminationTypeName":"CT Angiogram Aorta","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology A","RoomName":"CT 1","ExaminationTypeName":"CT Angiogram Aorta","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 2","ExaminationTypeName":"CT Angiogram Aorta","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 2","ExaminationTypeName":"CT Angiogram Aorta","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 3","ExaminationTypeName":"CT Angiogram Aorta","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 3","ExaminationTypeName":"CT Angiogram Aorta","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 4","ExaminationTypeName":"CT Angiogram Aorta","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 4","ExaminationTypeName":"CT Angiogram Aorta","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology C","RoomName":"S1CT 1","ExaminationTypeName":"CT Angiogram Aorta","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology C","RoomName":"S1CT 1","ExaminationTypeName":"CT Angiogram Aorta","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology D","RoomName":"S2CT 1","ExaminationTypeName":"CT Angiogram Aorta","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology D","RoomName":"S2CT 1","ExaminationTypeName":"CT Angiogram Aorta","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology E","RoomName":"S3CT 1","ExaminationTypeName":"CT Angiogram Aorta","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology E","RoomName":"S3CT 1","ExaminationTypeName":"CT Angiogram Aorta","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology E","RoomName":"S3CT 2","ExaminationTypeName":"CT Angiogram Aorta","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology E","RoomName":"S3CT 2","ExaminationTypeName":"CT Angiogram Aorta","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology A","RoomName":"CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Erick Hakimi","Examination":"1"},
+    {"DepartmentName":"Radiology A","RoomName":"CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Josh Carini","Examination":"1"},
+    {"DepartmentName":"Radiology A","RoomName":"CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology A","RoomName":"CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology A","RoomName":"CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Josh Carini","Examination":"1"},
+    {"DepartmentName":"Radiology A","RoomName":"CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Josh Carini","Examination":"1"},
+    {"DepartmentName":"Radiology A","RoomName":"CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Whitney Hanstein","Examination":"1"},
+    {"DepartmentName":"Radiology A","RoomName":"CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Whitney Hanstein","Examination":"1"},
+    {"DepartmentName":"Radiology A","RoomName":"CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Whitney Hanstein","Examination":"1"},
+    {"DepartmentName":"Radiology A","RoomName":"CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology A","RoomName":"CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology A","RoomName":"CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology A","RoomName":"CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Whitney Hanstein","Examination":"1"},
+    {"DepartmentName":"Radiology A","RoomName":"CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Whitney Hanstein","Examination":"1"},
+    {"DepartmentName":"Radiology A","RoomName":"CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology A","RoomName":"CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology A","RoomName":"CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology A","RoomName":"CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology A","RoomName":"CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology A","RoomName":"CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology A","RoomName":"CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology A","RoomName":"CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology A","RoomName":"CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 2","ExaminationTypeName":"CT Abdomen","Radiologist":"Erick Hakimi","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 2","ExaminationTypeName":"CT Abdomen","Radiologist":"Josh Carini","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 2","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 2","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 2","ExaminationTypeName":"CT Abdomen","Radiologist":"Josh Carini","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 2","ExaminationTypeName":"CT Abdomen","Radiologist":"Josh Carini","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 2","ExaminationTypeName":"CT Abdomen","Radiologist":"Whitney Hanstein","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 2","ExaminationTypeName":"CT Abdomen","Radiologist":"Whitney Hanstein","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 2","ExaminationTypeName":"CT Abdomen","Radiologist":"Whitney Hanstein","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 2","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 2","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 2","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 2","ExaminationTypeName":"CT Abdomen","Radiologist":"Whitney Hanstein","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 2","ExaminationTypeName":"CT Abdomen","Radiologist":"Whitney Hanstein","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 2","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 2","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 2","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 2","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 2","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 2","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 2","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 2","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 2","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 3","ExaminationTypeName":"CT Abdomen","Radiologist":"Erick Hakimi","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 3","ExaminationTypeName":"CT Abdomen","Radiologist":"Josh Carini","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 3","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 3","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 3","ExaminationTypeName":"CT Abdomen","Radiologist":"Josh Carini","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 3","ExaminationTypeName":"CT Abdomen","Radiologist":"Josh Carini","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 3","ExaminationTypeName":"CT Abdomen","Radiologist":"Whitney Hanstein","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 3","ExaminationTypeName":"CT Abdomen","Radiologist":"Whitney Hanstein","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 3","ExaminationTypeName":"CT Abdomen","Radiologist":"Whitney Hanstein","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 3","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 3","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 3","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 3","ExaminationTypeName":"CT Abdomen","Radiologist":"Whitney Hanstein","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 3","ExaminationTypeName":"CT Abdomen","Radiologist":"Whitney Hanstein","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 3","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 3","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 3","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 3","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 3","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 3","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 3","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 3","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 3","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 4","ExaminationTypeName":"CT Abdomen","Radiologist":"Erick Hakimi","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 4","ExaminationTypeName":"CT Abdomen","Radiologist":"Josh Carini","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 4","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 4","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 4","ExaminationTypeName":"CT Abdomen","Radiologist":"Josh Carini","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 4","ExaminationTypeName":"CT Abdomen","Radiologist":"Josh Carini","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 4","ExaminationTypeName":"CT Abdomen","Radiologist":"Whitney Hanstein","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 4","ExaminationTypeName":"CT Abdomen","Radiologist":"Whitney Hanstein","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 4","ExaminationTypeName":"CT Abdomen","Radiologist":"Whitney Hanstein","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 4","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 4","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 4","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 4","ExaminationTypeName":"CT Abdomen","Radiologist":"Whitney Hanstein","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 4","ExaminationTypeName":"CT Abdomen","Radiologist":"Whitney Hanstein","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 4","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 4","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 4","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 4","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 4","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 4","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 4","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 4","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology B","RoomName":"CT 4","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology C","RoomName":"S1CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Erick Hakimi","Examination":"1"},
+    {"DepartmentName":"Radiology C","RoomName":"S1CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Josh Carini","Examination":"1"},
+    {"DepartmentName":"Radiology C","RoomName":"S1CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology C","RoomName":"S1CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology C","RoomName":"S1CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Josh Carini","Examination":"1"},
+    {"DepartmentName":"Radiology C","RoomName":"S1CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Josh Carini","Examination":"1"},
+    {"DepartmentName":"Radiology C","RoomName":"S1CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Whitney Hanstein","Examination":"1"},
+    {"DepartmentName":"Radiology C","RoomName":"S1CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Whitney Hanstein","Examination":"1"},
+    {"DepartmentName":"Radiology C","RoomName":"S1CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Whitney Hanstein","Examination":"1"},
+    {"DepartmentName":"Radiology C","RoomName":"S1CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology C","RoomName":"S1CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology C","RoomName":"S1CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology C","RoomName":"S1CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Whitney Hanstein","Examination":"1"},
+    {"DepartmentName":"Radiology C","RoomName":"S1CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Whitney Hanstein","Examination":"1"},
+    {"DepartmentName":"Radiology C","RoomName":"S1CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology C","RoomName":"S1CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology C","RoomName":"S1CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology C","RoomName":"S1CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology C","RoomName":"S1CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology C","RoomName":"S1CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology C","RoomName":"S1CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology C","RoomName":"S1CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology C","RoomName":"S1CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology D","RoomName":"S2CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Erick Hakimi","Examination":"1"},
+    {"DepartmentName":"Radiology D","RoomName":"S2CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Josh Carini","Examination":"1"},
+    {"DepartmentName":"Radiology D","RoomName":"S2CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology D","RoomName":"S2CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology D","RoomName":"S2CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Josh Carini","Examination":"1"},
+    {"DepartmentName":"Radiology D","RoomName":"S2CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Josh Carini","Examination":"1"},
+    {"DepartmentName":"Radiology D","RoomName":"S2CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Whitney Hanstein","Examination":"1"},
+    {"DepartmentName":"Radiology D","RoomName":"S2CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Whitney Hanstein","Examination":"1"},
+    {"DepartmentName":"Radiology D","RoomName":"S2CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Whitney Hanstein","Examination":"1"},
+    {"DepartmentName":"Radiology D","RoomName":"S2CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology D","RoomName":"S2CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology D","RoomName":"S2CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology D","RoomName":"S2CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Whitney Hanstein","Examination":"1"},
+    {"DepartmentName":"Radiology D","RoomName":"S2CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Whitney Hanstein","Examination":"1"},
+    {"DepartmentName":"Radiology D","RoomName":"S2CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology D","RoomName":"S2CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology D","RoomName":"S2CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology D","RoomName":"S2CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology D","RoomName":"S2CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology D","RoomName":"S2CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology D","RoomName":"S2CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology D","RoomName":"S2CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology D","RoomName":"S2CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology E","RoomName":"S3CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Erick Hakimi","Examination":"1"},
+    {"DepartmentName":"Radiology E","RoomName":"S3CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Josh Carini","Examination":"1"},
+    {"DepartmentName":"Radiology E","RoomName":"S3CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology E","RoomName":"S3CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology E","RoomName":"S3CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Josh Carini","Examination":"1"},
+    {"DepartmentName":"Radiology E","RoomName":"S3CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Josh Carini","Examination":"1"},
+    {"DepartmentName":"Radiology E","RoomName":"S3CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Whitney Hanstein","Examination":"1"},
+    {"DepartmentName":"Radiology E","RoomName":"S3CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Whitney Hanstein","Examination":"1"},
+    {"DepartmentName":"Radiology E","RoomName":"S3CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Whitney Hanstein","Examination":"1"},
+    {"DepartmentName":"Radiology E","RoomName":"S3CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology E","RoomName":"S3CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology E","RoomName":"S3CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology E","RoomName":"S3CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Whitney Hanstein","Examination":"1"},
+    {"DepartmentName":"Radiology E","RoomName":"S3CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Whitney Hanstein","Examination":"1"},
+    {"DepartmentName":"Radiology E","RoomName":"S3CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology E","RoomName":"S3CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology E","RoomName":"S3CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology E","RoomName":"S3CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology E","RoomName":"S3CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology E","RoomName":"S3CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology E","RoomName":"S3CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology E","RoomName":"S3CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology E","RoomName":"S3CT 1","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology E","RoomName":"S3CT 2","ExaminationTypeName":"CT Abdomen","Radiologist":"Erick Hakimi","Examination":"1"},
+    {"DepartmentName":"Radiology E","RoomName":"S3CT 2","ExaminationTypeName":"CT Abdomen","Radiologist":"Josh Carini","Examination":"1"},
+    {"DepartmentName":"Radiology E","RoomName":"S3CT 2","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology E","RoomName":"S3CT 2","ExaminationTypeName":"CT Abdomen","Radiologist":"Williams Kornprobst","Examination":"1"},
+    {"DepartmentName":"Radiology E","RoomName":"S3CT 2","ExaminationTypeName":"CT Abdomen","Radiologist":"Josh Carini","Examination":"1"},
+    {"DepartmentName":"Radiology E","RoomName":"S3CT 2","ExaminationTypeName":"CT Abdomen","Radiologist":"Josh Carini","Examination":"1"}
+    ]
+	},
+    {
+        "name": "Waiting Room",
+        "settings": {
+            "title": "Waiting Room"
+        },
+        //Array of rooms and waiting times
+        "dataset": [
+        {
+            
+            "room": "CT", //Name of the room
+            "time": 20   //waiting time in minutes     
+        },
+        {
+            "room": "Buddy",
+            "time": -3   
+        },
+        {
+            "room": "MR",
+            "time": 0  
+        }
+        ]
+    }]
+})
