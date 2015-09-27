@@ -31,7 +31,8 @@ var widgetRegister = {
                 .append('div')
                 // .classed('container', true)
                 .append('div')
-                .classed('row', true);
+                .classed('row', true)
+                .classed('sortable', true)
 
             var panel = row.selectAll('.widget')
                 .data(data.widgets)
@@ -53,6 +54,10 @@ var widgetRegister = {
                             widgets[d.name](this, d.dataset, d.generalData, d.settings);
                         })
 
+               $(function () {
+                    $(".sortable").sortable();
+                    $(".sortable").disableSelection();
+                });
             // d3.selectAll('.widget').on('click', launchFullScreen)
         },
     __widgets: []

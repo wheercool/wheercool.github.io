@@ -34,3 +34,7 @@ div.dc-chart {
 	position: fixed;
 	z-index: 999999;
 }
+
+.ui-sortable-helper .panel{
+	cursor: all-scroll;
+}
