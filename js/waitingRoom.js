@@ -52,7 +52,7 @@
 			.attr('class', 'panel panel-default')
 
 		var header = panel.append('div')
-			.attr('class', 'panel-heading')
+			.attr('class', 'panel-heading text-center bold')
 			.append('h4')
 			.text(function(d) {return d.room})
 
