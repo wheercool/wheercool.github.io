@@ -48,9 +48,7 @@
 					<div class="col-md-6 ">						
 						<div class="departament-per-type departament-pie text-center">
 
-						<h5 class="text-center ">Per type <a class='reset'
-          href='javascript:perType.filterAll();dc.redrawAll();'
-          style='display: none;'>reset</a></h5>
+						<h5 class="text-center ">Per type</h5>
 
 						<span class="h5">
 						<small>
@@ -64,11 +62,7 @@
 						
 					<div class="col-md-6">
 						<div class="departament-per-employee departament-pie text-center">
-						<h5 class="text-center">Per employee
-							<a class='reset'
-					          href='javascript:perEmployee.filterAll();dc.redrawAll();'
-					          style='display: none;'>reset</a>
-						</h5>
+						<h5 class="text-center">Per employee</h5>
 						<span class="h5">
 						<small>
 				          Current filter: <span class="default-value">none</span> <span class='filter'></span>	</small>			          
@@ -123,6 +117,7 @@
 		    .legend(dc.legend().x(0.3 * widthPerType).y(widthPerType).itemHeight(legendItemHeight).gap(legendGap))
 		    
 		   
+
 		perEmployee = dc.pieChart(d3.select(el).select('.departament-per-employee').node())
 
 		    .width(widthPerEmployee)
@@ -171,6 +166,8 @@
 
 			});
 
+		
+
 		render();
 
 	    return {
@@ -187,7 +184,47 @@
 
 		function render() {
     		perType.render();
+
     		perEmployee.render();
+
+
+    		// console.log(d3.select(el).select('.departament-per-employee svg').append("g").classed('reset', true))
+    		d3.select(el).select('.departament-per-employee svg')
+			.append('text')
+			.classed('reset', true)
+			.style('display', function() { return perEmployee.hasFilter() ? 'block': 'none';  })
+			.attr('x', widthPerEmployee / 2)
+			.attr('y', heightPerEmployee / 2)
+			.attr('text-anchor', 'middle')
+			.attr('alignment-baseline', 'middle')
+			.attr('font-size', 16)
+			.attr('font-weight', 'bold')
+			.attr('fill', '#066784')
+			.attr('cursor', 'pointer')
+			.text('reset')
+			.on('click', function() {
+				perEmployee.filterAll();
+				render();
+			})
+
+			d3.select(el).select('.departament-per-type svg')
+			.append('text')
+			.classed('reset', true)
+			.style('display', function() { return perType.hasFilter() ? 'block': 'none';  })
+			.attr('x', widthPerType / 2)
+			.attr('y', heightPerType / 2)
+			.attr('text-anchor', 'middle')
+			.attr('alignment-baseline', 'middle')
+			.attr('font-size', 16)
+			.attr('font-weight', 'bold')
+			.attr('fill', '#066784')
+			.attr('cursor', 'pointer')
+			.text('reset')
+			.on('click', function() {
+				perType.filterAll();
+				render();
+			})
+
     	}
 	});
 

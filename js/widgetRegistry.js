@@ -52,6 +52,8 @@ var widgetRegister = {
                         .each(function(d) {
                             widgets[d.name](this, d.dataset, d.generalData, d.settings);
                         })
+
+            // d3.selectAll('.widget').on('click', launchFullScreen)
         },
     __widgets: []
 };
@@ -72,4 +74,26 @@ function buildDynamicMenu(el, data) {
 
     d3.select('.navbar-brand')
         .text(data.generalSettings && data.generalSettings.brand || 'Proof of Concept')
+}
+
+//Запустить отображение в полноэкранном режиме
+function launchFullScreen(element) {
+    element = this;
+    if(element.requestFullScreen) {
+        element.requestFullScreen();
+    } else if(element.mozRequestFullScreen) {
+        element.mozRequestFullScreen();
+    } else if(element.webkitRequestFullScreen) {
+        element.webkitRequestFullScreen();
+    }
+}
+
+function cancelFullscreen() {
+    if(document.cancelFullScreen) {
+        document.cancelFullScreen();
+    } else if(document.mozCancelFullScreen) {
+        document.mozCancelFullScreen();
+    } else if(document.webkitCancelFullScreen) {
+        document.webkitCancelFullScreen();
+    }
 }

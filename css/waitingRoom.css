@@ -5,9 +5,8 @@
 	font-weight: 600;
 	font-size: 5rem;
 }
-.clock span {
+.clock>span {
 	vertical-align: middle;
-
 }
 
  @media screen and (min-width: 480px) {

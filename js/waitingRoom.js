@@ -120,10 +120,19 @@
 	      return d3.interpolateString("rotate(90, 125 100)", "rotate(" +  scale(d.time) + ", 125 100)");
 	    }
 
-
 	});
 
+	requestAnimationFrame(animateFunc);
 
+
+
+	function animateFunc(t) {
+		requestAnimationFrame(animateFunc);
+		//DO animation here ...
+		d3.select('.clock .seconds')
+			.classed('invisible', Math.floor(t / 500) % 2)
+		// console.log(t);
+	}
 	function uncomment(fn){
 		var str = fn.toString();
 	  return str.slice(str.indexOf('/*') + 2, str.indexOf('*/'));
@@ -131,6 +140,7 @@
 
 	setInterval(function() {
 		d3.select('.clock span')
-			.html(d3.time.format('%H:%M')(new Date()))
+			.html(d3.time.format('%H<span class="seconds">:</span>%M')(new Date()))
+			// .html(d3.time.format('%H:%M')(new Date()))
 	}, 500)
 })()
