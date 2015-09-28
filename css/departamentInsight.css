@@ -2,6 +2,10 @@
 	margin-top: -40px;
 }
 
+.departament-pie svg>g{
+	transform: translate(100, 100);
+}
+
 .col-xs-41 {
 	display: inline-block;
 	vertical-align: middle;
