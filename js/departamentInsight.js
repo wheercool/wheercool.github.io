@@ -84,10 +84,10 @@
 		var ws = getCurrentWidth();
 			widthPerType = ws[0],
 			widthPerEmployee = ws[1],
-			legendHeightType = totalTypes * (legendItemHeight + legendGap) / 2,
+			legendHeightType = totalTypes * (legendItemHeight + legendGap),
 			// heightPerType = widthPerType + legendHeightType,
 			heightPerType = widthPerType,
-			legendHeigthEmployee = totalEmployees * (legendItemHeight + legendGap) / 2,
+			legendHeigthEmployee = totalEmployees * (legendItemHeight + legendGap),
 			// heightPerEmployee = widthPerEmployee + legendHeigthEmployee;
 			heightPerEmployee = widthPerEmployee;
 
