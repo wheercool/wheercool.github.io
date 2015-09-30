@@ -81,16 +81,7 @@
 				.attr('src', config.iconPath);
 		}
 
-		var ws = getCurrentWidth();
-			widthPerType = ws[0],
-			widthPerEmployee = ws[1],
-			legendHeightType = totalTypes * (legendItemHeight + legendGap),
-			// heightPerType = widthPerType + legendHeightType,
-			heightPerType = widthPerType,
-			legendHeigthEmployee = totalEmployees * (legendItemHeight + legendGap),
-			// heightPerEmployee = widthPerEmployee + legendHeigthEmployee;
-			heightPerEmployee = widthPerEmployee;
-
+		
 
 
 		d3.select(el).select('.departament-total').text(config.total)
@@ -104,6 +95,19 @@
 		var perEmployeeSlices = config.perEmployee? (config.perEmployee.maxSlices || 20): 20;
 		var perTypeColorPalette = config.perType? (config.perType.colorPalette || d3.scale.category20c().range()): d3.scale.category20c().range();
 		var perEmployeeColorPalette = config.perEmployee? (config.perEmployee.colorPalette || d3.scale.category20b().range()): d3.scale.category20b().range();
+		
+
+		var ws = getCurrentWidth();
+			widthPerType = ws[0],
+			widthPerEmployee = ws[1],
+			legendHeightType = Math.min(totalTypes, perTypeSlices) * (legendItemHeight + legendGap),
+			// heightPerType = widthPerType + legendHeightType,
+			heightPerType = widthPerType,
+			legendHeigthEmployee = Math.min(totalEmployees, perEmployeeSlices) * (legendItemHeight + legendGap),
+			// heightPerEmployee = widthPerEmployee + legendHeigthEmployee;
+			heightPerEmployee = widthPerEmployee;
+
+
 		perType = dc.pieChart(d3.select(el).select('.departament-per-type.departament-pie').node())
 		    .width(widthPerType)
 		    .height(heightPerType)

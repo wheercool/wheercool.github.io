@@ -28,7 +28,7 @@
 				var total = d.max - d.min;
 				var epsilonStart = d.avg - 0.25 * total,
 					epsilonEnd = d.avg + 0.25 * total;
-				if (d.duration > epsilonStart && d.duration < epsilonEnd) {
+				if (d.duration >= epsilonStart && d.duration <= epsilonEnd) {
 					d.status = 'ok';
 					return
 				}
