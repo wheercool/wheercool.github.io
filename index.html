@@ -15,21 +15,6 @@
 	<script>
 
 	// Check to make sure the browser supprots DeviceOrientationEvents
-		if (window.DeviceOrientationEvent) {
-			document.getElementById('log').innerHTML = 'exist2';
-		  // Create an event listener
-		  window.addEventListener('deviceorientation', function(event) {
-		      // Get the left-to-right tilt (in degrees).
-		    var tiltLR = event.gamma;
-
-		    // Get the front-to-back tilt (in degrees).
-		    var titleFB = event.beta;
-
-		      // Get the direction of the device (in degrees).
-		    var direction = event.alpha;
-		    document.getElementById('log').innerHTML = tiltLR || 'o_O';
-		  }, false);
-		} else  document.getElementById('log').innerHTML = 'no';
 
 
 		  window.addEventListener('devicemotion', function(event) {
