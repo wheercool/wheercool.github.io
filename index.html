@@ -9,7 +9,8 @@
 	<ul>
 		<li><a href="local.html">Local version</a></li>
 		<li><a href="remote.html">Remote version</a></li>
-		<span id="log">changed</span>
+		<div id="log">changed</div>
+		<div id="dm">changed</div>
 	</ul>
 	<script>
 
@@ -29,6 +30,21 @@
 		    document.getElementById('log').innerHTML = tiltLR || 'o_O';
 		  }, false);
 		} else  document.getElementById('log').innerHTML = 'no';
+
+
+		window.addEventListener('devicemotion', function(event) {
+		  var x = event.acceleration.x;
+		  var y = event.acceleration.y;
+		  var z = event.acceleration.z;
+		 
+		  var ralpha = event.rotationRate.alpha;
+		  var rbeta = event.rotationRate.beta;
+		  var rgamma = event.rotationRate.gamma;
+		 
+		  var interval = event.interval;
+		    document.getElementById('dm').innerHTML = x || 'o_O';
+
+		});
 
 
 	</script>
