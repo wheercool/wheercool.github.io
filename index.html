@@ -9,6 +9,7 @@
 	<ul>
 		<li><a href="local.html">Local version</a></li>
 		<li><a href="remote.html">Remote version</a></li>
+		<span id="log"></span>
 	</ul>
 	<script>
 	// Check to make sure the browser supprots DeviceOrientationEvents
@@ -23,9 +24,9 @@
 
 		      // Get the direction of the device (in degrees).
 		    var direction = event.alpha;
-		    console.log(event);
+		    document.getElementById('log').innerHTML = tiltLR || 'o_O';
 		  });
-		} else console.log('no (');
+		} else  document.getElementById('log').innerHTML = 'no';
 
 
 	</script>
