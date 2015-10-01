@@ -9,11 +9,12 @@
 	<ul>
 		<li><a href="local.html">Local version</a></li>
 		<li><a href="remote.html">Remote version</a></li>
-		<span id="log"></span>
+		<span id="log">changed</span>
 	</ul>
 	<script>
 	// Check to make sure the browser supprots DeviceOrientationEvents
 		if (window.DeviceOrientationEvent) {
+			document.getElementById('log').innerHTML = 'exist';
 		  // Create an event listener
 		  window.addEventListener('deviceorientation', function(event) {
 		      // Get the left-to-right tilt (in degrees).
