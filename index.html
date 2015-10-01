@@ -44,8 +44,13 @@
                 document.getElementById('dm').innerHTML = html;                  
               });
       
-      	if (window.navigator && window.navigator.vibrate)
-		  window.navigator.vibrate([100,30,100,30,100,200,200,30,200,30,200,200,100,30,100,30,100]);
+      	if (window.navigator && window.navigator.vibrate) {
+      		document.getElementById('log').innerHTML = 'supprots';
+      		 window.navigator.vibrate([100,30,100,30,100,200,200,30,200,30,200,200,100,30,100,30,100]);
+      	} else 
+      		document.getElementById('log').innerHTML = 'doesnt supprot';
+
+		 
 
 	</script>
 </body>
