@@ -32,19 +32,18 @@
 		} else  document.getElementById('log').innerHTML = 'no';
 
 
-		window.addEventListener('devicemotion', function(event) {
-		  var x = event.acceleration.x;
-		  var y = event.acceleration.y;
-		  var z = event.acceleration.z;
-		 
-		  var ralpha = event.rotationRate.alpha;
-		  var rbeta = event.rotationRate.beta;
-		  var rgamma = event.rotationRate.gamma;
-		 
-		  var interval = event.interval;
-		    document.getElementById('dm').innerHTML = x || 'o_O';
-
-		});
+		  window.addEventListener('devicemotion', function(event) {
+                var x = event.accelerationIncludingGravity.x;
+                var y = event.accelerationIncludingGravity.y;
+                var z = event.accelerationIncludingGravity.z;
+                var r = event.rotationRate;
+                var html = 'Acceleration:<br />';
+                html += 'x: ' + x +'<br />y: ' + y + '<br/>z: ' + z+ '<br />';
+                html += 'Rotation rate:<br />';
+                if(r!=null) html += 'alpha: ' + r.alpha +'<br />beta: ' + r.beta + '<br/>gamma: ' + r.gamma + '<br />';
+                document.getElementById('dm').innerHTML = html;                  
+              });
+      }
 
 
 	</script>
