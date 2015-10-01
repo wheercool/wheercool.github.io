@@ -12,6 +12,7 @@
 		<span id="log">changed</span>
 	</ul>
 	<script>
+
 	// Check to make sure the browser supprots DeviceOrientationEvents
 		if (window.DeviceOrientationEvent) {
 			document.getElementById('log').innerHTML = 'exist';
@@ -26,7 +27,7 @@
 		      // Get the direction of the device (in degrees).
 		    var direction = event.alpha;
 		    document.getElementById('log').innerHTML = tiltLR || 'o_O';
-		  });
+		  }, true);
 		} else  document.getElementById('log').innerHTML = 'no';
 
 
