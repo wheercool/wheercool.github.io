@@ -10,6 +10,24 @@
 		<li><a href="local.html">Local version</a></li>
 		<li><a href="remote.html">Remote version</a></li>
 	</ul>
-	
+	<script>
+	// Check to make sure the browser supprots DeviceOrientationEvents
+		if (window.DeviceOrientationEvent) {
+		  // Create an event listener
+		  window.addEventListener('deviceorientation', function(event) {
+		      // Get the left-to-right tilt (in degrees).
+		    var tiltLR = event.gamma;
+
+		    // Get the front-to-back tilt (in degrees).
+		    var titleFB = event.beta;
+
+		      // Get the direction of the device (in degrees).
+		    var direction = event.alpha;
+		    console.log(event);
+		  });
+		} else console.log('no (');
+
+
+	</script>
 </body>
 </html>
