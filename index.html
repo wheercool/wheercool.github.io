@@ -24,6 +24,9 @@
                 var z = event.accelerationIncludingGravity.z;
 
                 var length = Math.sqrt(x * x + y * y + z * z);
+                var a = Math.acos(x / length) * 180,
+                    b = Math.acos(y / length) * 180,
+                    c = Math.acos(z / length) * 180;
 
                 var r = event.rotationRate;
                 var html = 'Acceleration:<br />';
@@ -31,7 +34,10 @@
                 html += 'Rotation rate:<br />';
                 if(r!=null) html += 'alpha: ' + r.alpha +'<br />beta: ' + r.beta + '<br/>gamma: ' + r.gamma + '<br />';
                 document.getElementById('dm').innerHTML = html;                  
-                document.getElementById('additional').innerHTML = 'Length: ' + length;                  
+                document.getElementById('additional').innerHTML = 'Length: ' + length + 
+                '<br/>a = ' + a +
+                '<br/> b = ' + b +
+                '<br/> c = ' + c;                  
               });
       
       	if (window.navigator && window.navigator.vibrate) {
