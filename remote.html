@@ -57,14 +57,7 @@
 
 				</form>
  			</li>
-            <li class="dropdown widget-search">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-search"></span> Widgets <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-               <!--  <li><a href="#Process Insight">Process Insight</a></li>
-                <li><a href="#Departament Insight">Departament Insight</a></li>
-                <li><a href="#Waiting Room">Waiting Room</a></li>        -->        
-              </ul>
-            </li>
+          
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -72,7 +65,10 @@
 	
 
 	
-	<div id="dashboard" class="container"></div>	
+	<div id="dashboard" class="container">
+		<ul class="my-tab-menu nav nav-tabs" role="tablist"></ul>
+		<div class="tab-content" />
+	</div>	
 		
 	
 
@@ -96,6 +92,7 @@
 	<!-- Put new widget here ... -->
 	
 	<script type="text/javascript">
+
 		$(document).on('change', 'input:radio[id^="size-"]', function (event) {
 		    $('#dashboard')
 		    	.toggleClass('container-fluid')

@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <link rel="stylesheet" href="css/dc.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/sticky-footer-navbar.css">
+  <link rel="stylesheet" href="css/spinkit.css">
+  <link rel="stylesheet" href="css/jquery-ui.structure.min.css">
+  <link rel="stylesheet" href="css/jquery-ui.min.css">
+
+  <!-- Widget styles -->
+  <link rel="stylesheet" href="css/processInsight.css">
+  <link rel="stylesheet" href="css/departamentInsight.css">
+  <link rel="stylesheet" href="css/waitingRoom.css">
+  <!-- Put new widget style here ... -->
+  <link rel="stylesheet" href="css/general.css">  
+
+  <style>
+
+  </style>
+</head>
+<body>
+  <div id="dc-speedo"></div>
+  <div id="speedo-filter"></div>
+  <div class="filter-value"></div>
+    <button class="btn"><span class='glyphicon glyphicon-arrow-left'></span>Roll up</button>
+    
+    <div class="chart">
+      
+    </div>
+    
+    <div class="pie-chart"></div>
+
+  
+</body>
+
+<script src="js/jquery.min.js"></script>
+  <script src="js/jquery-ui.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+    <script src="js/crossfilter.min.js"></script>
+  <script src="js/d3.min.js"></script>
+  <!--script src="js/dc.1.7.4.js"></script -->
+  <script src="js/dc-latest.min.js"></script>
+  <script src="js/dc.speedo.js"></script>
+
+  <script>
+
+
+    function delay(ms) {
+      var promise = new Promise(function(resolve, reject) {
+        setTimeout(function() {
+          resolve();
+        }, ms)
+      });
+      return promise;
+    };
+    function log(d) {
+      console.log(d);
+    }
+    function getData (filter) {
+      log(filter);
+
+      return delay(1000).then(function() {
+        var dataset = [], field;
+        if (filter.day) {
+            dataset = week;
+             dataset.forEach(function(d) {
+             d.value = d.day;
+          })
+        } else 
+        if (filter.week) {
+          dataset = week;
+          dataset.forEach(function(d) {
+             d.value = d.day;
+          })
+        } else
+        if (filter.month) {
+          dataset = month;
+          dataset.forEach(function(d) {
+             d.value = d.week;
+          })
+        } else
+        if (filter.year) {
+          dataset = year;
+          dataset.forEach(function(d) {
+             d.value = d.month;
+          })
+        } else 
+        {
+           dataset = all;
+           dataset.forEach(function(d) {
+             d.value = d.year;
+          })
+        }
+
+
+        return dataset;
+
+      });
+    }
+
+    var all = [
+    {
+      examination: 1,
+      employee: 'Vasa',
+      year: 1900,
+      type: 'ABC'
+    },
+    {
+      examination: 1,
+      employee: 'Vasa',
+      year: 1901,
+      type: 'ABC'
+    },
+    {
+      examination: 1,
+      employee: 'Vasa',
+      year: 1901,
+      type: 'ABC'
+    },
+    {
+      examination: 1,
+      employee: 'Vasa',
+      year: 1902,
+      type: 'ABC'
+    },
+    {
+      examination: 1,
+      employee: 'Petia',
+      year: 1902,
+      type: 'ABC'
+    },
+    {
+      examination: 1,
+      employee: 'Petia',
+      year: 1901,
+      type: 'AB'
+    }];
+
+
+    var year = [
+      {
+      examination: 1,
+      employee: 'Vasa',
+      month: 1,
+      type: 'ABC'
+    },
+    {
+      examination: 12,
+      employee: 'Vasa',
+      month: 2,
+      type: 'ABC'
+    },
+    {
+      examination: 1,
+      employee: 'Petia',
+      month: 3,
+      type: 'ABC'
+    },
+    {
+      examination: 2,
+      employee: 'Petia',
+      month: 4,
+      type: 'AB'
+    },
+    {
+      examination: 1,
+      employee: 'Petia',
+      month: 4,
+      type: 'AB'
+    }];
+
+    var month = [
+    {
+      examination: 1,
+      employee: 'Petia',
+      week: 1,
+      type: 'AB'
+    },
+    {
+      examination: 2,
+      employee: 'Petia',
+      week: 2,
+      type: 'AB'
+    }
+    ];
+   
+    var week = [
+    {
+      examination: 1,
+      employee: 'Petia',
+      day: 1,
+      type: 'AB'
+    },
+    {
+      examination: 2,
+      employee: 'Petia',
+      day: 2,
+      type: 'AB'
+    },
+    {
+      examination: 3,
+      employee: 'Petia',
+      day: 2,
+      type: 'AB'
+    },
+    {
+      examination: 2,
+      employee: 'Petia',
+      day: 21,
+      type: 'AB'
+    },
+    {
+      examination: 2,
+      employee: 'Petia',
+      day: 2,
+      type: 'AB'
+    },
+    {
+      examination: 2,
+      employee: 'Petia',
+      day: 31,
+      type: 'AB'
+    }
+    ];
+
+ var day = [
+    {
+      examination: 1,
+      employee: 'Petia',
+      partOfDay: 1,
+      type: 'AB'
+    },
+    {
+      examination: 2,
+      employee: 'Vasa',
+      day: 2,
+      type: 'AB'
+    },
+    {
+      examination: 3,
+      employee: 'Petia',
+      day: 2,
+      type: 'AB'
+    },    
+    {
+      examination: 2,
+      employee: 'Petia',
+      day: 2,
+      type: 'AB'
+    },
+    {
+      examination: 2,
+      employee: 'Petia',
+      day: 2,
+      type: 'AB'
+    }];
+
+
+    // var format = d3.time.format('%Y')
+
+    var filter = {}; //parameter to the query and to display
+
+    var levels = ['year', 'month', 'week', 'day', 'partOfDay']; // ->
+    var currentLevel = 0;
+    var beautifyAxis = {
+      // month: [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ]
+      month: ["nothing", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ],
+      week: ['week 0', 'week 1', 'week 2', 'week 3', 'week 4', 'week 5']
+    };
+
+    var datas = [];
+    var chart = dc.barChart('.chart')
+      .width(500)
+      .height(500)
+      // .dimension(rec.dimension)
+      // .group(rec.group)
+      // .x(d3.time.scale().domain(extent));
+      .on("filtered", function(self, d) {
+          var f = self.filter();
+          if (self.hasFilter() && currentLevel< levels.length) {
+              filter[levels[currentLevel]] = f;
+              currentLevel++;              
+              self.filterAll();
+              return;
+         } 
+         if (currentLevel == levels.length) return;
+         getData(filter)
+          .then(drillDown)
+          .then(redraw.bind(null, self));              
+      })
+      // .x(d3.scale.ordinal().domain(d3.range(extent[0], extent[1] + 1)))
+      .elasticY(true)
+      .xUnits(dc.units.ordinal);
+    // redraw(chart);
+    // dc.renderAll();
+    d3.select('.btn')
+      .on('click', function() {
+        rollUp();
+        redraw(chart);
+      })
+
+
+    var pieChart = dc.pieChart('.pie-chart')
+      .width(300)
+      .height(300)
+        .radius(100)
+        
+
+
+    getData(filter)
+          .then(drillDown)
+          .then(redraw.bind(null, chart));
+
+    function drillDown(data) {        
+        var mapFunc = !!beautifyAxis[levels[currentLevel]]? function(currentLevel, d) {
+          return beautifyAxis[levels[currentLevel]][d.key];
+        }.bind(null, currentLevel): function(d) {return d.key};
+
+        var crs = crossfilter(data),
+            dimension = crs.dimension(function(d) { return d.value}),
+            pieDimension = crs.dimension(function(d) { return d.employee}),
+            group = dimension.group().reduceSum(function(d) { return d.examination}),
+            pieGroup = pieDimension.group().reduceSum(function(d) {return d.examination});
+        datas.push({
+          crs: crs,
+          dimension: dimension,
+          group: group,
+          keyAccessor: mapFunc,
+          // extent: d3.extent(data, function(d) { return d.date}),
+          range: group.all().map(mapFunc),
+          pieDimension: pieDimension,
+          pieGroup: pieGroup
+        });              
+    }
+
+    function rollUp() {
+      
+      var data = datas.pop();
+      currentLevel--;
+      delete filter[levels[currentLevel]];
+    }
+
+    function redraw(self) {
+        var rec = peek(datas);
+        // var pieFilters = pieChart.filters();
+        // if (!pieFilters.length) {
+        //   pieFilters = null;
+        // }
+       rec.pieDimension.filter(pieChart.filter());
+        self.keyAccessor(rec.keyAccessor)
+        self.dimension(rec.dimension)
+        self.group(rec.group)
+        self.x(d3.scale.ordinal().domain(rec.range))
+        self.xUnits(dc.units.ordinal)
+
+
+        //Some magic for old version
+        // self.expireCache()
+        // self.rescale();
+
+        self.render();
+
+        // self.stack();
+
+        var value;
+        if (filter.day) {
+          value = `year=${filter.year}<br/>month=${filter.month}<br />day=${filter.day}`;        
+        } else
+        if (filter.week) {
+          value = `year=${filter.year}<br/>month=${filter.month}<br />week=${filter.week}`;
+        } else 
+        if (filter.month) {
+          value = `year=${filter.year}<br/>month=${filter.month}`;
+        } else
+        if (filter.year) {
+          value = `year=${filter.year}`
+        }
+        else {
+          value = 'All';
+        }
+
+
+        
+        d3.select('.filter-value')
+          .html(value)
+        console.log(currentLevel);
+        d3.select('.btn')
+          .style('display', function() {
+            return currentLevel == 0? 'none': 'block';
+          })  
+        // self.stack();
+        var pFilter = pieChart.filter();
+        pieChart
+          .dimension(rec.pieDimension)
+          .group(rec.pieGroup)
+          // .filter(pFilter)
+
+
+          .render()
+    }
+
+var dt = [
+  {
+    group: 'G1',
+    s: 1,
+    duration: 1
+  },
+  {
+    group: 'G1',
+    s: 2,
+    duration: 2
+  },
+  {
+    group: 'G2',
+    s: 1,
+    duration: 12
+  },
+  {
+    group: 'G2',
+    s: 2,
+    duration: 10
+  }
+]; 
+
+var cf = crossfilter(dt); 
+var dim = cf.dimension(function(d) { return d.s}),
+    filterDim = cf.dimension(function(d) {return d.group}),
+    gGroup = filterDim.group().reduceCount(),
+    group = dim.group()
+    .reduce(
+        function(p, v) {
+          p.min = Math.min(p.min, v.duration);
+          p.max = Math.max(p.max, v.duration);
+          p.total++;
+          p.sum += v.duration;
+          return p;
+        },
+
+      function(p, v) {
+          p.min = Math.max(p.min, v.duration);
+          p.max = Math.min(p.max, v.duration);
+          p.total--;
+          p.sum -= v.duration;
+          return p;
+      },
+      function () {
+        return {
+          min: Infinity,
+          max: -Infinity,
+          total: 0,
+          sum: 0
+        };
+      });
+
+    dc.speedo('#dc-speedo')
+      .width(300)
+      .height(300)
+      .dimension(dim)
+      .group(group)
+      .render();
+
+      dc.pieChart('#speedo-filter')
+        .width(300)
+        .height(300)
+        .dimension(filterDim)
+        .group(gGroup)
+        .render()
+
+    function peek(a) {
+      return a[a.length - 1];
+    }
+  </script>
+</html>

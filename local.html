@@ -17,6 +17,7 @@
 	<link rel="stylesheet" href="css/waitingRoom.css">
 	<!-- Put new widget style here ... -->
 	<link rel="stylesheet" href="css/general.css">	
+	<link rel="stylesheet" href="css/flip.css">	
 	
 
 </head>
@@ -57,14 +58,7 @@
 
 				</form>
  			</li>
-            <li class="dropdown widget-search">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-search"></span> Widgets <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-               <!--  <li><a href="#Process Insight">Process Insight</a></li>
-                <li><a href="#Departament Insight">Departament Insight</a></li>
-                <li><a href="#Waiting Room">Waiting Room</a></li>        -->        
-              </ul>
-            </li>
+          
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -72,7 +66,10 @@
 	
 
 	
-	<div id="dashboard" class="container"></div>	
+	<div id="dashboard" class="container">
+		<ul class="my-tab-menu nav nav-tabs" role="tablist"></ul>
+		<div class="tab-content" />
+	</div>	
 		
 	
 
@@ -85,6 +82,7 @@
 	<script src="js/crossfilter.min.js"></script>
 	<script src="js/d3.min.js"></script>
 	<script src="js/dc.min.js"></script>
+	<script src="js/dc.speedo.js"></script>
 	<script src="js/htmlLegend.js"></script>
 	<script src="js/widgetRegistry.js"></script>
 
@@ -96,6 +94,7 @@
 	<!-- Put new widget here ... -->
 	
 	<script type="text/javascript">
+
 		$(document).on('change', 'input:radio[id^="size-"]', function (event) {
 		    $('#dashboard')
 		    	.toggleClass('container-fluid')
@@ -104,6 +103,7 @@
 		    window.dispatchEvent(new Event('resize'));
 		});
 
+		widgetRegister.url = "data/target-jsonp-min-settings.json";
 		widgetRegister.drawAll();
 
 	</script>

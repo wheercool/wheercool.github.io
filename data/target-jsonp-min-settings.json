@@ -62,7 +62,7 @@ callback({
     
    
 	{
-		"name": "Departament Insight",
+		"name": "Department Insight",
 		"settings": {
 			"title": "Department Insight",
       "month": "April", //[mandatory]The month of the dataset
