@@ -6,49 +6,58 @@
 	   	var legendItemHeight = 13,
 	   		legendGap = 5;
 
-		var departament = crossfilter(data),
-		    all = departament.groupAll(),
-		    departamentPerType = departament.dimension(prop('ExaminationTypeName')),
-		    departamentPerTypeGroup = departamentPerType.group(),
-		    departamentPerEmployee = departament.dimension(prop('Radiologist')),
-		    departamentPerEmployeeGroup = departamentPerEmployee.group()
-		    averageEmployee = departament.dimension(prop('Radiologist')),
-		    averageEmployeeGroup = departamentPerEmployee.groupAll();
+		// var departament = crossfilter(data),
+		//     all = departament.groupAll(),
+		//     departamentPerType = departament.dimension(prop('ExaminationTypeName')),
+		//     departamentPerTypeGroup = departamentPerType.group(),
+		//     departamentPerEmployee = departament.dimension(prop('Radiologist')),
+		//     departamentPerEmployeeGroup = departamentPerEmployee.group()
+		//     averageEmployee = departament.dimension(prop('Radiologist')),
+		//     averageEmployeeGroup = departamentPerEmployee.groupAll();
 		    
 		
-		var totalTypes = departamentPerTypeGroup.all().length,
-			totalEmployees = departamentPerEmployeeGroup.all().length;
+		// var totalTypes = departamentPerTypeGroup.all().length,
+		// 	totalEmployees = departamentPerEmployeeGroup.all().length;
 
 
 		var tpl = uncomment(function() {/*
 				<div class="row text-center">
 								
 						
-						<div class="col-xs-41">	
-							<div class="huge departament-total">-</div>
-							<h4><small>Total</small></h4>
-						</div>
-
-						<div class="col-xs-41">
-							<img class="hospital-icon" src="imgs/hospital.svg" width="50%"/>
-							<h3><small class="filter-value">--</small></h3>
-						</div>
 						
-						<div class="col-xs-41">	
-							<div class="huge departament-avg">-</div>
-							<h4><small>Average per FTE</small></h4>
-						</div>
 					
 				
 				</div>
 
 				
-				<div class="row" id="year-chart">
+				<div class="row text-center" >
+						<div class="departament-date col-md-12" />
 					 <div class="filter-value"></div>
-    <button class="btn rollup-btn"><span class='glyphicon glyphicon-arrow-left'></span>Roll up</button>
+    <button class="btn rollup-btn" style="display:none"><span class='glyphicon glyphicon-arrow-left'></span>Roll up</button>
 				</div>
 				<div class="row last-row">
-					<div class="col-md-6 col-lg-3">						
+
+						<div class="col-lg-3 col-md-4">
+						  
+		
+								<div class="col-md-12 text-center">
+									<img class="hospital-icon" src="imgs/hospital.svg" width="50%"/>
+									<h3><small class="filter-value">--</small></h3>
+								</div>
+								
+								<div class="col-md-6">	
+									<div class="departament-total">-</div>
+									<h4><small>Total</small></h4>
+								</div>
+
+								<div class="col-md-6 ">	
+									<div class=" departament-avg">-</div>
+									<h4><small>Average per FTE</small></h4>
+								</div>
+						</div>
+					
+
+					<div class="col-md-4 col-lg-3">						
 						<div class="departament-per-type departament-pie text-center">
 
 							<h5 class="text-center ">Per type</h5>
@@ -63,7 +72,7 @@
 						<span class="department-per-type-legend" />
 					</div>
 						
-					<div class="col-md-6 col-lg-3">
+					<div class="col-md-4 col-lg-3">
 						<div class="departament-per-employee departament-pie text-center">
 							<h5 class="text-center">Per employee</h5>
 							<span class="h5">
@@ -84,42 +93,23 @@
 				.attr('src', config.iconPath);
 		}
 
-		
-
-
-		// d3.select(el).select('.departament-total').text(config.total)
-		// d3.select(el).select('.departament-avg').text(config.avg)
 		var onFiltered = seq(makeRadioButton(), addDefaultFilterValue);
 
 		var perTypeLegendSvg = d3.select('.department-per-type-legend').append('svg');
 		var perEmployeeLegendSvg = d3.select('.department-per-employee-legend').append('svg');
 
+		//Settings
 		var perTypeSlices = config.perType? (config.perType.maxSlices || 20): 20;
 		var perEmployeeSlices = config.perEmployee? (config.perEmployee.maxSlices || 20): 20;
 		var perTypeColorPalette = config.perType? (config.perType.colorPalette || d3.scale.category20c().range()): d3.scale.category20c().range();
 		var perEmployeeColorPalette = config.perEmployee? (config.perEmployee.colorPalette || d3.scale.category20b().range()): d3.scale.category20b().range();
 		
-	
-		var ws = getCurrentWidth();
-			widthPerType = ws[0],
-			widthPerEmployee = ws[1],
-			legendHeightType = Math.min(totalTypes, perTypeSlices) * (legendItemHeight + legendGap),
-			// heightPerType = widthPerType + legendHeightType,
-			heightPerType = widthPerType,
-			legendHeigthEmployee = Math.min(totalEmployees, perEmployeeSlices) * (legendItemHeight + legendGap),
-			// heightPerEmployee = widthPerEmployee + legendHeigthEmployee;
-			heightPerEmployee = widthPerEmployee;
 
+		//CreateCharts
 
-		perType = dc.pieChart(d3.select(el).select('.departament-per-type.departament-pie').node())
-		    .width(widthPerType)
-		    .height(heightPerType)
-		    // .dimension(departamentPerType)
-		    // .group(departamentPerTypeGroup)
+		perType = dc.pieChart(d3.select(el).select('.departament-per-type.departament-pie').node())		   
 		    .minAngleForLabel(0.5)
-		    .radius(widthPerType / 3)
-		    .slicesCap(perTypeSlices)
-		    .innerRadius(widthPerType / 6)   
+		    .slicesCap(perTypeSlices)			   
 		    .colors(d3.scale.ordinal().range(perTypeColorPalette))
 		    .label(function(d) {
 		        var names = d.key.split(' ');
@@ -127,7 +117,97 @@
 		        return d.value || '';
 		    }) 
 		    .on('filtered', onFiltered)
-		    .legend(
+	   
+
+	   
+
+		perEmployee = dc.pieChart(d3.select(el).select('.departament-per-employee').node())		
+		    .slicesCap(perEmployeeSlices)
+		    .minAngleForLabel(0.5)			    
+		    .colors(d3.scale.ordinal().range(perEmployeeColorPalette))
+		    .label(function(d) {
+		        var names = d.key.split(' ');
+		        // return names[0][0] + '. ' + names[1][0] + '.';
+		        return d.value || '';
+		    })
+ 			.on('filtered', onFiltered)
+		   
+
+		
+
+		d3.select(window).on('resize', redraw);
+
+	    var updateStatistic =  function(rec) {
+	  		var total = rec.crs.groupAll().reduceSum(dc.pluck('Examination')).value();
+	  		totalEmployees = rec.perEmployeeGroup.all().length;
+	  		totalTypes = rec.perTypeGroup.all().length;
+
+	  		d3.select('.departament-avg')
+	  			.html((total / totalEmployees).toFixed(2));
+
+	  		d3.select('.departament-total')
+	  			.html(total);
+
+	  	};
+
+	  	totalTypes = 0,
+	  	totalEmployees = 0;
+		yearChart = makeChart('.departament-date', service, {
+		  rebindData: function(rec) {
+
+		  perType.dimension(rec.perType)
+		    	.group(rec.perTypeGroup)			    	
+		    	.render()
+
+		    perEmployee.dimension(rec.perEmployee)
+		    	.group(rec.perEmployeeGroup)
+		    	.render()
+
+			// yearChart.redraw();
+	  //     	if (perTypeFilter && !perTypeFilter.length) {
+	  //          perTypeFilter = null;
+	  //       }
+	  //     	if (perTypeFilter && !perEmployeeFilter.length) {
+	  //          perEmployeeFilter = null;
+	  //       }
+			// departamentPerType.filter(perTypeFilter)
+		 //    departamentPerEmployee.filter(perEmployeeFilter)
+
+		   
+		  },
+		  drillDown: updateStatistic,
+		  rollUp: updateStatistic
+		});
+
+		updateChartsSizes();
+		render();
+
+	    return {
+    		render: render
+	    };
+
+	    function updateChartsSizes() {
+	    	var ws = getCurrentWidth();
+			widthPerType = ws[0],
+			widthPerEmployee = ws[1],
+			widthDate = ws[2],
+			legendHeightType = Math.min(totalTypes, perTypeSlices) * (legendItemHeight + legendGap),
+			// heightPerType = widthPerType + legendHeightType,
+			heightPerType = widthPerType,
+			legendHeigthEmployee = Math.min(totalEmployees, perEmployeeSlices) * (legendItemHeight + legendGap),
+			// heightPerEmployee = widthPerEmployee + legendHeigthEmployee;
+			heightPerEmployee = widthPerEmployee;
+
+	   		perTypeLegendSvg.attr('height', legendHeightType);
+		    perEmployeeLegendSvg.attr('height', legendHeigthEmployee);
+
+
+			perType
+				.width(widthPerType)
+		    	.height(heightPerType)
+		    	.radius(widthPerType / 3)
+			    .innerRadius(widthPerType / 6)  
+		    	 .legend(
 		    	dc.htmlLegend()
 		    	.container( perTypeLegendSvg )
 		    	.x(0.3 * widthPerType)
@@ -136,132 +216,40 @@
 		    	.gap(legendGap)
 		    	)
 		
+		     	
 
-		   
-		   perTypeLegendSvg.attr('height', legendHeightType);
-
-			perEmployee = dc.pieChart(d3.select(el).select('.departament-per-employee').node())
-
-		    .width(widthPerEmployee)
+		   	perEmployee
+	        .width(widthPerEmployee)
 		    .height(heightPerEmployee)
 		    .radius(widthPerEmployee / 3)
-		    .slicesCap(perEmployeeSlices)
-		    .minAngleForLabel(0.5)
-		    .innerRadius(widthPerEmployee / 6)  
-		    .colors(d3.scale.ordinal().range(perEmployeeColorPalette))
-		    //.renderLabel(false)
-		    .label(function(d) {
-		        var names = d.key.split(' ');
-		        // return names[0][0] + '. ' + names[1][0] + '.';
-		        return d.value || '';
-		    })
-		    // .dimension(departamentPerEmployee)
-		    // .group(departamentPerEmployeeGroup)
- 			.on('filtered', onFiltered)
+		    .innerRadius(widthPerEmployee / 6) 
 		    .legend(dc.htmlLegend()
-		    	.container(perEmployeeLegendSvg)
-		    	.x(0.3 * widthPerEmployee)
-		    	.y(0).itemHeight(legendItemHeight).gap(legendGap))
+			    	.container(perEmployeeLegendSvg)
+			    	.x(0.3 * widthPerEmployee)
+			    	.y(0).itemHeight(legendItemHeight).gap(legendGap))
 
-		
-		   perEmployeeLegendSvg.attr('height', legendHeigthEmployee);
 
-			d3.select(window).on('resize', function() {
-			    var ws = getCurrentWidth();
-					widthPerType = ws[0],
-					widthPerEmployee = ws[1],
-					legendHeightType = totalTypes * (legendItemHeight + legendGap),
-					// heightPerType = widthPerType + legendHeightType,
-					heightPerType = widthPerType,
-					legendHeigthEmployee = totalEmployees * (legendItemHeight + legendGap),
-					// heightPerEmployee = widthPerEmployee + legendHeigthEmployee;
-					heightPerEmployee = widthPerEmployee;
+		   	yearChart.
+		   		width(widthDate);
 
-			    perType
-			        .width(widthPerType)
-			        .height(heightPerType)
-			        .radius(widthPerType / 3)
-			        .innerRadius(widthPerType / 6)   
-			        // .legend(
-			        // 	dc.legend()
-			        // 	.x(0.3 * widthPerType).y(widthPerType).itemHeight(legendItemHeight).gap(legendGap))
-
-			    perEmployee
-			        .width(widthPerEmployee)
-			        .height(heightPerEmployee)
-			        .radius(widthPerEmployee / 3)
-			        .innerRadius(widthPerEmployee / 6)   
-			        // .legend(dc.legend().x(0.3 * widthPerEmployee).y(widthPerEmployee).itemHeight(legendItemHeight).gap(legendGap))
-
-			    render();
-
-			    
-			});
-
-	    var perTypeFilter, perEmployeeFilter;
-
-	    var updateStatistic =  function(rec) {
-			  		var total = rec.crs.groupAll().reduceSum(dc.pluck('Examination')).value();
-			  		var employeeCount = rec.perEmployeeGroup.all().length;
-			  		d3.select('.departament-avg')
-			  			.html((total / employeeCount).toFixed(2));
-
-			  		d3.select('.departament-total')
-			  			.html(total);
-
-			  };
-		yearChart = makeChart('#year-chart', service, {
-			  rebindData: function(rec) {
-
-			  perType.dimension(rec.perType)
-			    	.group(rec.perTypeGroup)			    	
-			    	.render()
-
-			    perEmployee.dimension(rec.perEmployee)
-			    	.group(rec.perEmployeeGroup)
-			    	.render()
-
-				// yearChart.redraw();
-		  //     	if (perTypeFilter && !perTypeFilter.length) {
-		  //          perTypeFilter = null;
-		  //       }
-		  //     	if (perTypeFilter && !perEmployeeFilter.length) {
-		  //          perEmployeeFilter = null;
-		  //       }
-				// departamentPerType.filter(perTypeFilter)
-			 //    departamentPerEmployee.filter(perEmployeeFilter)
-
-			   
-			  },
-			  drillDown: updateStatistic,
-			  rollUp: updateStatistic
-			});
-
-		
-		render();
-
-	    return {
-    		render: render
-	    };
-
+	    }
 
 	    function getCurrentWidth() {
 			return [
 				parseInt(d3.select(el).select('.departament-per-type').style('width'), 10),
-				parseInt(d3.select(el).select('.departament-per-employee').style('width'), 10)
+				parseInt(d3.select(el).select('.departament-per-employee').style('width'), 10),
+				parseInt(d3.select(el).select('.departament-date').style('width'), 10),
 			];
 		}
 
+		//Gets the data from the server and then redraw
 		function render() {
 			yearChart.render();
-    		// perType.render();
+    	}
 
-    		// perEmployee.render();
-
-
-    		// console.log(d3.select(el).select('.departament-per-employee svg').append("g").classed('reset', true))
-
-
+    	function redraw() {
+    		updateChartsSizes();
+    		dc.renderAll();
     	}
 	});
 
@@ -312,6 +300,7 @@
 				yearChart.redraw();
 			})
 	}
+
 	function prop(nm) {
 	    return function(obj) {
 	        return obj[nm];
@@ -327,11 +316,11 @@
 
 	function addDefaultFilterValue(chart) {	
 				
-			chart.root()
-				.select('.default-value')
-				.style('display', function(){ return chart.hasFilter()?'none': 'inline' });
+		chart.root()
+			.select('.default-value')
+			.style('display', function(){ return chart.hasFilter()?'none': 'inline' });
 
-			drawResetButtons(chart.root().node(), this)
+		drawResetButtons(chart.root().node(), this)
 		
 	}
 
@@ -427,9 +416,12 @@
 	// 	};
 		
 
-	data.forEach(function(d) { d.Week = d.Day % 5 + 1; });
+	data.forEach(function(d) { d.Week = Math.floor(d.Day / 8) + 1; });
 
 	function service(filter) {
+		  d3.select('.waiting')
+		  	.style('display', 'block')
+
       log(filter);
 
 	      return delay(1000).then(function() {
@@ -473,23 +465,21 @@
 	        }
 	        dataset.forEach(function(d) { d.value = +d.value;})
 	        return dataset;
+	    }).then(function(d) {
+	    	d3.select('.waiting')
+		  	.style('display', 'none')
+		  	return d;
 	    })
+
 	          	
   	}
-  	window.service = service;
-  	window.groupBy = groupBy;
-  function delay(ms) {
-      var promise = new Promise(function(resolve, reject) {
-        setTimeout(function() {
-          resolve();
-        }, ms)
-      });
-      return promise;
-    };
+  	
+
+
+
     function log(d) {
       console.log(d);
     }
-    window.log = log;
 
 
 
@@ -499,42 +489,39 @@ function makeChart(el, service, callback) {
     var levels = ['year', 'month', 'week', 'day'] //, 'partOfDay']; // ->
     var currentLevel = 0;
     var beautifyAxis = {
-      // month: [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ]
+      month: ['0', "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ],
       // month: ["nothing", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ],
-      // week: ['week 0', 'week 1', 'week 2', 'week 3', 'week 4', 'week 5']
+      week: ['week 0', 'week 1', 'week 2', 'week 3', 'week 4', 'week 5']
     };
 
     var datas = [];
     var chart = dc.barChart(el)
-      .width(800)
+      // .width(800)
       .height(200)
       .margins({
-      	top: 0,
+      	top: 10,
       	left: 100,
       	bottom: 50,
-      	right: 10
+      	right: 20
       })
       // .dimension(rec.dimension)
       // .group(rec.group)
       // .x(d3.time.scale().domain(extent));
       .on("filtered", function(self, d) {
           var f = self.filter();
-          if (self.hasFilter() && currentLevel< levels.length) {
+          if (self.hasFilter() && currentLevel < levels.length - 1) {
               filter[levels[currentLevel]] = f;
               currentLevel++;              
               self.filterAll();
+               service(filter)
+	          .then(drillDown)
+	          .then(redraw.bind(null, self));          	          
               return;
          } 
-         if (currentLevel == levels.length) return;
-         service(filter)
-          .then(drillDown)
-          .then(redraw.bind(null, self));              
-      })
-      // .x(d3.scale.ordinal().domain(d3.range(extent[0], extent[1] + 1)))
+      })      
       .elasticY(true)
       .xUnits(dc.units.ordinal);
-    // redraw(chart);
-    // dc.renderAll();
+
     d3.select('.rollup-btn')
       .on('click', function() {
         rollUp();
@@ -554,9 +541,11 @@ function makeChart(el, service, callback) {
     function drillDown(data) {   
 
     	
-        var mapFunc = !!beautifyAxis[levels[currentLevel]]? function(currentLevel, d) {
-          return beautifyAxis[levels[currentLevel]][d.key];
-        }.bind(null, currentLevel): function(d) {return d.key};
+        // var mapFunc = !!beautifyAxis[levels[currentLevel]]? function(currentLevel, d) {
+        //   return beautifyAxis[levels[currentLevel]][d];
+        // }.bind(null, currentLevel): function(d) {         	
+        // 	 return d;
+        // };
         var crs = crossfilter(data),
             dimension = crs.dimension(function(d) { return d.value}),
             perType = crs.dimension(prop('ExaminationTypeName')),
@@ -572,13 +561,12 @@ function makeChart(el, service, callback) {
 	          crs: crs,
 	          dimension: dimension,
 	          group: group,
-	          keyAccessor: mapFunc,
 	          perTypeGroup: perTypeGroup,
 	          perEmployeeGroup: perEmployeeGroup,
 	          perType: perType,
 	          perEmployee: perEmployee,
 	          // extent: d3.extent(data, function(d) { return d.date}),
-	          range: group.all().map(mapFunc),
+	          range: group.all().map(function(d) {return d.key}),
           // pieDimension: pieDimension,
           // pieGroup: pieGroup
         };
@@ -590,12 +578,13 @@ function makeChart(el, service, callback) {
       
       var data = datas.pop();
       currentLevel--;
-      delete filter[levels[currentLevel]];    
+      delete filter[levels[currentLevel]];   
+      chart.filterAll() 
       callback.rollUp(peek(datas));  
     }
 
  	function peek(a) {
-	      return a[a.length - 1];
+	    return a[a.length - 1];
     }
     function redraw(self, redraw) {
         var rec = peek(datas);
@@ -607,8 +596,15 @@ function makeChart(el, service, callback) {
         // }
         
        // rec.pieDimension.filter(pieChart.filter());
+        var filterBy = levels[currentLevel]; 
+        self.xAxis().tickFormat(function(d) {
 
-        self.keyAccessor(rec.keyAccessor)
+        	return beautifyAxis[filterBy] && beautifyAxis[filterBy][d]? beautifyAxis[filterBy][d]: d;
+        }) //rec.keyAccessor)
+        self.title(function(d) {
+        	return beautifyAxis[filterBy] && beautifyAxis[filterBy][d.key]? beautifyAxis[filterBy][d.key]: d.key;
+        }) //rec.keyAccessor)
+
         self.dimension(rec.dimension)
         self.group(rec.group)
         self.x(d3.scale.ordinal().domain(rec.range))
@@ -673,7 +669,9 @@ function makeChart(el, service, callback) {
 				 service(filter)
 		          .then(drillDown)
 		          .then(redraw.bind(null, chart));
-			}
+			},
+			width: chart.width				
+
 		};
 
 	};
