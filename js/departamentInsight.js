@@ -8,31 +8,29 @@
 
 		// var departament = crossfilter(data),
 		//     all = departament.groupAll(),
-		//     departamentPerType = departament.dimension(prop('ExaminationTypeName')),
-		//     departamentPerTypeGroup = departamentPerType.group(),
+		//     departamentperGroup = departament.dimension(prop('ExaminationTypeName')),
+		//     departamentperGroupGroup = departamentperGroup.group(),
 		//     departamentPerEmployee = departament.dimension(prop('Radiologist')),
 		//     departamentPerEmployeeGroup = departamentPerEmployee.group()
 		//     averageEmployee = departament.dimension(prop('Radiologist')),
 		//     averageEmployeeGroup = departamentPerEmployee.groupAll();
 		    
 		
-		// var totalTypes = departamentPerTypeGroup.all().length,
+		// var totalTypes = departamentperGroupGroup.all().length,
 		// 	totalEmployees = departamentPerEmployeeGroup.all().length;
 
 
 		var tpl = uncomment(function() {/*
-				<div class="row text-center">
-								
-						
-						
+				<div class="row ">
 					
-				
 				</div>
-
 				
 				<div class="row text-center" >
 						<div class="departament-date col-md-12" />
-					 <div class="filter-value"></div>
+						<ol class="breadcrumb date-filter">
+							
+						</ol>
+					
     <button class="btn rollup-btn" style="display:none"><span class='glyphicon glyphicon-arrow-left'></span>Roll up</button>
 				</div>
 				<div class="row last-row">
@@ -58,9 +56,9 @@
 					
 
 					<div class="col-md-4 col-lg-3">						
-						<div class="departament-per-type departament-pie text-center">
+						<div class="departament-per-group departament-pie text-center">
 
-							<h5 class="text-center ">Per type</h5>
+							<h5 class="text-center ">Per group</h5>
 
 							<span class="h5">
 							<small>
@@ -69,7 +67,7 @@
 					        </span>
 				        </div>
 							
-						<span class="department-per-type-legend" />
+						<span class="department-per-group-legend" />
 					</div>
 						
 					<div class="col-md-4 col-lg-3">
@@ -95,27 +93,27 @@
 
 		var onFiltered = seq(makeRadioButton(), addDefaultFilterValue);
 
-		var perTypeLegendSvg = d3.select('.department-per-type-legend').append('svg');
+		var perGroupLegendSvg = d3.select('.department-per-group-legend').append('svg');
 		var perEmployeeLegendSvg = d3.select('.department-per-employee-legend').append('svg');
 
 		//Settings
-		var perTypeSlices = config.perType? (config.perType.maxSlices || 20): 20;
+		var perGroupSlices = config.perGroup? (config.perGroup.maxSlices || 20): 20;
 		var perEmployeeSlices = config.perEmployee? (config.perEmployee.maxSlices || 20): 20;
-		var perTypeColorPalette = config.perType? (config.perType.colorPalette || d3.scale.category20c().range()): d3.scale.category20c().range();
+		var perGroupColorPalette = config.perGroup? (config.perGroup.colorPalette || d3.scale.category20c().range()): d3.scale.category20c().range();
 		var perEmployeeColorPalette = config.perEmployee? (config.perEmployee.colorPalette || d3.scale.category20b().range()): d3.scale.category20b().range();
 		
 
 		//CreateCharts
 
-		perType = dc.pieChart(d3.select(el).select('.departament-per-type.departament-pie').node())		   
+		perGroup = dc.pieChart(d3.select(el).select('.departament-per-group.departament-pie').node())		   
 		    .minAngleForLabel(0.5)
-		    .slicesCap(perTypeSlices)			   
-		    .colors(d3.scale.ordinal().range(perTypeColorPalette))
-		    .label(function(d) {
-		        var names = d.key.split(' ');
-		        // return names[0][0] + '. ' + names[1][0] + '.';
-		        return d.value || '';
-		    }) 
+		    .slicesCap(perGroupSlices)			   
+		    .colors(d3.scale.ordinal().range(perGroupColorPalette))
+		    // .label(function(d) {
+		    //     var names = d.key.split(' ');
+		    //     // return names[0][0] + '. ' + names[1][0] + '.';
+		    //     return d.value || '';
+		    // }) 
 		    .on('filtered', onFiltered)
 	   
 
@@ -125,11 +123,11 @@
 		    .slicesCap(perEmployeeSlices)
 		    .minAngleForLabel(0.5)			    
 		    .colors(d3.scale.ordinal().range(perEmployeeColorPalette))
-		    .label(function(d) {
-		        var names = d.key.split(' ');
-		        // return names[0][0] + '. ' + names[1][0] + '.';
-		        return d.value || '';
-		    })
+		    // .label(function(d) {
+		    //     var names = d.key.split(' ');
+		    //     // return names[0][0] + '. ' + names[1][0] + '.';
+		    //     return d.value || '';
+		    // })
  			.on('filtered', onFiltered)
 		   
 
@@ -140,7 +138,7 @@
 	    var updateStatistic =  function(rec) {
 	  		var total = rec.crs.groupAll().reduceSum(dc.pluck('Examination')).value();
 	  		totalEmployees = rec.perEmployeeGroup.all().length;
-	  		totalTypes = rec.perTypeGroup.all().length;
+	  		totalTypes = rec.perGroupGroup.all().length;
 
 	  		d3.select('.departament-avg')
 	  			.html((total / totalEmployees).toFixed(2));
@@ -155,8 +153,8 @@
 		yearChart = makeChart('.departament-date', service, {
 		  rebindData: function(rec) {
 
-		  perType.dimension(rec.perType)
-		    	.group(rec.perTypeGroup)			    	
+		  perGroup.dimension(rec.perGroup)
+		    	.group(rec.perGroupGroup)			    	
 		    	.render()
 
 		    perEmployee.dimension(rec.perEmployee)
@@ -164,13 +162,13 @@
 		    	.render()
 
 			// yearChart.redraw();
-	  //     	if (perTypeFilter && !perTypeFilter.length) {
-	  //          perTypeFilter = null;
+	  //     	if (perGroupFilter && !perGroupFilter.length) {
+	  //          perGroupFilter = null;
 	  //       }
-	  //     	if (perTypeFilter && !perEmployeeFilter.length) {
+	  //     	if (perGroupFilter && !perEmployeeFilter.length) {
 	  //          perEmployeeFilter = null;
 	  //       }
-			// departamentPerType.filter(perTypeFilter)
+			// departamentperGroup.filter(perGroupFilter)
 		 //    departamentPerEmployee.filter(perEmployeeFilter)
 
 		   
@@ -188,30 +186,30 @@
 
 	    function updateChartsSizes() {
 	    	var ws = getCurrentWidth();
-			widthPerType = ws[0],
+			widthperGroup = ws[0],
 			widthPerEmployee = ws[1],
 			widthDate = ws[2],
-			legendHeightType = Math.min(totalTypes, perTypeSlices) * (legendItemHeight + legendGap),
-			// heightPerType = widthPerType + legendHeightType,
-			heightPerType = widthPerType,
+			legendHeightType = Math.min(totalTypes, perGroupSlices) * (legendItemHeight + legendGap),
+			// heightperGroup = widthperGroup + legendHeightType,
+			heightperGroup = widthperGroup,
 			legendHeigthEmployee = Math.min(totalEmployees, perEmployeeSlices) * (legendItemHeight + legendGap),
 			// heightPerEmployee = widthPerEmployee + legendHeigthEmployee;
 			heightPerEmployee = widthPerEmployee;
 
-	   		perTypeLegendSvg.attr('height', legendHeightType);
+	   		perGroupLegendSvg.attr('height', legendHeightType);
 		    perEmployeeLegendSvg.attr('height', legendHeigthEmployee);
 
 
-			perType
-				.width(widthPerType)
-		    	.height(heightPerType)
-		    	.radius(widthPerType / 3)
-			    .innerRadius(widthPerType / 6)  
+			perGroup
+				.width(widthperGroup)
+		    	.height(heightperGroup)
+		    	.radius(widthperGroup / 3)
+			    .innerRadius(widthperGroup / 6)  
 		    	 .legend(
 		    	dc.htmlLegend()
-		    	.container( perTypeLegendSvg )
-		    	.x(0.3 * widthPerType)
-		    	// .y(widthPerType)
+		    	.container( perGroupLegendSvg )
+		    	.x(0.3 * widthperGroup)
+		    	// .y(widthperGroup)
 		    	.itemHeight(legendItemHeight)
 		    	.gap(legendGap)
 		    	)
@@ -236,7 +234,7 @@
 
 	    function getCurrentWidth() {
 			return [
-				parseInt(d3.select(el).select('.departament-per-type').style('width'), 10),
+				parseInt(d3.select(el).select('.departament-per-group').style('width'), 10),
 				parseInt(d3.select(el).select('.departament-per-employee').style('width'), 10),
 				parseInt(d3.select(el).select('.departament-date').style('width'), 10),
 			];
@@ -272,19 +270,19 @@
 			.text('reset')
 			.on('click', function() {
 				perEmployee.filterAll();
-				perType.render();
+				perGroup.render();
 				perEmployee.render();
 				drawResetButtons(el);
 				yearChart.redraw();
 			})
 
-			d3.select(el).select('.departament-per-type svg')
+			d3.select(el).select('.departament-per-group svg')
 
 			.append('text')
 			.classed('reset', true)
-			.style('display', function() { return perType.hasFilter() ? 'block': 'none';  })
-			.attr('x', widthPerType / 2)
-			.attr('y', heightPerType / 2)
+			.style('display', function() { return perGroup.hasFilter() ? 'block': 'none';  })
+			.attr('x', widthperGroup / 2)
+			.attr('y', heightperGroup / 2)
 			.attr('text-anchor', 'middle')
 			.attr('alignment-baseline', 'middle')
 			.attr('font-size', 16)
@@ -293,8 +291,8 @@
 			.attr('cursor', 'pointer')
 			.text('reset')
 			.on('click', function() {
-				perType.filterAll();
-				perType.render();
+				perGroup.filterAll();
+				perGroup.render();
 				perEmployee.render();
 				drawResetButtons(el);
 				yearChart.redraw();
@@ -522,13 +520,6 @@ function makeChart(el, service, callback) {
       .elasticY(true)
       .xUnits(dc.units.ordinal);
 
-    d3.select('.rollup-btn')
-      .on('click', function() {
-        rollUp();
-        redraw(chart);
-      })
-
-
     // var pieChart = dc.pieChart('.pie-chart')
     //   .width(300)
     //   .height(300)
@@ -548,11 +539,11 @@ function makeChart(el, service, callback) {
         // };
         var crs = crossfilter(data),
             dimension = crs.dimension(function(d) { return d.value}),
-            perType = crs.dimension(prop('ExaminationTypeName')),
+            perGroup = crs.dimension(prop('ExaminationTypeName')),
             perEmployee = crs.dimension(prop('Radiologist')),
 			perEmployeeGroup = perEmployee.group().reduceSum(dc.pluck('Examination')),
 
-            perTypeGroup = perType.group().reduceSum(dc.pluck('Examination')),
+            perGroupGroup = perGroup.group().reduceSum(dc.pluck('Examination')),
             // pieDimension = crs.dimension(function(d) { return d.employee}),
             group = dimension.group().reduceSum(function(d) { return d.Examination});
             // pieGroup = pieDimension.group().reduceSum(function(d) {return d.examination});
@@ -561,9 +552,9 @@ function makeChart(el, service, callback) {
 	          crs: crs,
 	          dimension: dimension,
 	          group: group,
-	          perTypeGroup: perTypeGroup,
+	          perGroupGroup: perGroupGroup,
 	          perEmployeeGroup: perEmployeeGroup,
-	          perType: perType,
+	          perGroup: perGroup,
 	          perEmployee: perEmployee,
 	          // extent: d3.extent(data, function(d) { return d.date}),
 	          range: group.all().map(function(d) {return d.key}),
@@ -574,11 +565,16 @@ function makeChart(el, service, callback) {
         callback.drillDown(rec);    
     }
 
-    function rollUp() {
-      
-      var data = datas.pop();
-      currentLevel--;
-      delete filter[levels[currentLevel]];   
+    function rollUp(n) {
+      var i, data;
+      if (!n) n = 1;
+      for ( i = 0; i < n; i++) {
+      	data = datas.pop();
+      	currentLevel--;
+      	delete filter[levels[currentLevel]];   
+
+      }
+     
       chart.filterAll() 
       callback.rollUp(peek(datas));  
     }
@@ -586,7 +582,7 @@ function makeChart(el, service, callback) {
  	function peek(a) {
 	    return a[a.length - 1];
     }
-    function redraw(self, redraw) {
+    function redraw(self, needRedraw) {
         var rec = peek(datas);
         // var pieFilters = pieChart.filters();
        
@@ -615,7 +611,7 @@ function makeChart(el, service, callback) {
         // self.expireCache()
         // self.rescale();
 
-        if (redraw) {
+        if (needRedraw) {
         	self.redraw();
         } else {
         	self.render();	
@@ -624,33 +620,90 @@ function makeChart(el, service, callback) {
 
         // self.stack();
 
-        var value;
-        if (filter.day) {
-          value = `year=${filter.year}, month=${filter.month}, day=${filter.day}`;        
-        } else
-        if (filter.week) {
-          value = `year=${filter.year},month=${filter.month}, week=${filter.week}`;
-        } else 
-        if (filter.month) {
-          value = `year=${filter.year},month=${filter.month}`;
-        } else
-        if (filter.year) {
-          value = `year=${filter.year}`
-        }
-        else {
-          value = 'All';
-        }
+        var value, filterValue = ['All'], lastFilterValue = 'All';
+        levels.forEach(function(d) {
+        	 if (filter[d]) {
+        	 	
+        		lastFilterValue = beautifyAxis[d]? beautifyAxis[d][filter[d]]: filter[d];
+        		filterValue.push(lastFilterValue);
+        	}
+        });
+
+        d3.select('.date-filter')
+        	.html('')
+
+        var filterValueItem = d3.select('.date-filter')
+        	.selectAll('li')
+        	.data(filterValue)
+
+        	filterValueItem.enter()
+        	.append('li')
+        	.classed('active', false)
+        	.each(function(d, i) {
+        		if (d == lastFilterValue) {
+        			d3.select(this)
+        				.classed('active', true)
+        				.text(function(d) {
+			        		return d;
+			        	})
+        		} else {
+        			d3.select(this)
+        				.append('a')
+			        	.attr('href', '#')
+			        	.text(function(d) {
+			        		return d;
+			        	})
+        		}
+        	})
+        	.on('click', function(d, i) {
+        		if (d != lastFilterValue) {
+    				rollUp(currentLevel - i);
+        			redraw(self, false);
+        			
+        			// debugger;
+        			// redraw(self, true);
+        		}
+        		console.log(arguments);
+        	})
+
+        	d3.select('.date-filter')
+        		// .append('li')
+        		.append('a')
+        		.attr('class', 'pull-left')
+        		.classed('hide', currentLevel == 0)
+        		.attr('href', '#')
+        		.on('click', function() {
+        			rollUp();
+        			redraw(chart);
+        		})
+        		.append('span')
+        		.attr('class', 'glyphicon glyphicon-arrow-left')
+        		
+
+        	// filterValueItem.exit().remove()
+
+        // if (filter.day) {
+        //   value = `year=${filter.year}, month=${filter.month}, day=${filter.day}`;        
+        // } else
+        // if (filter.week) {
+        //   value = `year=${filter.year},month=${filter.month}, week=${filter.week}`;
+        // } else 
+        // if (filter.month) {
+        //   value = `year=${filter.year},month=${filter.month}`;
+        // } else
+        // if (filter.year) {
+        //   value = `year=${filter.year}`
+        // }
+        // else {
+        //   value = 'All';
+        // }
 
 
         
-        d3.select('.filter-value')
-          .html(value)
-        console.log(currentLevel);
-        d3.select('.rollup-btn')
-          .style('display', function() {
-            return currentLevel == 0? 'none': 'block';
-          })  
-
+        // d3.select('.filter-value')
+        //   .html(value)
+        // console.log(currentLevel);
+      
 
         callback.rebindData(rec);  
         // self.stack();
