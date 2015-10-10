@@ -127,7 +127,7 @@
 				.attr('src', config.iconPath);
 		}
 
-		var onFiltered = seq(makeRadioButton(), addDefaultFilterValue);
+		var onFiltered = seq(drawResetButtons, makeRadioButton(), addDefaultFilterValue);
 
 		var perGroupLegendSvg = d3.select('.department-per-group-legend').append('svg');
 		var perEmployeeLegendSvg = d3.select('.department-per-employee-legend').append('svg');
@@ -205,7 +205,7 @@
 		    	.filter(departamentDropdown.filter())
 		    	
 		
-		   	dc.renderAll();
+		   	redraw();
 		  },
 		  drillDown: updateStatistic,
 		  rollUp: updateStatistic
@@ -287,56 +287,59 @@
     	function redraw() {
     		updateChartsSizes();
     		dc.renderAll();
+    		drawResetButtons(el);
     	}
+
+    	function drawResetButtons() {
+		
+			d3.select(el).select('.departament-per-employee svg .reset')
+				.remove();
+
+			d3.select(el).select('.departament-per-employee svg')
+		
+				.append('text')
+				.classed('reset', true)
+				.style('display', function() { return perEmployee.hasFilter() ? 'block': 'none';  })
+				.attr('x', widthPerEmployee / 2)
+				.attr('y', heightPerEmployee / 2)
+				.attr('text-anchor', 'middle')
+				.attr('alignment-baseline', 'middle')
+				.attr('font-size', 16)
+				.attr('font-weight', 'bold')
+				.attr('fill', '#066784')
+				.attr('cursor', 'pointer')
+				.text('reset')
+				.on('click', function() {
+					perEmployee.filterAll();
+					redraw();
+				})
+
+				d3.select(el).select('.departament-per-group svg .reset')
+					.remove();
+
+			d3.select(el).select('.departament-per-group svg')	
+				.append('text')
+				.classed('reset', true)
+				.style('display', function() { return perGroup.hasFilter() ? 'block': 'none';  })
+				.attr('x', widthperGroup / 2)
+				.attr('y', heightperGroup / 2)
+				.attr('text-anchor', 'middle')
+				.attr('alignment-baseline', 'middle')
+				.attr('font-size', 16)
+				.attr('font-weight', 'bold')
+				.attr('fill', '#066784')
+				.attr('cursor', 'pointer')
+				.text('reset')
+				.on('click', function() {
+					perGroup.filterAll();
+					redraw();
+				})
+		}
 	});
 
 
 
-	function drawResetButtons(el, self) {
-		
-		d3.select(el).select('.departament-per-employee svg')
-			.append('text')
-			.classed('reset', true)
-			.style('display', function() { return perEmployee.hasFilter() ? 'block': 'none';  })
-			.attr('x', widthPerEmployee / 2)
-			.attr('y', heightPerEmployee / 2)
-			.attr('text-anchor', 'middle')
-			.attr('alignment-baseline', 'middle')
-			.attr('font-size', 16)
-			.attr('font-weight', 'bold')
-			.attr('fill', '#066784')
-			.attr('cursor', 'pointer')
-			.text('reset')
-			.on('click', function() {
-				perEmployee.filterAll();
-				perGroup.render();
-				perEmployee.render();
-				drawResetButtons(el);
-				yearChart.redraw();
-			})
-
-			d3.select(el).select('.departament-per-group svg')
-
-			.append('text')
-			.classed('reset', true)
-			.style('display', function() { return perGroup.hasFilter() ? 'block': 'none';  })
-			.attr('x', widthperGroup / 2)
-			.attr('y', heightperGroup / 2)
-			.attr('text-anchor', 'middle')
-			.attr('alignment-baseline', 'middle')
-			.attr('font-size', 16)
-			.attr('font-weight', 'bold')
-			.attr('fill', '#066784')
-			.attr('cursor', 'pointer')
-			.text('reset')
-			.on('click', function() {
-				perGroup.filterAll();
-				perGroup.render();
-				perEmployee.render();
-				drawResetButtons(el);
-				yearChart.redraw();
-			})
-	}
+	
 
 	function prop(nm) {
 	    return function(obj) {
@@ -352,19 +355,20 @@
 	};
 
 	function addDefaultFilterValue(chart) {	
-				
+		console.log('filtered');				
 		chart.root()
 			.select('.default-value')
 			.style('display', function(){ return chart.hasFilter()?'none': 'inline' });
 
-		drawResetButtons(chart.root().node(), this)
+		// drawResetButtons(chart.root().node(), this)
 		
 	}
 
-	function seq(f1, f2) {
+	function seq(f1, f2, f3) {
 		return function(d, i) {
 			f1(d, i);
-			return f2(d, i);
+			f2(d, i)
+			return f3(d, i);
 		};
 	}
 	function makeRadioButton() {
@@ -653,11 +657,11 @@ function makeChart(el, service, callback) {
         // self.expireCache()
         // self.rescale();
 
-        if (needRedraw) {
-        	self.redraw();
-        } else {
-        	self.render();	
-        }
+        // if (needRedraw) {
+        // 	self.redraw();
+        // } else {
+        // 	self.render();	
+        // }
         
 
         // self.stack();
