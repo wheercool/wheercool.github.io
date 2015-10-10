@@ -65,6 +65,7 @@ callback({
 		"name": "Department Insight",
 		"settings": {
 			"title": "Department Insight",
+      "context": "Examinations in Departments",
       "month": "April", //[mandatory]The month of the dataset
       "year": 2015, // [mandatory]The year of the data
       "total": 200, // [mandatory] Total count

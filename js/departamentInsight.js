@@ -25,60 +25,96 @@
 					
 				</div>
 				
-				<div class="row text-center" >
-						<div class="departament-date col-md-12" />
-						<ol class="breadcrumb date-filter">
+				<div class="row" >
+
+						<div class="col-md-6">
+							<div class="row">
+								<div class="text-center col-md-4">
+									<img class="hospital-icon" src="imgs/hospital.svg" width="90%"/>
+								</div>
+								<div class="col-md-8">
+									<table class="table">
+										<thead>
+											<tr>
+												<th>Department</th>
+												<th>Total</th>
+												<th>Average</th>
+											</tr>
+										<thead>
+										<tbody>
+											<tr>
+												<td>
+												<div class="select-style">
+													<select>
+														<option>Department 1</option>
+														<option>Department 2</option>
+														<option>Department 3</option>
+													</select>
+													</div>
+												</td>
+												<td class="departament-total"></td>
+												<td class="departament-avg"></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+	
+							</div>
 							
-						</ol>
-					
-    <button class="btn rollup-btn" style="display:none"><span class='glyphicon glyphicon-arrow-left'></span>Roll up</button>
-				</div>
-				<div class="row last-row">
-
-						<div class="col-lg-3 col-md-4">
-						  
-		
-								<div class="col-md-12 text-center">
-									<img class="hospital-icon" src="imgs/hospital.svg" width="50%"/>
-									<h3><small class="filter-value">--</small></h3>
-								</div>
-								
-								<div class="col-md-6">	
-									<div class="departament-total">-</div>
-									<h4><small>Total</small></h4>
-								</div>
-
-								<div class="col-md-6 ">	
-									<div class=" departament-avg">-</div>
-									<h4><small>Average per FTE</small></h4>
-								</div>
 						</div>
-					
 
-					<div class="col-md-4 col-lg-3">						
-						<div class="departament-per-group departament-pie text-center">
+						<div class="col-md-6"/>
+							<ol class="breadcrumb date-filter text-center">
+							</ol>
+							<div class="departament-date"></div>
+						</div>
 
-							<h5 class="text-center ">Per group</h5>
-
-							<span class="h5">
-							<small>
-					          Current filter: <span class='default-value'>none</span><span class='filter'></span>	
-					          </small>			          
-					        </span>
-				        </div>
-							
-						<span class="department-per-group-legend" />
-					</div>
 						
-					<div class="col-md-4 col-lg-3">
-						<div class="departament-per-employee departament-pie text-center">
-							<h5 class="text-center">Per employee</h5>
-							<span class="h5">
-							<small>Current filter: <span class="default-value">none</span> <span class='filter'></span></small>			          
-					        </span>
+				</div>
+				<!-- end of the first row -->
+
+				<div class="row">
+					<!-- First Pie section -->
+
+					<div class="col-md-6">	
+						<div class="row">
+							<h5 class="text-center">Examinations Per Group</h5>
 						</div>
 
-						<span class="department-per-employee-legend" />
+						<div class="row">					
+							<div class="col-md-6 ">
+								<div class="row departament-per-group departament-pie text-center">
+									<span class="h5">
+									<small>
+							          Current filter: <span class='default-value'>none</span><span class='filter'></span>	
+							          </small>			          
+							        </span>
+						        </div>
+					        </div>
+								
+							<div class="col-md-6 department-per-group-legend"></div>
+						</div>
+					</div>
+					<!-- end of the first pie section -->
+
+					<div class="col-md-6">
+						<div class="row">
+							<h5 class="text-center">Examinations Per Employee</h5>
+						</div>
+
+						<div class="row">
+							<div class="col-md-6">
+								<div class="row departament-per-employee departament-pie text-center">
+									<span class="h5">
+									<small>Current filter: <span class="default-value">none</span> <span class='filter'></span></small>			          
+							        </span>
+							    </div>
+							</div>
+
+							<div class="col-md-6 department-per-employee-legend"></div>
+						</div>
+
+						
 					</div>
 				</div>*/});
 		// document.write('TPL');
@@ -141,10 +177,10 @@
 	  		totalTypes = rec.perGroupGroup.all().length;
 
 	  		d3.select('.departament-avg')
-	  			.html((total / totalEmployees).toFixed(2));
+	  			.html((+(total / totalEmployees).toFixed(2)).toLocaleString());
 
 	  		d3.select('.departament-total')
-	  			.html(total);
+	  			.html(total.toLocaleString());
 
 	  	};
 
@@ -152,6 +188,7 @@
 	  	totalEmployees = 0;
 		yearChart = makeChart('.departament-date', service, {
 		  rebindData: function(rec) {
+		  	updateChartsSizes();
 
 		  perGroup.dimension(rec.perGroup)
 		    	.group(rec.perGroupGroup)			    	
@@ -203,8 +240,8 @@
 			perGroup
 				.width(widthperGroup)
 		    	.height(heightperGroup)
-		    	.radius(widthperGroup / 3)
-			    .innerRadius(widthperGroup / 6)  
+		    	.radius(widthperGroup/2.5)
+			    .innerRadius(widthperGroup / 5)  
 		    	 .legend(
 		    	dc.htmlLegend()
 		    	.container( perGroupLegendSvg )
@@ -219,8 +256,8 @@
 		   	perEmployee
 	        .width(widthPerEmployee)
 		    .height(heightPerEmployee)
-		    .radius(widthPerEmployee / 3)
-		    .innerRadius(widthPerEmployee / 6) 
+		    .radius(widthPerEmployee / 2.5)
+		    .innerRadius(widthPerEmployee / 5) 
 		    .legend(dc.htmlLegend()
 			    	.container(perEmployeeLegendSvg)
 			    	.x(0.3 * widthPerEmployee)
@@ -234,12 +271,17 @@
 
 	    function getCurrentWidth() {
 			return [
-				parseInt(d3.select(el).select('.departament-per-group').style('width'), 10),
-				parseInt(d3.select(el).select('.departament-per-employee').style('width'), 10),
-				parseInt(d3.select(el).select('.departament-date').style('width'), 10),
+				getWidth(d3.select(el).select('.departament-per-group')),
+				getWidth(d3.select(el).select('.departament-per-employee')),
+				getWidth(d3.select(el).select('.departament-date'))
 			];
 		}
-
+		function getWidth(el) {
+			return parseInt(el.style('width'), 10);
+		}
+		function getWidthWithoutPadding(el) {
+			return parseInt(el.style('width'), 10) - parseInt(el.style('padding-left'), 10) - parseInt(el.style('padding-right'), 10)
+		}
 		//Gets the data from the server and then redraw
 		function render() {
 			yearChart.render();
@@ -366,7 +408,7 @@
 							'Year': year,
 							'Month': month,
 							'Day': day,
-							'Examination': Math.floor(Math.random() * employees[employee].length)
+							'Examination': Math.floor(Math.random() * employees[employee].length * 10)
 						});
 					}
 				}
@@ -498,7 +540,7 @@ function makeChart(el, service, callback) {
       .height(200)
       .margins({
       	top: 10,
-      	left: 100,
+      	left: 50,
       	bottom: 50,
       	right: 20
       })

@@ -1,10 +1,10 @@
-.departament-pie svg{
+/*.departament-pie svg{
 	margin-top: -40px;
-}
+}*/
 
-.departament-pie svg>g{
+/*.departament-pie svg>g{
 	transform: translate(100, 100);
-}
+}*/
 
 .col-xs-41 {
 	display: inline-block;
@@ -17,3 +17,9 @@
 	font-size: 52px;
 }
 		
+
+.department-per-group-legend, .department-per-employee-legend {
+padding-top: 25px;
+    padding-left: 20px;
+}
+}
