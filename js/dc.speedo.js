@@ -40,7 +40,6 @@ dc.speedo = function (parent, chartGroup) {
 						min = data.min,
 						max = data.max,
 						value = data.sum;
-						debugger;
 			indicator.transition()
 				.duration(3000)
 				.attrTween('transform', function tween(d, i, a) {

@@ -167,7 +167,7 @@
  			.on('filtered', onFiltered)
 		   
 
-		
+		departamentDropdown = dc.dropdown('.select-style');
 
 		d3.select(window).on('resize', redraw);
 
@@ -190,25 +190,22 @@
 		  rebindData: function(rec) {
 		  	updateChartsSizes();
 
-		  perGroup.dimension(rec.perGroup)
+		  	perGroup.dimension(rec.perGroup)
 		    	.group(rec.perGroupGroup)			    	
-		    	.render()
+		    	.filter(perGroup.filter())
+		    	// .redraw()
 
 		    perEmployee.dimension(rec.perEmployee)
 		    	.group(rec.perEmployeeGroup)
-		    	.render()
+		    	.filter(perEmployee.filter())
 
-			// yearChart.redraw();
-	  //     	if (perGroupFilter && !perGroupFilter.length) {
-	  //          perGroupFilter = null;
-	  //       }
-	  //     	if (perGroupFilter && !perEmployeeFilter.length) {
-	  //          perEmployeeFilter = null;
-	  //       }
-			// departamentperGroup.filter(perGroupFilter)
-		 //    departamentPerEmployee.filter(perEmployeeFilter)
-
-		   
+		    departamentDropdown
+		    	.dimension(rec.departament)
+		    	.group(rec.departamentGroup)
+		    	.filter(departamentDropdown.filter())
+		    	
+		
+		   	dc.renderAll();
 		  },
 		  drillDown: updateStatistic,
 		  rollUp: updateStatistic
@@ -397,31 +394,33 @@
 		employees = ['John', 'Bill', 'Max', 'Alex', 'David', 'Sasha'],
 		yearCount = 10;
 
-	for (var type = 0; type < types.length; type++) {
-		for (var employee = 0; employee < employees.length; employee++) {
-			for (var year = 2008; year < 2008 + yearCount; year++) {
-				for (var month = 1; month <= 12; month++) {
-					for (var day = 1; day <= 31; day++) {
-						data.push({
-							'ExaminationTypeName': types[type],
-							'Radiologist': employees[employee],
-							'Year': year,
-							'Month': month,
-							'Day': day,
-							'Examination': Math.floor(Math.random() * employees[employee].length * 10)
-						});
+	for (var department = 0; department < 3; department++) {
+		for (var type = 0; type < types.length; type++) {
+			for (var employee = 0; employee < employees.length; employee++) {
+				for (var year = 2008; year < 2008 + yearCount; year++) {
+					for (var month = 1; month <= 12; month++) {
+						for (var day = 1; day <= 31; day++) {
+							data.push({
+								'Department': 'Department ' + department,
+								'ExaminationTypeName': types[type],
+								'Radiologist': employees[employee],
+								'Year': year,
+								'Month': month,
+								'Day': day,
+								'Examination': Math.floor(Math.random() * employees[employee].length * 10) * department
+							});
+						}
 					}
 				}
 			}
 		}
 	}
-
 	var reducer = function(by) {
 		var init = {			
 		};
 
 		return [function(acc, next) {
-			var key = next.ExaminationTypeName + '-' + next.Radiologist + '-' +  next[by];
+			var key = next.ExaminationTypeName + '-' + next.Radiologist + '-' +  next[by] + '-' + next.Department;
 			if (!acc[key]) acc[key] = 0;
 			acc[key] += next.Examination;
 			return acc;
@@ -437,7 +436,8 @@
 				ExaminationTypeName: values[0],
 				Radiologist: values[1],
 				Examination: groups[key],
-				value: values[2]
+				value: values[2],
+				Department: values[3]
 			});
 
 		}
@@ -570,15 +570,8 @@ function makeChart(el, service, callback) {
 
 
    
-
+	
     function drillDown(data) {   
-
-    	
-        // var mapFunc = !!beautifyAxis[levels[currentLevel]]? function(currentLevel, d) {
-        //   return beautifyAxis[levels[currentLevel]][d];
-        // }.bind(null, currentLevel): function(d) {         	
-        // 	 return d;
-        // };
         var crs = crossfilter(data),
             dimension = crs.dimension(function(d) { return d.value}),
             perGroup = crs.dimension(prop('ExaminationTypeName')),
@@ -587,7 +580,11 @@ function makeChart(el, service, callback) {
 
             perGroupGroup = perGroup.group().reduceSum(dc.pluck('Examination')),
             // pieDimension = crs.dimension(function(d) { return d.employee}),
-            group = dimension.group().reduceSum(function(d) { return d.Examination});
+            group = dimension.group().reduceSum(function(d) { return d.Examination}),
+
+            departament = crs.dimension(dc.pluck('Department')),
+            departamentGroup = departament.group().reduceCount();
+
             // pieGroup = pieDimension.group().reduceSum(function(d) {return d.examination});
         var rec = {
         	  data: data,
@@ -598,6 +595,8 @@ function makeChart(el, service, callback) {
 	          perEmployeeGroup: perEmployeeGroup,
 	          perGroup: perGroup,
 	          perEmployee: perEmployee,
+	          departament: departament,
+	          departamentGroup: departamentGroup,
 	          // extent: d3.extent(data, function(d) { return d.date}),
 	          range: group.all().map(function(d) {return d.key}),
           // pieDimension: pieDimension,
@@ -640,7 +639,8 @@ function makeChart(el, service, callback) {
         	return beautifyAxis[filterBy] && beautifyAxis[filterBy][d]? beautifyAxis[filterBy][d]: d;
         }) //rec.keyAccessor)
         self.title(function(d) {
-        	return beautifyAxis[filterBy] && beautifyAxis[filterBy][d.key]? beautifyAxis[filterBy][d.key]: d.key;
+        	return beautifyAxis[filterBy] && beautifyAxis[filterBy][d.key]? beautifyAxis[filterBy][d.key]: d.key + '-' +
+        	d.value;
         }) //rec.keyAccessor)
 
         self.dimension(rec.dimension)
@@ -702,7 +702,6 @@ function makeChart(el, service, callback) {
     				rollUp(currentLevel - i);
         			redraw(self, false);
         			
-        			// debugger;
         			// redraw(self, true);
         		}
         		console.log(arguments);
@@ -758,6 +757,7 @@ function makeChart(el, service, callback) {
 		
 	        //   .render()
 	    }
+	    window.peek = peek.bind(null, datas);
 	    return {
 			redraw: redraw.bind(null, chart, true),
 			render: function() {
@@ -768,6 +768,7 @@ function makeChart(el, service, callback) {
 			width: chart.width				
 
 		};
+
 
 	};
 

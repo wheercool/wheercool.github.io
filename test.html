@@ -32,7 +32,7 @@
     </div>
     
     <div class="pie-chart"></div>
-
+    <div id="dropdown"></div>
   
 </body>
 
@@ -44,6 +44,7 @@
   <!--script src="js/dc.1.7.4.js"></script -->
   <script src="js/dc-latest.min.js"></script>
   <script src="js/dc.speedo.js"></script>
+  <!-- script src="js/dc-dropdown.js"></script -->
 
   <script>
 
@@ -271,6 +272,7 @@
       week: ['week 0', 'week 1', 'week 2', 'week 3', 'week 4', 'week 5']
     };
 
+/*
     var datas = [];
     var chart = dc.barChart('.chart')
       .width(500)
@@ -401,7 +403,7 @@
 
           .render()
     }
-
+*/
 var dt = [
   {
     group: 'G1',
@@ -426,51 +428,38 @@ var dt = [
 ]; 
 
 var cf = crossfilter(dt); 
-var dim = cf.dimension(function(d) { return d.s}),
+var 
     filterDim = cf.dimension(function(d) {return d.group}),
-    gGroup = filterDim.group().reduceCount(),
-    group = dim.group()
-    .reduce(
-        function(p, v) {
-          p.min = Math.min(p.min, v.duration);
-          p.max = Math.max(p.max, v.duration);
-          p.total++;
-          p.sum += v.duration;
-          return p;
-        },
+    sDim = cf.dimension(function(d) {return d.s}),
+    sGroup = sDim.group().reduceCount(),
+    gGroup = filterDim.group().reduceCount()
 
-      function(p, v) {
-          p.min = Math.max(p.min, v.duration);
-          p.max = Math.min(p.max, v.duration);
-          p.total--;
-          p.sum -= v.duration;
-          return p;
-      },
-      function () {
-        return {
-          min: Infinity,
-          max: -Infinity,
-          total: 0,
-          sum: 0
-        };
-      });
 
-    dc.speedo('#dc-speedo')
+    dc.pieChart('#dc-speedo')
       .width(300)
       .height(300)
-      .dimension(dim)
-      .group(group)
-      .render();
 
+      .dimension(sDim)
+      .group(sGroup)
+      
       dc.pieChart('#speedo-filter')
         .width(300)
         .height(300)
         .dimension(filterDim)
         .group(gGroup)
-        .render()
+       
 
     function peek(a) {
       return a[a.length - 1];
     }
+
+    // var dropDown = dc.dropdown('#dropdown')
+    //   .group(gGroup)
+    //   .dimension(filterDim)
+
+
+    dc.renderAll();
+
   </script>
+
 </html>
