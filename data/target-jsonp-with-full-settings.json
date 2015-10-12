@@ -43,11 +43,7 @@ callback({
 			"size": "large",
 			"tabTitle": "Department Insight",
       "header": "Examinations in department" ,
-      "month": "April", //[mandatory]The month of the dataset
-      "year": 2015, // [mandatory]The year of the data
-      "total": 200, // [mandatory] Total count
-      "avg": 50, // [mandatory] Average count per FTE
-
+      
       "iconPath": "imgs/hospital.svg",
       "perType": {
         "maxSlices": 20,

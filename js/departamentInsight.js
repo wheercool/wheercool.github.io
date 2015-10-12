@@ -186,7 +186,9 @@
 
 	  	totalTypes = 0,
 	  	totalEmployees = 0;
-		yearChart = makeChart('.departament-date', service, {
+	  	var currentService = config.url? remoteService(config.url): service;
+
+		yearChart = makeChart('.departament-date', currentService, {
 		  rebindData: function(rec) {
 		  	updateChartsSizes();
 
@@ -465,6 +467,35 @@
 
 	data.forEach(function(d) { d.Week = Math.floor(d.Day / 8) + 1; });
 
+
+	function remoteService(url) {
+		var count = 0;
+
+		return function(filter) {
+			count++;
+			var promise = new Promise(function(resolve, reject) {
+				window['callback' + count] = function(response) {
+					resolve(response);
+				}
+				var filterParams = '';
+				for (var p in filter) {
+					filterParams += '&' + p + '=' + filter[p];
+				}
+				var src = url + '?callback=callback-' + count + filterParams + '&by=' + levels[currentLevel];
+				d3.select(document.body)
+					.append('script')
+					.attr('src', src)
+
+			});
+
+			return promise;
+
+		}
+		
+
+	}
+
+
 	function service(filter) {
 		  d3.select('.waiting')
 		  	.style('display', 'block')
@@ -528,13 +559,14 @@
       console.log(d);
     }
 
-
+var levels = ['year', 'month', 'week', 'day']
+ var currentLevel = 0;
 
 function makeChart(el, service, callback) {
     var filter = {}; //parameter to the query and to display
 
-    var levels = ['year', 'month', 'week', 'day'] //, 'partOfDay']; // ->
-    var currentLevel = 0;
+     //, 'partOfDay']; // ->
+   
     var beautifyAxis = {
       month: ['0', "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ],
       // month: ["nothing", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ],
@@ -579,6 +611,7 @@ function makeChart(el, service, callback) {
    
 	
     function drillDown(data) {   
+    	debugger;
     	console.log(data);
         var crs = crossfilter(data),
             dimension = crs.dimension(function(d) { return d.timeValue}),

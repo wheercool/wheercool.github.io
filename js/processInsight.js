@@ -424,7 +424,6 @@
 					.style('width', '100%')
 					.style('height', '100%')
 			})
-			console.log(JSON.stringify(data))
 		deepLevelSteps.select('.deep .detail-container')
 			.each(function(d) {
 				var svg = dimple.newSvg(this, 150, 250);
