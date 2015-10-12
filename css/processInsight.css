@@ -1,4 +1,8 @@
-.process-header {
+/*.process-header {
 	padding: 3px;
 	padding-left: 16px;
+}*/
+
+.top {
+	cursor: pointer;
 }

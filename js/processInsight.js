@@ -67,19 +67,20 @@
 	    };
 
   		
-
-	     function redrawAll() {
-    	// try {
-
-	    	objectToArray(topLevelData()).forEach(function(d) {
+	    function redrawTopCharts() {
+			objectToArray(topLevelData()).forEach(function(d) {
 		    	topLevelCharts[d.key]
 		    	.data( objectToArray(d.value))
 		    	.redraw();
 
 		    });
-		    objectToArray(deepLevelData()).forEach(function(d) {
+	    }
+
+	    function redrawDeepCharts() {
+	    	 objectToArray(deepLevelData()).forEach(function(d) {
 		    	var data = [];
-		    	var data = objectToArray(d.value).map(function(d) { return {key: d.key, value: d.value[1]}});
+		    	var key = topFilterValue == 'All'? 'group': 'type';
+		    	var data = objectToArray(d.value).map(function(d) { var res = {examinations: d.value[1], key: d.key};return res; });
 				var chart = deepLevelCharts[d.key];
 		    	chart.data = data;
 		    	// chart.setBounds(10, 15, chart.width - 10, chart.height - 70)
@@ -89,15 +90,16 @@
 		    	
 		    	chart.svg.attr('height', data.length * 15 + 90);
 		    	chart.svg.attr('width', w);
-				chart.setBounds(45, 20, w - 50, chart.height)
-				
+		    	if (!w) return;
+				chart.setBounds(45, 20, w - 50, chart.height - 10)				
 		    	chart.draw();
+
+		    	chart.svg.select('.dimple-axis.dimple-title.dimple-custom-axis-title.dimple-axis-y').text(key);
 		    });
-			// }
-			// catch(ex) {
-
-			// }
-
+	    }
+	     function redrawAll() {
+	    	redrawTopCharts();
+	    	redrawDeepCharts();
 	    }
 		var statusIndicatorIcons = config.stepIndicatorIcons || {
 			"ok": "imgs/neutral_trading.svg",
@@ -122,15 +124,17 @@
 			"good": "rgba(49, 163, 84, 0.09)"
 		};
 
-		var tpl = uncomment(function() {/*
-				<div class="front">	
+		var topTpl = uncomment(function() {/*
+				<div class="top">	
 					<div class="panel panel-default">
 							<div class="panel-heading process-header">
-								<h4>Booking</h4>				
-							</div>
+								<span class="h4">Booking</span>								
+								
+                            </div>			
+						
 							<div class="panel-body text-center">
 								<img width="60%" />
-								<div style="height:100px"  class="status-indicator text-center"></div>
+								<div style="height:90px"  class="status-indicator text-center"></div>
 								<h4 class="text text-center"></h4>
 
 							</div>
@@ -138,18 +142,28 @@
 					</div>
 				</div>
 
-				<div class="back" style="display:none">
+				
+	*/});
+
+	var deepTpl = uncomment(function() {/*
+				<div class="deep">
 					<div class="panel panel-default">
 						<div class="panel-heading process-header">
-							<h4>Booking</h4>				
+						<div class="pull-right">
+                                <div class="btn-group">
+                                   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>                                  
+                                </div>
+                            </div>	
+							<span class="h4">Booking</span>
+										
 						</div>
 						<div class="panel-body text-center">
 							<div class="detail-container"></div>
 						</div>
 					</div>
 				</div>
-	*/});
 
+	*/});
 	
 	function uncomment(fn){
 		var str = fn.toString();
@@ -159,48 +173,172 @@
 	function render () {
 		d3.select(el).html(''); //clear
 
-		d3.select(el)
+		var firstRow = d3.select(el)
 			.append('div')
 			.attr('class', 'row')
-			.append('div')
-			.attr('class', 'pull-right')
+			.style('padding-bottom', '10px')
+
+
+			firstRow.append('div')
+			.attr('class', 'col-md-4 text-center')
+			.style('padding', '6px')
+
+			.text('Examination Group:')
+
+
+			var secondColumn = firstRow.append('div')
+			.attr('class', 'col-md-4 text-center')			
 			.each(function() {
-				processTopFilter(this)
-			    	.data(objectToArray(exGroups).sort(sortFunc))
+
+
+				var group = d3.select(this)
+					.append('div')
+					.attr('class', 'form-group')
+
+					group.append('span')
+					// .text('Examination Group')
+
+				var self = group.append('div')
+				.attr('class', 'select-style text-center')
+
+				
+
+				processTopFilter(self.node())
+			    	.data(objectToArray(exGroups))
 			    	.redraw()
 			    	.callback(function(d) {
 			    		topFilterValue = d == 'All'?null: d;
 			    		redrawAll();
 			    	});
 			})
-		var cols = d3.select(el)
-		.append('div')
-		.classed('row', true)
-		.selectAll('.step')
-		.data(objectToArray(topLevelData()));
+
+			firstRow
+				.append('div')
+				.attr('class', 'col-md-4 text-right')
+				.append('svg')				
+				.attr('height', 85)
+				.attr('width', 250)
+				.style('border', '1px solid #ccc')
+				.style('border-radius', '3px')
+				.html(`<g class="legend" transform="translate(50,30)" style="font-size: 16px;">
+			<rect class="legend-box" x="-18" y="-28" height="82" width="175.828125" fill="white"></rect>
+			<g class="legend-items">
+				<text y="0em" x="1em">Examinations ahead</text>
+				<text y="1em" x="1em">Examinations on time</text>
+				<text y="2em" x="1em">Examinations outside</text>
+				<circle cy="-0.25em" cx="0" r="0.4em" style="fill: rgb(44, 160, 44);"></circle>
+				<circle cy="0.75em" cx="0" r="0.4em" style="fill: gray;"></circle>
+				<circle cy="1.75em" cx="0" r="0.4em" style="fill: red;"></circle></g></g>`)
+
+		var sortedData = objectToArray(topLevelData()).sort(sortFunc)
+		
+
+		var onDeepClick = function(d) {
+			// this.classList.toggle('flipped');
+			// this.classList.toggle('col-sm-2');
+			// this.classList.toggle('col-sm-6');
+			// this.classList.toggle('detail');
+			// this.parentElement.classList.toggle('md');
+			var b = d3.select(d3.event.target)
+			// debugger;
+			var top = d3.select('#top-' + d.key),
+				deep = d3.select('#deep-' + d.key);
+			
+			// top
+			// .classed('hidden', !top.classed('hidden'));
+
+			deep
+				.classed('animated', true)
+				.classed('zoomOut', true)
+
+			setTimeout(function() {
+				deep
+				.classed('animated', false)
+				.classed('zoomOut', false)
+				.classed('hidden', !deep.classed('hidden'));
+
+			}, 800);
+			
+
+		};
+
+		var onTopClick = function(d) {
+			// this.classList.toggle('flipped');
+			// this.classList.toggle('col-sm-2');
+			// this.classList.toggle('col-sm-6');
+			// this.classList.toggle('detail');
+			// this.parentElement.classList.toggle('md');
+			var b = d3.select(d3.event.target)
+			// debugger;
+			var top = d3.select('#top-' + d.key),
+				deep = d3.select('#deep-' + d.key);
+			
+			// top
+			// .classed('hidden', !top.classed('hidden'));
+			top.classed('animated', true);
+			top.classed('pulse', true);
+
+			deep
+				.classed('hidden', false)
+			
+				.classed('animated', true)
+				.classed('zoomIn', true)
+
+			setTimeout(function() {
+				top.classed('animated', false);
+				top.classed('pulse', false);
 
 
-	var cols2 = d3.select(el)
-		.append('div')
-		.classed('row', true)
-		.selectAll('.step')
-		.data(objectToArray(topLevelData()));
+
+					deep
+
+					.classed('animated', false)
+					.classed('zoomIn', false)
+					redrawDeepCharts();		
+				
+
+			}, 800)
+
+			
+			
+
+		};
+
+		var deepLevelSteps = d3.select(el)
+			.append('div')
+			.classed('row', true)
+			.selectAll('.step')
+			.data(sortedData)
 
 
-		cols
+		var topLevelSteps = d3.select(el)
+			.append('div')
+			.classed('row', true)
+			.selectAll('.step')
+			.data(sortedData);
+
+		
+
+		deepLevelSteps.enter()
+			.append('div')
+			.attr('class', 'step col-sm-6 hidden')
+			.attr('id', function(d) { return 'deep-' + d.key; })
+			
+
+			.html(deepTpl)
+
+		deepLevelSteps.select('.close')
+			.on('click', onDeepClick)
+
+		topLevelSteps
 		.enter()
 		.append('div')
 		.attr('class', 'step col-sm-2 flipper')
-	
-		.on('click', function() {
-			this.classList.toggle('flipped');
-			this.classList.toggle('col-sm-2');
-			this.classList.toggle('col-sm-6');
-			this.classList.toggle('detail');
-			this.parentElement.classList.toggle('md');
+		.attr('id', function(d) { return 'top-' + d.key; })
 
-		})
-		.html(tpl)
+	
+		.on('click', onTopClick)
+		.html(topTpl)
 
 
 		function whichTransitionEvent(){
@@ -211,8 +349,7 @@
 		      'OTransition':'oTransitionEnd',
 		      'MozTransition':'transitionend',
 		      'WebkitTransition':'webkitTransitionEnd'
-		    }
-
+		    }		   
 		    for(t in transitions){
 		        if( el.style[t] !== undefined ){
 		            return transitions[t];
@@ -222,60 +359,68 @@
 
 		/* Listen for a transition! */
 		var transitionEvent = whichTransitionEvent();
-		transitionEvent && el.addEventListener(transitionEvent, function(e) {
-			var b = d3.select(e.target)
-				.classed('flipped');
-			if (b) {
-				d3.select(e.target)
-					.select('.front')
-					.style('display', 'none');
+		transitionEvent && topLevelSteps[0][0].addEventListener(transitionEvent, function(e) {
+			debugger;
+			// var b = d3.select(e.target)
+			// 	.classed('animated', false)
 
-				d3.select(e.target)
-					.select('.back')
-					.style('display', 'block');
+			// 	.classed('flipped'),
+			// 	d = b.datum()
+			// if (b) {
+			// 	// d3.select(e.target)
+			// 		d3.select('#top-' + d.key)
+			// 		.style('display', 'none');
 
-			} else {
-				d3.select(e.target)
-					.select('.back')
-					.style('display', 'none');
+			// 	// d3.select(e.target)
+			// 		d3.select('#deep-' + d.key)
+			// 		.style('display', 'block');
 
-				d3.select(e.target)
-					.select('.front')
-					.style('display', 'block');
-			}
-			redrawAll();
+			// } else {
+			// 	// d3.select(e.target)
+			// 		d3.select('#deep-' + d.key)
+			// 		.style('display', 'none');
+
+			// 	// d3.select(e.target)
+			// 		d3.select('#top-' + d.key)
+			// 		.style('display', 'block');
+			// }
+			// redrawAll();
 		});
 
 
-		cols.select('.front .panel-heading > h4')
+		topLevelSteps.select('.top .panel-heading > .h4')
 			.text(function(d) { return d.key})	
 
-		cols.select('.back .panel-heading > h4')
-			.text(function(d) { return d.key})	
+		deepLevelSteps.select('.deep .panel-heading > .h4')
+			.html(function(d) { return d.key + '<small><br />Examinations outside</small>'})	
 
-		cols.select('.panel-heading')
+		topLevelSteps.select('.panel-heading')
 			.style('color', 'white')
 			.style('background-color', function(d) {
 				return statusBackgroundColorTable[d.value[1] > 0? 'bad': 'ok'];
 			})
 
-		cols.select('.panel-body')
+		topLevelSteps.select('.panel-body')
 			.style('background-color', function(d) {
 				return statusOpacityBackgroundColorTable[d.value[1] > 0? 'bad': 'ok'];
 			})			
 
 
-		cols.select('.panel-body img')
+		topLevelSteps.select('.panel-body img')
 			.attr('src', function(d, i) {
 				return d.link || 'imgs/' + d.key + '.svg';
 			});
 
-		cols.select('.front .panel-body .status-indicator')
+		topLevelSteps.select('.top .panel-body .status-indicator')
 			.each(function(d) {
 				topLevelCharts[d.key] = trendChart(this).height(70);
+				topLevelCharts[d.key].svg()
+					.attr('viewBox', '0 -25 100 100')
+					.style('width', '100%')
+					.style('height', '100%')
 			})
 
-		cols.select('.back .detail-container')
+		deepLevelSteps.select('.deep .detail-container')
 			.each(function(d) {
 				var svg = dimple.newSvg(this, 150, 250);
 				var chart = new dimple.chart(svg, []);
@@ -283,57 +428,16 @@
 				    new dimple.color("red")
 				];
 				// chart.setBounds(45, 20, 100, 80)
-				chart.addMeasureAxis("x", "value");
+				chart.addMeasureAxis("x", "examinations");
 		        var y = chart.addCategoryAxis("y", "key");
-		        y.addOrderRule("value");
-		        
+		        y.addOrderRule("examinations");
+		        var shape = y.titleShape;
+
 				chart.addSeries(null, dimple.plot.bar);
 				deepLevelCharts[d.key] = chart;
-			})
+			})			
 
-			// .attr('viewBox', '35 10 180 100')
-			// .attr('preserveAspectRatio', 'xMidYMid meet')
-
-			// indicator.append('path')
-			// 	.attr('stroke', "#31a354")
-			// 	.attr('fill', 'none')
-			// 	.attr('d', "M 45 99.99999999999999 C 44.999999999999986 71.41875280734692 60.24791385931975 45.00859129357144 84.99999999999999 30.717967697244916")
-			// 	.attr('stroke-width', 15)
-				
-			// indicator.append('path')
-			// 	.attr('stroke', "#ccc")
-			// 	.attr('fill', 'none')
-			// 	.attr('d', "M 85.00000000000001 30.717967697244887 C 109.75208614068028 16.427344100918347 140.24791385931977 16.42734410091836 165 30.717967697244887")
-			// 	.attr('stroke-width', 15)
-
-			// indicator.append('path')
-			// 	.attr('stroke', "red")
-			// 	.attr('fill', 'none')
-			// 	.attr('d', "M 165 30.717967697244916 C 189.75208614068026 45.00859129357145 205 71.4187528073469 205 99.99999999999999")
-			// 	.attr('stroke-width', 15)
-
-			// var g = indicator.append('g')
-
-			// 	g.append('circle')
-			// 	.attr('cx', 45)
-			// 	.attr('cy', 100)
-			// 	.attr('r', 8);
-
-
-			// g.transition()
-			// 	.duration(3000)
-			// 	.attrTween('transform', function tween(d, i, a) {
-			// 	scale = d3.scale.linear().domain([d.min, d.max]) 
-			// 						.range([0, 180])
-		 //      return d3.interpolateString("rotate(90, 125 100)", "rotate(" +  scale(d.duration) + ", 125 100)");
-		 //    })
-
-			// .attr('src', function(d, i) {				
-			// 	return statusIndicatorIcons[d.status];
-			// })
-
-
-		cols.select('.panel-body .text')
+		topLevelSteps.select('.panel-body .text')
 			.text(function(d) {
 				return d.value[1] + ' outside';
 			})
@@ -342,8 +446,10 @@
 			})
 
 		redrawAll();
+		d3.select(window).on('resize', redrawDeepCharts);
 	}
 	
+
 
 	render();
 
@@ -352,4 +458,9 @@
 		};
 
 	});
+
+
+
+		
+
 })()

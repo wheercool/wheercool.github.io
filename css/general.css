@@ -44,12 +44,13 @@ html { font-size: 100%; }
     overflow: hidden;
     background-color: #fff;
 
-    background: #fff url("http://www.scottgood.com/jsg/blog.nsf/images/arrowdown.gif") no-repeat 90% 50%;
+    background: #fff url("http://www.scottgood.com/jsg/blog.nsf/images/arrowdown.gif") no-repeat 95% 50%;
 }
 
 .select-style select {
     padding: 5px 8px;
-    width: 130%;
+    /*width: 130%;*/
+    width: 100%;
     border: none;
     box-shadow: none;
     background-color: transparent;
@@ -80,3 +81,7 @@ div.dc-chart {
 .step.detail .front {
 	display: none !important;
 }*/
+.animated.pulse {
+  -webkit-animation-duration: .2s;
+  animation-duration: .2s;
+}

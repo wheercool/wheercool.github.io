@@ -6,6 +6,9 @@ trendChart = function(root) {
 		_height = 100;
 
 	var _chart = {
+		svg: function(){
+			return svg;
+		},
 		data: function(data) {
 			if (!arguments.length) return _data;
 
@@ -59,9 +62,9 @@ trendChart = function(root) {
 				.attr('height', 0)
 				.attr('fill', function(d) {
 					var key = _chart.keyAccessor(d);
-					return  key == -1? 'green':
+					return  key == -1? 'rgb(44, 160, 44)':
 							key == 1? 'red':
-							'gray';
+							'#ccc';
 				})
 				.select('title')
 				.text( function(d) {return _chart.valueAccessor(d);})
