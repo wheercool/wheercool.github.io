@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="chart"></div>
+</body>
+	<script src="js/d3.min.js"></script>
+	<script src="js/dimple.v2.1.6.min.js"></script>
+
+	<script>
+		var svg = dimple.newSvg("#chart", 590, 400);
+		 var data = [
+		 {
+		 	key: 'g1',
+		 	value: 100
+		 },
+		 {
+		 	key: 'g2',
+		 	value: 10
+		 }
+		 ];
+		 var myChart = new dimple.chart(svg, data);
+		 myChart.defaultColors = [
+		    new dimple.color("red"),
+		    // new dimple.color("#666666"),
+		    // new dimple.color("#999999"),
+		    // new dimple.color("#BBBBBB"),
+		    // new dimple.color("#EEEEEE")
+		];
+
+		 console.log(myChart)
+		
+	      myChart.setBounds(75, 30, 480, 330)
+	      myChart.addMeasureAxis("x", "value");
+	      var y = myChart.addCategoryAxis("y", "key");
+	      y.addOrderRule("Date");
+	      myChart.addSeries(null, dimple.plot.bar);
+	      myChart.draw(2000);
+
+	      data[0].value +=10;
+			myChart.data = data;
+			myChart.draw(2000);
+	</script>
+</html>

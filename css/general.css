@@ -39,7 +39,7 @@ html { font-size: 100%; }
     padding: 0;
     margin: 0;
     border: 1px solid #ccc;
-    width: 120px;
+    min-width: 120px;
     border-radius: 3px;
     overflow: hidden;
     background-color: #fff;
@@ -66,3 +66,17 @@ html { font-size: 100%; }
 div.dc-chart {
 	float: none;
 }
+
+
+/*.md .front {
+	display: none;
+}
+.md .back {
+	display: none;
+}
+.step.detail .back{
+	display: block !important;
+}
+.step.detail .front {
+	display: none !important;
+}*/

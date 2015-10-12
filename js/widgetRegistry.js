@@ -60,7 +60,7 @@ var widgetRegister = {
 
                     panel.append('div')
                         .attr('class', 'panel-heading')
-                        .html(function(d) { return /*'<a class="anchor" name="' + d.name + '"></a>*/'<h5>'+ d.settings.context || d.settings.title + '</h5>';})
+                        .html(function(d) { return /*'<a class="anchor" name="' + d.name + '"></a>*/'<h5>'+ (d.settings.header || d.settings.tabTitle) + '</h5>';})
 
                     panel.append('div')
                         .attr('class', 'panel-body')
@@ -122,7 +122,7 @@ function buildDynamicMenu(el, data) {
         .attr('name', function(d) {return  d.name})
         // .attr('data-toggle', 'tab')
         // .attr('href', '#')
-        .html(function(d) { return d.settings.title});
+        .html(function(d) { return d.settings.tabTitle});
 
 
 

@@ -8,7 +8,7 @@
 
 		// var departament = crossfilter(data),
 		//     all = departament.groupAll(),
-		//     departamentperGroup = departament.dimension(prop('ExaminationTypeName')),
+		//     departamentperGroup = departament.dimension(prop('ExaminationGroup')),
 		//     departamentperGroupGroup = departamentperGroup.group(),
 		//     departamentPerEmployee = departament.dimension(prop('Radiologist')),
 		//     departamentPerEmployeeGroup = departamentPerEmployee.group()
@@ -162,7 +162,7 @@
 		    // .label(function(d) {
 		    //     var names = d.key.split(' ');
 		    //     // return names[0][0] + '. ' + names[1][0] + '.';
-		    //     return d.value || '';
+		    //     return d.timeValue || '';
 		    // })
  			.on('filtered', onFiltered)
 		   
@@ -242,7 +242,7 @@
 		    	 .legend(
 		    	dc.htmlLegend()
 		    	.container( perGroupLegendSvg )
-		    	.x(0.3 * widthperGroup)
+		    	.x(0.1 * widthperGroup)
 		    	// .y(widthperGroup)
 		    	.itemHeight(legendItemHeight)
 		    	.gap(legendGap)
@@ -257,12 +257,14 @@
 		    .innerRadius(widthPerEmployee / 5) 
 		    .legend(dc.htmlLegend()
 			    	.container(perEmployeeLegendSvg)
-			    	.x(0.3 * widthPerEmployee)
+			    	.x(0.1 * widthPerEmployee)
 			    	.y(0).itemHeight(legendItemHeight).gap(legendGap))
 
 
 		   	yearChart.
 		   		width(widthDate);
+
+		   	return ws.every(Number.isInteger)
 
 	    }
 
@@ -285,7 +287,8 @@
     	}
 
     	function redraw() {
-    		updateChartsSizes();
+    		var ok = updateChartsSizes();
+    		if (!ok) return;
     		dc.renderAll();
     		drawResetButtons(el);
     	}
@@ -406,7 +409,7 @@
 						for (var day = 1; day <= 31; day++) {
 							data.push({
 								'Department': 'Department ' + department,
-								'ExaminationTypeName': types[type],
+								'ExaminationGroup': types[type],
 								'Radiologist': employees[employee],
 								'Year': year,
 								'Month': month,
@@ -424,7 +427,7 @@
 		};
 
 		return [function(acc, next) {
-			var key = next.ExaminationTypeName + '-' + next.Radiologist + '-' +  next[by] + '-' + next.Department;
+			var key = next.ExaminationGroup + '-' + next.Radiologist + '-' +  next[by] + '-' + next.Department;
 			if (!acc[key]) acc[key] = 0;
 			acc[key] += next.Examination;
 			return acc;
@@ -437,10 +440,10 @@
 		for (var key in groups) {
 			var values = key.split('-');
 			res.push({
-				ExaminationTypeName: values[0],
+				ExaminationGroup: values[0],
 				Radiologist: values[1],
 				Examination: groups[key],
-				value: values[2],
+				timeValue: values[2],
 				Department: values[3]
 			});
 
@@ -498,16 +501,16 @@
 	        if (filter.year) {
 	          dataset = groupBy(data.filter(function(d) {return d.Year == filter.year}), 'Month');;
 	           //   dataset.forEach(function(d) {
-		          //    d.value = d.Month;
+		          //    d.timeValue = d.Month;
 		          // });
 	        } else 
 	        {
 	        	dataset = groupBy(data, 'Year');
 	        	// dataset.forEach(function(d) {
-		        //     d.value = d.Year;
+		        //     d.timeValue = d.Year;
 		        // });		        
 	        }
-	        dataset.forEach(function(d) { d.value = +d.value;})
+	        dataset.forEach(function(d) { d.timeValue = +d.timeValue;})
 	        return dataset;
 	    }).then(function(d) {
 	    	d3.select('.waiting')
@@ -576,9 +579,10 @@ function makeChart(el, service, callback) {
    
 	
     function drillDown(data) {   
+    	console.log(data);
         var crs = crossfilter(data),
-            dimension = crs.dimension(function(d) { return d.value}),
-            perGroup = crs.dimension(prop('ExaminationTypeName')),
+            dimension = crs.dimension(function(d) { return d.timeValue}),
+            perGroup = crs.dimension(prop('ExaminationGroup')),
             perEmployee = crs.dimension(prop('Radiologist')),
 			perEmployeeGroup = perEmployee.group().reduceSum(dc.pluck('Examination')),
 
@@ -644,7 +648,7 @@ function makeChart(el, service, callback) {
         }) //rec.keyAccessor)
         self.title(function(d) {
         	return beautifyAxis[filterBy] && beautifyAxis[filterBy][d.key]? beautifyAxis[filterBy][d.key]: d.key + '-' +
-        	d.value;
+        	d.timeValue;
         }) //rec.keyAccessor)
 
         self.dimension(rec.dimension)
@@ -708,7 +712,6 @@ function makeChart(el, service, callback) {
         			
         			// redraw(self, true);
         		}
-        		console.log(arguments);
         	})
 
         	d3.select('.date-filter')
