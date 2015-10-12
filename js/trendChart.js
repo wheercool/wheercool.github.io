@@ -5,6 +5,9 @@ trendChart = function(root) {
 		_width = 100,
 		_height = 100;
 
+	var line = svg.append('line')
+
+
 	var _chart = {
 		svg: function(){
 			return svg;
@@ -80,7 +83,11 @@ trendChart = function(root) {
 					return yScale(_chart.valueAccessor(d));
 				})
 				
-				
+			line.attr('x1', -10)
+			.attr('x2', _width + 10)
+			.attr('y1', _height)
+			.attr('y2', _height)
+			.attr('stroke', 'black')
 
 			bars.exit().remove();
 			return _chart;

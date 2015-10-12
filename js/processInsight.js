@@ -101,11 +101,11 @@
 	    	redrawTopCharts();
 	    	redrawDeepCharts();
 	    }
-		var statusIndicatorIcons = config.stepIndicatorIcons || {
-			"ok": "imgs/neutral_trading.svg",
-			"bad": "imgs/bearish.svg",
-			"good": "imgs/bullish.svg"
-		};
+		// var statusIndicatorIcons = config.stepIndicatorIcons || {
+		// 	"ok": "imgs/neutral_trading.svg",
+		// 	"bad": "imgs/bearish.svg",
+		// 	"good": "imgs/bullish.svg"
+		// };
 
 		var statusColorTable = config.stepTextColor  || {
 			"ok": "black",
@@ -273,6 +273,7 @@
 			var top = d3.select('#top-' + d.key),
 				deep = d3.select('#deep-' + d.key);
 			
+
 			// top
 			// .classed('hidden', !top.classed('hidden'));
 			top.classed('animated', true);
@@ -397,12 +398,16 @@
 		topLevelSteps.select('.panel-heading')
 			.style('color', 'white')
 			.style('background-color', function(d) {
-				return statusBackgroundColorTable[d.value[1] > 0? 'bad': 'ok'];
+				return statusBackgroundColorTable[d.value[1] > 0? 'bad'
+									: d.value[-1] > 0? 'good'
+									: 'ok'];
 			})
 
 		topLevelSteps.select('.panel-body')
 			.style('background-color', function(d) {
-				return statusOpacityBackgroundColorTable[d.value[1] > 0? 'bad': 'ok'];
+				return statusOpacityBackgroundColorTable[d.value[1] > 0? 'bad'
+													:d.value[-1] > 0? 'good'
+													: 'ok'];
 			})			
 
 
@@ -419,7 +424,7 @@
 					.style('width', '100%')
 					.style('height', '100%')
 			})
-
+			console.log(JSON.stringify(data))
 		deepLevelSteps.select('.deep .detail-container')
 			.each(function(d) {
 				var svg = dimple.newSvg(this, 150, 250);
@@ -439,10 +444,13 @@
 
 		topLevelSteps.select('.panel-body .text')
 			.text(function(d) {
-				return d.value[1] + ' outside';
+				console.log(d)
+				return d.value[1] > 0? (d.value[1] + ' outside')
+						: d.value[-1] > 0? (d.value[-1] + ' ahead')
+						: (d.value[0] + ' on time');
 			})
 			.style('color', function(d, i) {
-				return statusColorTable[d.value[1] > 0? 'bad': 'ok'];
+				return statusColorTable[d.value[1] > 0? 'bad': d.value[-1]>0? 'good' :'ok'];
 			})
 
 		redrawAll();
