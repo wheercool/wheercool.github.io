@@ -78,7 +78,7 @@
 
 	    function redrawDeepCharts() {
 	    	alert(JSON.stringify(deepLevelData()));
-	    	 objectToArray(deepLevelData()).forEach(function(d) {
+	    	 objectToArray(deepLevelData()).forEach(function(d, i) {
 	    	 	alert('Insight foreach')
 		    	var data = [];
 		    	var key = topFilterValue == 'All'? 'group': 'type';
@@ -88,10 +88,10 @@
 		    	// chart.setBounds(10, 15, chart.width - 10, chart.height - 70)
 		    	chart.height = data.length * 25;
 		    	alert(data.length)
+		    	alert(chart.svg.node())
 		    	var container = chart.svg.node().parentElement
-
+		    	
 		    	var w = container.offsetWidth;
-		    	alert(container)
 		    	chart.svg.attr('height', data.length * 15 + 90);
 		    	chart.svg.attr('width', w);
 		    	if (!w) return;
@@ -99,7 +99,8 @@
 		    	chart.draw();
 
 		    	chart.svg.select('.dimple-axis.dimple-title.dimple-custom-axis-title.dimple-axis-y').text(key);
-		    });
+		    	
+		    }); 
 	    }
 	     function redrawAll() {
 	    	redrawTopCharts();
