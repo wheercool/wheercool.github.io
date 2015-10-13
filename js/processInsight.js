@@ -84,15 +84,27 @@
 				var chart = deepLevelCharts[d.key];
 		    	chart.data = data;
 		    	// chart.setBounds(10, 15, chart.width - 10, chart.height - 70)
-		    	chart.height = data.length * 25;
+		    	var h = data.length * 35;
 		    	var container = chart.svg.node().parentNode
-		    	
+
+		    	var margin = {
+		    		left: 105,
+		    		top: 5,
+		    		right: 5,
+		    		bottom: 55 
+		    	};
+
 		    	var w = container.offsetWidth || 200;
-		    	chart.svg.attr('height', data.length * 15 + 90);
+		    	var width = w - margin.left - margin.right;
+		    	var height = h - margin.top - margin.bottom;
+
+		    	chart.svg.attr('height', h);
 		    	chart.svg.attr('width', w);
 
+		    	chart.height = h;
+
 		    	if (!w) return;
-				chart.setBounds(45, 20, w - 50, chart.height - 10)				
+				chart.setBounds(margin.left, margin.top, width, height)				
 		    	chart.draw();
 
 		    	chart.svg.select('.dimple-axis.dimple-title.dimple-custom-axis-title.dimple-axis-y').text(key);
