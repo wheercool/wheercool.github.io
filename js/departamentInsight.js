@@ -1,7 +1,6 @@
 (function() {
 
 	widgetRegister.register("Department Insight", function(el, data, general, config) {
-	    alert(Promise);
 	   	/* Default settings */
 	   	var legendItemHeight = 13,
 	   		legendGap = 5;
@@ -251,7 +250,7 @@
 		   	yearChart.
 		   		width(widthDate);
 
-		   	return ws.every(Number.isInteger)
+		   	return ws.every(function(d) { return !isNaN(d)})
 
 	    }
 
@@ -644,7 +643,6 @@ function makeChart(el, service, callback) {
 	    return a[a.length - 1];
     }
     function redraw(self, needRedraw) {
-    	alert('redraw')
         var rec = peek(datas);
         // var pieFilters = pieChart.filters();
        
