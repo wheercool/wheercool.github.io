@@ -147,7 +147,7 @@
                             </div>			
 						
 							<div class="panel-body text-center">
-								<img width="60%" />
+								<img width="60%"  style="min-height:77px"/>
 								<div style="height:90px"  class="status-indicator text-center"></div>
 								<h4 class="text text-center"></h4>
 

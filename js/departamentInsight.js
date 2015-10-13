@@ -464,7 +464,7 @@
 				for (var p in filter) {
 					filterParams += '&' + p + '=' + filter[p];
 				}
-				var src = url + '?callback=callback-' + count + filterParams + '&by=' + levels[currentLevel];
+				var src = url + '?callback=callback' + count + filterParams + '&by=' + levels[currentLevel];
 				d3.select(document.body)
 					.append('script')
 					.attr('src', src)
