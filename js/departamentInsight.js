@@ -1,11 +1,6 @@
 (function() {
 
-<<<<<<< HEAD
 	widgetRegister.register("Department Insight", function(el, data, general, config, all) {
-	    
-=======
-	widgetRegister.register("Department Insight", function(el, data, general, config) {
->>>>>>> 0917897b9229b08b7bb6e11a8b4d900c9bf47027
 	   	/* Default settings */
 	   	var legendItemHeight = 13,
 	   		legendGap = 5;
