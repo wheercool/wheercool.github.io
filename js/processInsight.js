@@ -77,9 +77,7 @@
 	    }
 
 	    function redrawDeepCharts() {
-	    	alert(JSON.stringify(deepLevelData()));
 	    	 objectToArray(deepLevelData()).forEach(function(d, i) {
-	    	 	alert('Insight foreach')
 		    	var data = [];
 		    	var key = topFilterValue == 'All'? 'group': 'type';
 		    	var data = objectToArray(d.value).map(function(d) { var res = {examinations: d.value[1], key: d.key};return res; });
@@ -87,13 +85,13 @@
 		    	chart.data = data;
 		    	// chart.setBounds(10, 15, chart.width - 10, chart.height - 70)
 		    	chart.height = data.length * 25;
-		    	alert(data.length)
-		    	alert(chart.svg.node())
-		    	var container = chart.svg.node().parentElement
+		    	var container = chart.svg.node().parentNode
 		    	
 		    	var w = container.offsetWidth || 200;
 		    	chart.svg.attr('height', data.length * 15 + 90);
 		    	chart.svg.attr('width', w);
+		    	alert(w)
+
 		    	if (!w) return;
 				chart.setBounds(45, 20, w - 50, chart.height - 10)				
 		    	chart.draw();
