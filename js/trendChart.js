@@ -60,9 +60,11 @@ trendChart = function(root) {
 				bars.attr('x', function(d, i) {
 					return xScale(_chart.keyAccessor(d));
 				})
-				.attr('y', _height)
+				//.attr('y', _height)
 				.attr('width', xScale.rangeBand())
-				.attr('height', 0)
+				
+			
+
 				.attr('fill', function(d) {
 					var key = _chart.keyAccessor(d);
 					return  key == -1? 'rgb(44, 160, 44)':
