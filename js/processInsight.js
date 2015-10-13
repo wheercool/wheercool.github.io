@@ -77,6 +77,7 @@
 	    }
 
 	    function redrawDeepCharts() {
+	    	alert('deep');
 	    	 objectToArray(deepLevelData()).forEach(function(d) {
 		    	var data = [];
 		    	var key = topFilterValue == 'All'? 'group': 'type';
@@ -87,7 +88,7 @@
 		    	chart.height = data.length * 25;
 		    	var container = chart.svg.node().parentElement
 		    	var w = container.offsetWidth;
-		    	
+		    	alert(container)
 		    	chart.svg.attr('height', data.length * 15 + 90);
 		    	chart.svg.attr('width', w);
 		    	if (!w) return;
@@ -183,7 +184,6 @@
 
 	function render () {
 		d3.select(el).html(''); //clear
-		alert('start')
 
 		var firstRow = d3.select(el)
 			.append('div')
@@ -197,7 +197,6 @@
 
 			.text('Examination Group:')
 
-	alert('firstRow')
 			var secondColumn = firstRow.append('div')
 			.attr('class', 'col-md-4 text-center')			
 			.each(function() {
@@ -224,15 +223,46 @@
 			    	});
 			})
 
+
 			firstRow
 				.append('div')
 				.attr('class', 'col-md-4 text-right')
-				.append('svg')				
-				.attr('height', 85)
-				.attr('width', 250)
+				.append('img')
+				.attr('src', 'imgs/legend.svg')
+				// .append('svg')				
+				// .attr('height', 85)
+				// .attr('width', 250)
 				.style('border', '1px solid #ccc')
 				.style('border-radius', '3px')
-				.html(legendTpl)
+				// .append('g')
+				// .attr('transform', 'translate(50,30)')
+				// .style('font-size', '14px')
+				// .append('rect')
+				// .attr('x', -18)
+				// .attr('y', -28)
+				// .attr('height', 82)
+				// .attr('width', 175.828125)
+				// .attr('fill', 'white')				
+				// .selectAll('g')
+				// .data([
+				// 	{text: 'examinations ahead', fill: 'rgb(44, 160, 44)'},
+				// 	{text: 'examinations on time', fill: 'gray'},
+				// 	{text: 'examinations outside', fill: 'red'}
+				// ])
+				// .enter()
+				// .append('g')
+				// .each(function(d, i) {
+
+				// 	d3.select(this).append('text')
+				// 		.attr('y', i + 'em')
+				// 		.attr('x', '1em')
+				// 		.text(d.text)
+				// 	d3.select(this).append('circle')
+				// 		.attr('cy', -0.25 + i + 'em')
+				// 		.attr('r', '0.4em')
+				// 		.attr('fill', d.fill)
+				// });
+
 
 		var sortedData = objectToArray(topLevelData()).sort(sortFunc)
 		
@@ -306,7 +336,6 @@
 
 
 		};
-		alert(sortedData.length)
 		var deepLevelSteps = d3.select(el)
 			.append('div')
 			.classed('row', true)
