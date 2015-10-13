@@ -165,6 +165,17 @@
 
 	*/});
 	
+	var legendTpl = uncomment(function() {/*
+		<g class="legend" transform="translate(50,30)" style="font-size: 16px;">
+			<rect class="legend-box" x="-18" y="-28" height="82" width="175.828125" fill="white"></rect>
+			<g class="legend-items">
+				<text y="0em" x="1em">Examinations ahead</text>
+				<text y="1em" x="1em">Examinations on time</text>
+				<text y="2em" x="1em">Examinations outside</text>
+				<circle cy="-0.25em" cx="0" r="0.4em" style="fill: rgb(44, 160, 44);"></circle>
+				<circle cy="0.75em" cx="0" r="0.4em" style="fill: gray;"></circle>
+				<circle cy="1.75em" cx="0" r="0.4em" style="fill: red;"></circle></g></g>
+	*/});
 	function uncomment(fn){
 		var str = fn.toString();
 	  return str.slice(str.indexOf('/*') + 2, str.indexOf('*/'));
@@ -172,6 +183,7 @@
 
 	function render () {
 		d3.select(el).html(''); //clear
+		alert('start')
 
 		var firstRow = d3.select(el)
 			.append('div')
@@ -185,7 +197,7 @@
 
 			.text('Examination Group:')
 
-
+	alert('firstRow')
 			var secondColumn = firstRow.append('div')
 			.attr('class', 'col-md-4 text-center')			
 			.each(function() {
@@ -220,15 +232,7 @@
 				.attr('width', 250)
 				.style('border', '1px solid #ccc')
 				.style('border-radius', '3px')
-				.html(`<g class="legend" transform="translate(50,30)" style="font-size: 16px;">
-			<rect class="legend-box" x="-18" y="-28" height="82" width="175.828125" fill="white"></rect>
-			<g class="legend-items">
-				<text y="0em" x="1em">Examinations ahead</text>
-				<text y="1em" x="1em">Examinations on time</text>
-				<text y="2em" x="1em">Examinations outside</text>
-				<circle cy="-0.25em" cx="0" r="0.4em" style="fill: rgb(44, 160, 44);"></circle>
-				<circle cy="0.75em" cx="0" r="0.4em" style="fill: gray;"></circle>
-				<circle cy="1.75em" cx="0" r="0.4em" style="fill: red;"></circle></g></g>`)
+				.html(legendTpl)
 
 		var sortedData = objectToArray(topLevelData()).sort(sortFunc)
 		
@@ -300,8 +304,6 @@
 
 			}, 800)
 
-			
-			
 
 		};
 		alert(sortedData.length)
