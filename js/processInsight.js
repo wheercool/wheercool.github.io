@@ -79,6 +79,7 @@
 	    function redrawDeepCharts() {
 	    	alert('deep');
 	    	 objectToArray(deepLevelData()).forEach(function(d) {
+	    	 	alert('Insight foreach')
 		    	var data = [];
 		    	var key = topFilterValue == 'All'? 'group': 'type';
 		    	var data = objectToArray(d.value).map(function(d) { var res = {examinations: d.value[1], key: d.key};return res; });
@@ -86,7 +87,9 @@
 		    	chart.data = data;
 		    	// chart.setBounds(10, 15, chart.width - 10, chart.height - 70)
 		    	chart.height = data.length * 25;
+		    	alert(data.length)
 		    	var container = chart.svg.node().parentElement
+
 		    	var w = container.offsetWidth;
 		    	alert(container)
 		    	chart.svg.attr('height', data.length * 15 + 90);
