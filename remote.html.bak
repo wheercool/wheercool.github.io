@@ -17,8 +17,6 @@
 	<link rel="stylesheet" href="css/waitingRoom.css">
 	<!-- Put new widget style here ... -->
 	<link rel="stylesheet" href="css/general.css">	
-	<link rel="stylesheet" href="css/flip.css">	
-	<link rel="stylesheet" href="css/animate.css">	
 	
 
 </head>
@@ -73,11 +71,9 @@
 	</div>	
 		
 	
-	<div class="steps">
+
 
 </div>
-	<!-- Pollyfils -->
-	<script src="js/es6-promise.min.js"></script>
 	<script src="js/jquery.min.js"></script>
 	<script src="js/jquery-ui.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
@@ -85,16 +81,11 @@
 	<script src="js/crossfilter.min.js"></script>
 	<script src="js/d3.min.js"></script>
 	<script src="js/dc.min.js"></script>
-	<script src="js/dc.speedo.js"></script>
 	<script src="js/htmlLegend.js"></script>
 	<script src="js/widgetRegistry.js"></script>
-  	<script src="js/dc-dropdown.js"></script>
-  	<script src="js/dimple.v2.1.6.min.js"></script>
 
 	<!-- Widgets -->
 	<script src="js/departamentInsight.js"></script>
-	<script src="js/trendChart.js"></script>
-	<script src="js/processTopFilter.js"></script>
 	<script src="js/processInsight.js"></script>
 	<script src="js/waitingRoom.js"></script>
 

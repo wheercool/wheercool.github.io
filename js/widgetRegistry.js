@@ -87,7 +87,7 @@ var widgetRegister = {
                         }
                   };
 
-                   widgetRegister.__widgetsObj[name] = widgets[name](el.node(), datum.dataset, datum.generalData, datum.settings);
+                   widgetRegister.__widgetsObj[name] = widgets[name](el.node(), datum.dataset, datum.generalData, datum.settings, datum);
                    el.attr('data-cached', true);
 
                 });

@@ -1,7 +1,7 @@
 (function() {
 
-	widgetRegister.register("Department Insight", function(el, data, general, config) {
-	    alert(Promise);
+	widgetRegister.register("Department Insight", function(el, data, general, config, all) {
+	    
 	   	/* Default settings */
 	   	var legendItemHeight = 13,
 	   		legendGap = 5;
@@ -171,7 +171,7 @@
 
 	  	totalTypes = 0,
 	  	totalEmployees = 0;
-	  	var currentService = config.url? remoteService(config.url): service;
+	  	var currentService = config.url? remoteService(all.datasetUrl.url): service;
 
 		yearChart = makeChart('.departament-date', currentService, {
 		  rebindData: function(rec) {
@@ -251,7 +251,7 @@
 		   	yearChart.
 		   		width(widthDate);
 
-		   	return ws.every(Number.isInteger)
+		   	return ws.every(function(d) { return !d.isNaN()})
 
 	    }
 
