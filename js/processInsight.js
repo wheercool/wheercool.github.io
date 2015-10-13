@@ -77,7 +77,7 @@
 	    }
 
 	    function redrawDeepCharts() {
-	    	alert(deepLevelData().length);
+	    	alert(JSON.stringify(deepLevelData()));
 	    	 objectToArray(deepLevelData()).forEach(function(d) {
 	    	 	alert('Insight foreach')
 		    	var data = [];
