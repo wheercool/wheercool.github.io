@@ -105,13 +105,15 @@
 
 		    	if (!w) return;
 				chart.setBounds(margin.left, margin.top, width, height)				
-		    	chart.draw();
+		    	chart.draw(2000);
 
 		    	chart.svg.select('.dimple-axis.dimple-title.dimple-custom-axis-title.dimple-axis-y').text(key);
 		    	
 		    }); 
 	    }
-	     function redrawAll() {
+
+	    function redrawAll() {
+	    	redrawCards();
 	    	redrawTopCharts();
 	    	redrawDeepCharts();
 	    }
@@ -178,109 +180,13 @@
 				</div>
 
 	*/});
-	
-	var legendTpl = uncomment(function() {/*
-		<g class="legend" transform="translate(50,30)" style="font-size: 16px;">
-			<rect class="legend-box" x="-18" y="-28" height="82" width="175.828125" fill="white"></rect>
-			<g class="legend-items">
-				<text y="0em" x="1em">Examinations ahead</text>
-				<text y="1em" x="1em">Examinations on time</text>
-				<text y="2em" x="1em">Examinations outside</text>
-				<circle cy="-0.25em" cx="0" r="0.4em" style="fill: rgb(44, 160, 44);"></circle>
-				<circle cy="0.75em" cx="0" r="0.4em" style="fill: gray;"></circle>
-				<circle cy="1.75em" cx="0" r="0.4em" style="fill: red;"></circle></g></g>
-	*/});
+
 	function uncomment(fn){
 		var str = fn.toString();
 	  return str.slice(str.indexOf('/*') + 2, str.indexOf('*/'));
 	};
 
-	function render () {
-		d3.select(el).html(''); //clear
-
-		var firstRow = d3.select(el)
-			.append('div')
-			.attr('class', 'row')
-			.style('padding-bottom', '10px')
-
-
-			firstRow.append('div')
-			.attr('class', 'col-md-4 text-center')
-			.style('padding', '6px')
-
-			.text('Examination Group:')
-
-			var secondColumn = firstRow.append('div')
-			.attr('class', 'col-md-4 text-center')			
-			.each(function() {
-
-
-				var group = d3.select(this)
-					.append('div')
-					.attr('class', 'form-group')
-
-					group.append('span')
-					// .text('Examination Group')
-
-				var self = group.append('div')
-				.attr('class', 'select-style text-center')
-
-				
-
-				processTopFilter(self.node())
-			    	.data(objectToArray(exGroups))
-			    	.redraw()
-			    	.callback(function(d) {
-			    		topFilterValue = d == 'All'?null: d;
-			    		redrawAll();
-			    	});
-			})
-
-
-			firstRow
-				.append('div')
-				.attr('class', 'col-md-4 text-right')
-				.append('img')
-				.attr('src', 'imgs/legend.svg')
-				// .append('svg')				
-				// .attr('height', 85)
-				// .attr('width', 250)
-				.style('border', '1px solid #ccc')
-				.style('border-radius', '3px')
-				// .append('g')
-				// .attr('transform', 'translate(50,30)')
-				// .style('font-size', '14px')
-				// .append('rect')
-				// .attr('x', -18)
-				// .attr('y', -28)
-				// .attr('height', 82)
-				// .attr('width', 175.828125)
-				// .attr('fill', 'white')				
-				// .selectAll('g')
-				// .data([
-				// 	{text: 'examinations ahead', fill: 'rgb(44, 160, 44)'},
-				// 	{text: 'examinations on time', fill: 'gray'},
-				// 	{text: 'examinations outside', fill: 'red'}
-				// ])
-				// .enter()
-				// .append('g')
-				// .each(function(d, i) {
-
-				// 	d3.select(this).append('text')
-				// 		.attr('y', i + 'em')
-				// 		.attr('x', '1em')
-				// 		.text(d.text)
-				// 	d3.select(this).append('circle')
-				// 		.attr('cy', -0.25 + i + 'em')
-				// 		.attr('r', '0.4em')
-				// 		.attr('fill', d.fill)
-				// });
-
-
-		var sortedData = objectToArray(topLevelData()).sort(sortFunc)
-		
-
-		var onDeepClick = function(d) {
+var onDeepClick = function(d) {
 			// this.classList.toggle('flipped');
 			// this.classList.toggle('col-sm-2');
 			// this.classList.toggle('col-sm-6');
@@ -349,16 +255,19 @@
 
 
 		};
+
+		function redrawCards() {
+
+		var sortedData = objectToArray(topLevelData()).sort(sortFunc)
+
 		var deepLevelSteps = d3.select(el)
-			.append('div')
-			.classed('row', true)
+			.select('.top-row')
 			.selectAll('.step')
 			.data(sortedData)
 
 
 		var topLevelSteps = d3.select(el)
-			.append('div')
-			.classed('row', true)
+			.select('.deep-row')
 			.selectAll('.step')
 			.data(sortedData);
 
@@ -386,21 +295,6 @@
 		.html(topTpl)
 
 
-		function whichTransitionEvent(){
-		    var t;
-		    var el = document.createElement('fakeelement');
-		    var transitions = {
-		      'transition':'transitionend',
-		      'OTransition':'oTransitionEnd',
-		      'MozTransition':'transitionend',
-		      'WebkitTransition':'webkitTransitionEnd'
-		    }		   
-		    for(t in transitions){
-		        if( el.style[t] !== undefined ){
-		            return transitions[t];
-		        }
-		    }
-		}
 
 		topLevelSteps.select('.top .panel-heading > .h4')
 			.text(function(d) { return d.key})	
@@ -431,7 +325,8 @@
 
 		topLevelSteps.select('.top .panel-body .status-indicator')
 			.each(function(d) {
-				topLevelCharts[d.key] = trendChart(this).height(70);
+
+				topLevelCharts[d.key]?topLevelCharts[d.key]: (topLevelCharts[d.key] = trendChart(this).height(70));
 				topLevelCharts[d.key].svg()
 					.attr('viewBox', '0 -25 100 100')
 					.style('width', '100%')
@@ -463,6 +358,68 @@
 			.style('color', function(d, i) {
 				return statusColorTable[d.value[1] > 0? 'bad': d.value[-1]>0? 'good' :'ok'];
 			})
+		}
+
+	function render () {
+		d3.select(el).html(''); //clear
+
+		var firstRow = d3.select(el)
+			.append('div')
+			.attr('class', 'row')
+			.style('padding-bottom', '10px')
+
+
+			firstRow.append('div')
+			.attr('class', 'col-md-4 text-center')
+			.style('padding', '6px')
+
+			.text('Examination Group:')
+
+			var secondColumn = firstRow.append('div')
+			.attr('class', 'col-md-4 text-center')			
+			.each(function() {
+
+
+				var group = d3.select(this)
+					.append('div')
+					.attr('class', 'form-group')
+
+					group.append('span')
+					// .text('Examination Group')
+
+				var self = group.append('div')
+				.attr('class', 'select-style text-center')
+
+				
+
+				processTopFilter(self.node())
+			    	.data(objectToArray(exGroups))
+			    	.redraw()
+			    	.callback(function(d) {
+			    		topFilterValue = d == 'All'?null: d;
+			    		redrawAll();
+			    	});
+			})
+
+
+			firstRow
+				.append('div')
+				.attr('class', 'col-md-4 text-right')
+				.append('img')
+				.attr('src', 'imgs/legend.svg')
+				.style('border', '1px solid #ccc')
+				.style('border-radius', '3px')
+
+		
+		var deepLevelSteps = d3.select(el)
+			.append('div')
+			.classed('row', true)
+			.classed('top-row', true)
+
+		var topLevelSteps = d3.select(el)
+			.append('div')
+			.classed('row', true)
+			.classed('deep-row', true)
 
 		redrawAll();
 		d3.select(window).on('resize', redrawDeepCharts);
