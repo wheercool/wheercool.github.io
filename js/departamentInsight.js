@@ -360,7 +360,6 @@
 	};
 
 	function addDefaultFilterValue(chart) {	
-		console.log('filtered');				
 		chart.root()
 			.select('.default-value')
 			.style('display', function(){ return chart.hasFilter()?'none': 'inline' });
@@ -500,8 +499,6 @@
 		  d3.select('.waiting')
 		  	.style('display', 'block')
 
-      log(filter);
-
 	      return delay(1000).then(function() {
 	      	// if (filter.day) {
 	       //       dataset = groupBy(data, 'Week');;
@@ -611,8 +608,6 @@ function makeChart(el, service, callback) {
    
 	
     function drillDown(data) {   
-    	debugger;
-    	console.log(data);
         var crs = crossfilter(data),
             dimension = crs.dimension(function(d) { return d.timeValue}),
             perGroup = crs.dimension(prop('ExaminationGroup')),

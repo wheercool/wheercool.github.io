@@ -2,7 +2,6 @@ dc.dropdown = function (parent, chartGroup) {
 	var _chart = dc.baseMixin({});
 	
 	_chart._doRender = function () {
-		console.log('render');
 		if (!_chart.root().select('select').node())
 				_chart.root().select('select').append('select');
 

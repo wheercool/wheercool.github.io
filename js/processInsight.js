@@ -443,7 +443,6 @@
 
 		topLevelSteps.select('.panel-body .text')
 			.text(function(d) {
-				console.log(d)
 				return d.value[1] > 0? (d.value[1] + ' outside')
 						: d.value[-1] > 0? (d.value[-1] + ' ahead')
 						: (d.value[0] + ' on time');

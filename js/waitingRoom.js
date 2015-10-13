@@ -134,7 +134,6 @@
 				d3.select('.rss-feed-container')
 				.html(tpl)
 				// .html()
-				console.log(w);
 		}
 		drawRssFeed();
 
@@ -160,7 +159,6 @@
 		//DO animation here ...
 		d3.select('.clock .seconds')
 			.classed('invisible', Math.floor(t / 500) % 2)
-		// console.log(t);
 	}
 	function uncomment(fn){
 		var str = fn.toString();
@@ -175,7 +173,6 @@
 
 	return {
 		activate: function() {
-			console.log('activate');
 		}
 	}	
 })()
