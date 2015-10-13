@@ -53,7 +53,8 @@ var widgetRegister = {
             //     .enter()
                 .append('div')
                     .attr('class', function(d) {
-                        return 'widget ' + sizes[d.settings.size || "large"];
+                        // return 'widget ' + sizes[d.settings.size || "large"];
+                        return 'widget ' + sizes["large"];
                     })
                     .append('div')
                     .attr('class', 'panel panel-default');

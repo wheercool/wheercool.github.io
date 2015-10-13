@@ -170,7 +170,7 @@
 
 	  	totalTypes = 0,
 	  	totalEmployees = 0;
-	  	var currentService = config.url? remoteService(all.datasetUrl.url): service;
+	  	var currentService = config.url? remoteService(all.datasetUrl): service;
 
 		yearChart = makeChart('.departament-date', currentService, {
 		  rebindData: function(rec) {
