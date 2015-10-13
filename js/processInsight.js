@@ -91,7 +91,7 @@
 		    	alert(chart.svg.node())
 		    	var container = chart.svg.node().parentElement
 		    	
-		    	var w = container.offsetWidth;
+		    	var w = container.offsetWidth || 200;
 		    	chart.svg.attr('height', data.length * 15 + 90);
 		    	chart.svg.attr('width', w);
 		    	if (!w) return;
