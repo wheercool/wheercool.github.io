@@ -334,19 +334,21 @@ var onDeepClick = function(d) {
 			})
 		deepLevelSteps.select('.deep .detail-container')
 			.each(function(d) {
-				var svg = dimple.newSvg(this, 150, 250);
-				var chart = new dimple.chart(svg, []);
-				chart.defaultColors = [
-				    new dimple.color("red")
-				];
-				// chart.setBounds(45, 20, 100, 80)
-				chart.addMeasureAxis("x", "examinations");
-		        var y = chart.addCategoryAxis("y", "key");
-		        y.addOrderRule("examinations");
-		        var shape = y.titleShape;
+				if (!deepLevelCharts[d.key]) {
+					var svg = dimple.newSvg(this, 150, 250);
+					var chart = new dimple.chart(svg, []);
+					chart.defaultColors = [
+					    new dimple.color("red")
+					];
+					// chart.setBounds(45, 20, 100, 80)
+					chart.addMeasureAxis("x", "examinations");
+			        var y = chart.addCategoryAxis("y", "key");
+			        y.addOrderRule("examinations");
+			        var shape = y.titleShape;
 
-				chart.addSeries(null, dimple.plot.bar);
-				deepLevelCharts[d.key] = chart;
+					chart.addSeries(null, dimple.plot.bar);
+					deepLevelCharts[d.key] = chart;
+				}
 			})			
 
 		topLevelSteps.select('.panel-body .text')
