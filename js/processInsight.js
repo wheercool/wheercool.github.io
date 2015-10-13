@@ -304,7 +304,7 @@
 			
 
 		};
-
+		alert(sortedData.length)
 		var deepLevelSteps = d3.select(el)
 			.append('div')
 			.classed('row', true)
@@ -357,37 +357,6 @@
 		        }
 		    }
 		}
-
-		/* Listen for a transition! */
-		var transitionEvent = whichTransitionEvent();
-		transitionEvent && topLevelSteps[0][0].addEventListener(transitionEvent, function(e) {
-			debugger;
-			// var b = d3.select(e.target)
-			// 	.classed('animated', false)
-
-			// 	.classed('flipped'),
-			// 	d = b.datum()
-			// if (b) {
-			// 	// d3.select(e.target)
-			// 		d3.select('#top-' + d.key)
-			// 		.style('display', 'none');
-
-			// 	// d3.select(e.target)
-			// 		d3.select('#deep-' + d.key)
-			// 		.style('display', 'block');
-
-			// } else {
-			// 	// d3.select(e.target)
-			// 		d3.select('#deep-' + d.key)
-			// 		.style('display', 'none');
-
-			// 	// d3.select(e.target)
-			// 		d3.select('#top-' + d.key)
-			// 		.style('display', 'block');
-			// }
-			// redrawAll();
-		});
-
 
 		topLevelSteps.select('.top .panel-heading > .h4')
 			.text(function(d) { return d.key})	
