@@ -1,9 +1,9 @@
-<svg height="85" width="250" xmlns="http://www.w3.org/2000/svg" version="1.1"><g class="legend" transform="translate(50,30)" style="font-size: 16px;">
+<svg height="85" width="250" xmlns="http://www.w3.org/2000/svg" version="1.1"><g class="legend" transform="translate(50,30)" style="font-size: 14px;">
 			<rect class="legend-box" x="-18" y="-28" height="82" width="175.828125" fill="white"></rect>
 			<g class="legend-items">
-				<text y="0em" x="1em">Examinations ahead</text>
-				<text y="1em" x="1em">Examinations on time</text>
-				<text y="2em" x="1em">Examinations outside</text>
+				<text y="0em" x="1em">examinations ahead</text>
+				<text y="1em" x="1em">examinations on time</text>
+				<text y="2em" x="1em">examinations outside</text>
 				<circle cy="-0.25em" cx="0" r="0.4em" style="fill: rgb(44, 160, 44);"></circle>
 				<circle cy="0.75em" cx="0" r="0.4em" style="fill: gray;"></circle>
 				<circle cy="1.75em" cx="0" r="0.4em" style="fill: red;"></circle></g></g>

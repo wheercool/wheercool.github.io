@@ -1,25 +1,10 @@
 (function() {
 
 	widgetRegister.register("Department Insight", function(el, data, general, config) {
-	    
+	    alert(Promise);
 	   	/* Default settings */
 	   	var legendItemHeight = 13,
 	   		legendGap = 5;
-
-		// var departament = crossfilter(data),
-		//     all = departament.groupAll(),
-		//     departamentperGroup = departament.dimension(prop('ExaminationGroup')),
-		//     departamentperGroupGroup = departamentperGroup.group(),
-		//     departamentPerEmployee = departament.dimension(prop('Radiologist')),
-		//     departamentPerEmployeeGroup = departamentPerEmployee.group()
-		//     averageEmployee = departament.dimension(prop('Radiologist')),
-		//     averageEmployeeGroup = departamentPerEmployee.groupAll();
-		    
-		
-		// var totalTypes = departamentperGroupGroup.all().length,
-		// 	totalEmployees = departamentPerEmployeeGroup.all().length;
-
-
 		var tpl = uncomment(function() {/*
 				<div class="row ">
 					
@@ -553,7 +538,6 @@
 
 
     function log(d) {
-      console.log(d);
     }
 
 var levels = ['year', 'month', 'week', 'day']
@@ -660,6 +644,7 @@ function makeChart(el, service, callback) {
 	    return a[a.length - 1];
     }
     function redraw(self, needRedraw) {
+    	alert('redraw')
         var rec = peek(datas);
         // var pieFilters = pieChart.filters();
        
@@ -778,7 +763,6 @@ function makeChart(el, service, callback) {
         
         // d3.select('.filter-value')
         //   .html(value)
-        // console.log(currentLevel);
       
 
         callback.rebindData(rec);  
@@ -792,7 +776,6 @@ function makeChart(el, service, callback) {
 		
 	        //   .render()
 	    }
-	    window.peek = peek.bind(null, datas);
 	    return {
 			redraw: redraw.bind(null, chart, true),
 			render: function() {

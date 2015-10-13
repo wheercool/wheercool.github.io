@@ -90,7 +90,6 @@
 		    	var w = container.offsetWidth || 200;
 		    	chart.svg.attr('height', data.length * 15 + 90);
 		    	chart.svg.attr('width', w);
-		    	alert(w)
 
 		    	if (!w) return;
 				chart.setBounds(45, 20, w - 50, chart.height - 10)				
