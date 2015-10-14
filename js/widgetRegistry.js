@@ -61,7 +61,7 @@ var widgetRegister = {
 
                     panel.append('div')
                         .attr('class', 'panel-heading')
-                        .html(function(d) { return /*'<a class="anchor" name="' + d.name + '"></a>*/'<h5>'+ 'test-' + (d.settings.header || d.settings.tabTitle) + '</h5>';})
+                        .html(function(d) { return /*'<a class="anchor" name="' + d.name + '"></a>*/'<h5>'+  (d.settings.header || d.settings.tabTitle) + '</h5>';})
 
                     panel.append('div')
                         .attr('class', 'panel-body')
