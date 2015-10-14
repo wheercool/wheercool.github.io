@@ -609,11 +609,12 @@ function makeChart(el, service, callback) {
     //   .height(300)
     //     .radius(100)
         
-    window.trendChart = chart;
+    // window.trendChart = chart;
 
    
 	
     function drillDown(data) {  
+    	debugger;
         var crs = crossfilter(data),
             dimension = crs.dimension(function(d) { return d.timeValue}),
             perGroup = crs.dimension(prop('ExaminationGroup')),
