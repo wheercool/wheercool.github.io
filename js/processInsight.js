@@ -475,10 +475,59 @@ var onDeepClick = function(d) {
 			firstRow
 				.append('div')
 				.attr('class', 'col-md-4 text-right')
-				.append('img')
-				.attr('src', 'imgs/legend.svg')
+				// .append('img')
+				// .attr('src', 'imgs/legend.svg')
+
+				.append('svg')
 				.style('border', '1px solid #ccc')
 				.style('border-radius', '3px')
+//
+				.attr('height', 85)
+				.attr('width', 250)
+				.append('g')
+				.attr('transform', "translate(50,30)" )
+				.style('font-size', 14)
+				.append('g')
+					.call(function() {
+						this.append('text')
+							.attr('y', '0em')
+							.attr('x', '1em')
+							.text('examinations ahead')
+
+						this.append('text')
+							.attr('y', '1.1em')
+							.attr('x', '1em')
+							.text('examinations on time')
+
+						this.append('text')
+							.attr('y', '2.2em')
+							.attr('x', '1em')
+							.text('examinations outside')
+
+						this.append('circle')
+							.attr('cy', '-0.35em')
+							.attr('cx', 0)
+							.attr('r', '0.5em')
+							.attr('fill', barColors.good)
+							.attr('stroke', 'black')
+
+						this.append('circle')
+							.attr('cy', '0.85em')
+							.attr('cx', 0)
+							.attr('r', '0.5em')
+							.attr('fill', barColors.ok)
+							.attr('stroke', 'black')
+
+						this.append('circle')
+							.attr('cy', '2.0em')
+							.attr('cx', 0)
+							.attr('r', '0.5em')
+							.attr('fill', barColors.bad)
+							.attr('stroke', 'black')
+
+					})
+
+
 
 		
 		var deepLevelSteps = d3.select(el)
