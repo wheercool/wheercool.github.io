@@ -8,29 +8,34 @@ callback({
             "name": "Process Insight",
             "settings": {
                 "steps": {
-                  "Booking": {
-                    "measure": "min",
-                    "link": "imgs/Booking.svg",
-                    "title": "=Booking="
-                  },
-                  "Waiting": {
-                    "measure": "min",
-                    "title": "Waiting"
-                  },
-                  "Planning": {
+                  "APP": {
                     "measure": "day",
+                    "link": "imgs/Booking.svg",
+                    "title": "Booking"
+                  },
+                  "WAI": {
+                    "measure": "min",
+                    "title": "Waiting",
+                    "link": "imgs/Waiting.svg"
+                  },
+                  "PLA": {
+                    "measure": "day",
+                    "link": "imgs/Planning.svg",
                     "title": "Planning"
                   },
-                  "Invoicing": {
+                  "BIL": {
                     "measure": "day",
+                    "link": "imgs/Invoicing.svg",
                     "title": "Invoicing"
                   },
-                  "Examination": {
+                  "EXA": {
                     "measure": "min",
+                    "link": "imgs/Examination.svg",
                     "title": "Examination"
                   },
-                  "Reporting": {
+                  "REP": {
                     "measure": "day",
+                    "link": "imgs/Reporting.svg",
                     "title": "Reporting"
                   }
                 },

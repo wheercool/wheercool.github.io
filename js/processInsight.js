@@ -3,10 +3,10 @@
 				(d.duration > d.max? 'outside': 'onTime');}
 
 	function topLevelReducer(acc, next) {
-		if (!acc[next.step]) { acc[next.step] = { outside: 0, onTime: 0, ahead: 0, total: 0, totalDuration: 0}}
-		acc[next.step][next.category] += 1;
-		acc[next.step].total += 1;
-		acc[next.step].totalDuration += next.duration;
+		if (!acc[next.step_id]) { acc[next.step_id] = { outside: 0, onTime: 0, ahead: 0, total: 0, totalDuration: 0}}
+		acc[next.step_id][next.category] += 1;
+		acc[next.step_id].total += 1;
+		acc[next.step_id].totalDuration += next.duration;
 		return acc;
 	}
 
@@ -15,8 +15,8 @@
 		return function(acc, next) {
 			//filter
 			//if (next.step != step) return acc;
-			if (!acc[next.step]) acc[next.step] = {};
-			var innerAcc = acc[next.step];
+			if (!acc[next.step_id]) acc[next.step_id] = {};
+			var innerAcc = acc[next.step_id];
 			var byValue = next[by];
 			if (!innerAcc[byValue]) {innerAcc[byValue] = { outside: 0, onTime: 0, ahead: 0, total: 0, totalDuration: 0}}
 			innerAcc[byValue][next.category] += 1;
@@ -59,7 +59,7 @@
 		data.forEach(function(d) {
 			d.category = getCategory(d);
 			exGroups[d.ex_group] = d.ex_group;
-			stepOrder[d.step] = d.step_pos;
+			stepOrder[d.step_id] = d.step_pos;
 		})
 		var sortFunc = function(a, b) {return stepOrder[a.key] - stepOrder[b.key]; };
 
@@ -166,6 +166,39 @@
 			"bad": "rgba(217, 83, 79, 0.09)",
 			"good": "rgba(49, 163, 84, 0.09)"
 		};
+
+		var stepSettings = stepSettings || {
+			"APP": {
+                    "measure": "day",
+                    "link": "imgs/Booking.svg",
+                    "title": "Booking"
+                  },
+                  "WAI": {
+                    "measure": "min",
+                    "title": "Waiting",
+                    "link": "imgs/Waiting.svg"
+                  },
+                  "PLA": {
+                    "measure": "day",
+                    "link": "imgs/Planning.svg",
+                    "title": "Planning"
+                  },
+                  "BIL": {
+                    "measure": "day",
+                    "link": "imgs/Invoicing.svg",
+                    "title": "Invoicing"
+                  },
+                  "EXA": {
+                    "measure": "min",
+                    "link": "imgs/Examination.svg",
+                    "title": "Examination"
+                  },
+                  "REP": {
+                    "measure": "day",
+                    "link": "imgs/Reporting.svg",
+                    "title": "Reporting"
+                  }
+              };
 
 		var topTpl = uncomment(function() {/*
 				<div class="top">	
@@ -322,10 +355,10 @@ var onDeepClick = function(d) {
 
 
 		topLevelSteps.select('.top .panel-heading > .h4')
-			.text(function(d) { debugger; return config.steps[d.key].title})	
+			.text(function(d) {  return stepSettings[d.key].title})	
 
 		deepLevelSteps.select('.deep .panel-heading > .h4')
-			.html(function(d) { return config.steps[d.key].title + '<small><br />Examinations outside</small>'})	
+			.html(function(d) { return stepSettings[d.key].title + '<small><br />Total examinations</small>'})	
 
 		topLevelSteps.select('.panel-heading')
 			.style('color', 'white')
@@ -345,7 +378,7 @@ var onDeepClick = function(d) {
 
 		topLevelSteps.select('.panel-body img')
 			.attr('src', function(d, i) {
-				return config.steps[d.key].link || 'imgs/' + d.key + '.svg';
+				return stepSettings[d.key].link || 'imgs/' + d.key + '.svg';
 			});
 
 		topLevelSteps.select('.top .panel-body .status-indicator')
@@ -380,8 +413,8 @@ var onDeepClick = function(d) {
 
 		topLevelSteps.select('.panel-body .text')
 			.html(function(d) {
-				var precission = config.steps[d.key].measure == 'day' || config.steps[d.key].measure == 'days'? 1: 0;
-				return (d.value.totalDuration / d.value.total).toFixed(precission) + '<br /><small>' + config.steps[d.key].measure + '</small>';
+				var precission = stepSettings[d.key].measure == 'day' || stepSettings[d.key].measure == 'days'? 1: 0;
+				return (d.value.totalDuration / d.value.total).toFixed(precission) + '<br /><small>' + stepSettings[d.key].measure + '</small>';
 			})
 			.style('color', function(d, i) {
 				return statusColorTable[d.value.outside > 0? 'bad': d.value.ahead > 0? 'good' :'ok'];
