@@ -199,6 +199,11 @@
                     "title": "Reporting"
                   }
               };
+        var barColors = config.barColors || {
+        	"ok": "gray",
+        	"bad": "#F44336",
+        	"good": "#94E094"
+        };
 
 		var topTpl = uncomment(function() {/*
 				<div class="top">	
@@ -384,7 +389,11 @@ var onDeepClick = function(d) {
 		topLevelSteps.select('.top .panel-body .status-indicator')
 			.each(function(d) {
 
-				topLevelCharts[d.key]?topLevelCharts[d.key]: (topLevelCharts[d.key] = trendChart(this).height(70));
+				topLevelCharts[d.key]?topLevelCharts[d.key]: (topLevelCharts[d.key] = trendChart(this).height(70)).colors(function(i) {
+					return i == -1? barColors.good:
+							i == 0 ? barColors.ok:
+							barColors.bad; 
+				});
 				topLevelCharts[d.key].svg()
 					.attr('viewBox', '0 -25 100 100')
 					.style('width', '100%')
@@ -396,9 +405,9 @@ var onDeepClick = function(d) {
 					var svg = dimple.newSvg(this, 150, 250);
 					var chart = new dimple.chart(svg, []);
 					chart.defaultColors = [
-					    new dimple.color("green"),
-					    new dimple.color("gray"),
-					    new dimple.color("red"),
+					    new dimple.color(barColors.good),
+					    new dimple.color(barColors.ok),
+					    new dimple.color(barColors.bad)
 					];
 					// chart.setBounds(45, 20, 100, 80)
 					chart.addMeasureAxis("x", "examinations");

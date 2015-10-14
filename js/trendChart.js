@@ -3,7 +3,8 @@ trendChart = function(root) {
 		.attr('class', 'trend'),
 		_data = [],
 		_width = 100,
-		_height = 100;
+		_height = 100,
+		_colors = function() {}
 
 	var line = svg.append('line')
 
@@ -37,6 +38,10 @@ trendChart = function(root) {
 		keyAccessor: function(d) {
 			return d.key;
 		},
+		colors: function(_) {
+			_colors = _;
+			return _chart;
+		},
 		redraw: function() {
 			var yScale = d3.scale.linear()
 				.domain([0, d3.max(_data, _chart.valueAccessor)])
@@ -67,10 +72,9 @@ trendChart = function(root) {
 
 				.attr('fill', function(d) {
 					var key = _chart.keyAccessor(d);
-					return  key == -1? 'rgb(44, 160, 44)':
-							key == 1? 'red':
-							'#ccc';
+					return  _colors(key);
 				})
+				.attr('stroke', 'black')
 				.select('title')
 				.text( function(d) {return _chart.valueAccessor(d);})
 
