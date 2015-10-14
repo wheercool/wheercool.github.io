@@ -380,10 +380,8 @@ var onDeepClick = function(d) {
 
 		topLevelSteps.select('.panel-body .text')
 			.html(function(d) {
-				return (d.value.totalDuration / d.value.total).toFixed(2) + '<br /><small>' + config.steps[d.key].measure + '</small>';
-				// return d.value[1] > 0? (d.value[1] + ' outside')
-				// 		: d.value[-1] > 0? (d.value[-1] + ' ahead')
-				// 		: (d.value[0] + ' on time');
+				var precission = config.steps[d.key].measure == 'day' || config.steps[d.key].measure == 'days'? 1: 0;
+				return (d.value.totalDuration / d.value.total).toFixed(precission) + '<br /><small>' + config.steps[d.key].measure + '</small>';
 			})
 			.style('color', function(d, i) {
 				return statusColorTable[d.value.outside > 0? 'bad': d.value.ahead > 0? 'good' :'ok'];
