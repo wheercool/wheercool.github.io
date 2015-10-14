@@ -28,11 +28,8 @@
 										<tbody>
 											<tr>
 												<td>
-												<div class="select-style">
+												<div id="department-selector" class="select-style">
 													<select>
-														<option>Department 1</option>
-														<option>Department 2</option>
-														<option>Department 3</option>
 													</select>
 													</div>
 												</td>
@@ -151,7 +148,8 @@
  			.on('filtered', onFiltered)
 		   
 
-		departamentDropdown = dc.dropdown('.select-style');
+
+				departamentDropdown = dc.dropdown('#department-selector');
 
 		d3.select(window).on('resize', redraw);
 
@@ -455,6 +453,8 @@
 		var count = 0;
 
 		return function(filter) {
+			 d3.select('.waiting')
+		  	.style('display', 'block')
 			count++;
 			var promise = new Promise(function(resolve, reject) {
 				window['callback' + count] = function(response) {
@@ -471,7 +471,11 @@
 
 			});
 
-			return promise;
+			return promise.then(function(d) {
+		    	d3.select('.waiting')
+			  	.style('display', 'none')
+			  	return d;
+		    });
 
 		}
 		
@@ -658,8 +662,8 @@ function makeChart(el, service, callback) {
         	return beautifyAxis[filterBy] && beautifyAxis[filterBy][d]? beautifyAxis[filterBy][d]: d;
         }) //rec.keyAccessor)
         self.title(function(d) {
-        	return beautifyAxis[filterBy] && beautifyAxis[filterBy][d.key]? beautifyAxis[filterBy][d.key]: d.key + '-' +
-        	d.timeValue;
+        	var axisLabel = beautifyAxis[filterBy] && beautifyAxis[filterBy][d.key]? beautifyAxis[filterBy][d.key]: d.key;
+        	return d.value + ' examinations';
         }) //rec.keyAccessor)
 
         self.dimension(rec.dimension)
@@ -777,6 +781,10 @@ function makeChart(el, service, callback) {
 	    return {
 			redraw: redraw.bind(null, chart, true),
 			render: function() {
+				currentLevel = 0;
+				 datas = [];
+				 filter = {};
+
 				 service(filter)
 		          .then(drillDown)
 		          .then(redraw.bind(null, chart));

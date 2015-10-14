@@ -21,18 +21,18 @@ dc.dropdown = function (parent, chartGroup) {
     }
 
     _chart._doRedraw = function () {
+    	debugger;
 		var select = _chart.root().select('select');
-
+		console.log(select.node())
         var data = [{ key: 'All', value: 0}].concat(_chart.group().all());
 
 		var options = select.selectAll('option')
-			.data(data);
+			.data(data)
 
 			options.enter()
 			.append('option')
 
-			options.text(_chart.keyAccessor())
-
+			options.text(function(d) { return d.key})
 			options.exit().remove();
 
 		select.node().value = _chart.filter() || 'All';
