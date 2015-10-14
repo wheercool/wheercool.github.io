@@ -7,6 +7,9 @@ callback({
      {
             "name": "Process Insight",
             "settings": {
+                "measures": {
+                    "Booking": "min"
+                  },
                 "size": "large", //Can be small, medium or large
                 "tabTitle": "Process Insight", //Tab title of the widget
                 "header": "Examinations per steps",
@@ -40,6 +43,7 @@ callback({
 	{
 		"name": "Department Insight",
 		"settings": {
+
 			"size": "large",
 			"tabTitle": "Department Insight",
       "header": "Examinations in department" ,

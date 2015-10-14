@@ -16,7 +16,10 @@ callback({
 	{
 		"name": "Department Insight",
 		"settings": {
-			"title": "Department Insight",
+			"measures": {
+				"Booking": "min"
+			},
+			"title": "Department Insight2",
       "context": "Examinations in Departments",
       "month": "April", //[mandatory]The month of the dataset
       "year": 2015, // [mandatory]The year of the data

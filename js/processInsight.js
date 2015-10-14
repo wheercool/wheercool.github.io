@@ -381,8 +381,9 @@ var onDeepClick = function(d) {
 			})			
 
 		topLevelSteps.select('.panel-body .text')
-			.text(function(d) {
-				return (d.value.totalDuration / d.value.total).toFixed(2);
+			.html(function(d) {
+				debugger;
+				return (d.value.totalDuration / d.value.total).toFixed(2) + '<br /><small>' + ((config.measures && config.measures[d.key]) || '') + '</small>';
 				// return d.value[1] > 0? (d.value[1] + ' outside')
 				// 		: d.value[-1] > 0? (d.value[-1] + ' ahead')
 				// 		: (d.value[0] + ' on time');
