@@ -105,7 +105,6 @@
 	    	 		data.push(recs[2]);
 	    	 		recs = [{}, {}, {}];
 	    	 	}
-	    	 	// console.log(data);
 		    	// var data = [];
 		    	// var data = objectToArray(d.value).map(function(d) { var res = {examinations: d.value.outside, key: d.key};return res; });
 				var chart = deepLevelCharts[d.key];
@@ -167,7 +166,7 @@
 			"good": "rgba(49, 163, 84, 0.09)"
 		};
 
-		var stepSettings = stepSettings || {
+		var stepSettings =  config.steps || {
 			"APP": {
                     "measure": "days",
                     "link": "imgs/Booking.svg",

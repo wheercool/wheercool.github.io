@@ -171,7 +171,6 @@
 	  		// var total =  rec.crs.groupAll().reduceSum(dc.pluck('Examination')).value();
 	  		var total = rec.data.filter(function(d) { return departamentDropdown.filter() == null || d.Department == departamentDropdown.filter()})
 	  				.reduce(function(acc, next) { return acc += next.Examination }, 0)
-	  				debugger;
 	  		totalEmployees = rec.perEmployeeGroup.all().length;
 	  		totalTypes = rec.perGroupGroup.all().length;
 
@@ -200,7 +199,6 @@
 		    	.group(rec.perEmployeeGroup)
 		    	.filter(perEmployee.filter())
 
-		    debugger;
 		    departamentDropdown
 		    	.dimension(rec.departament)
 		    	.group(rec.departamentGroup)
@@ -614,7 +612,6 @@ function makeChart(el, service, callback) {
    
 	
     function drillDown(data) {  
-    	debugger;
         var crs = crossfilter(data),
             dimension = crs.dimension(function(d) { return d.timeValue}),
             perGroup = crs.dimension(prop('ExaminationGroup')),
