@@ -82,13 +82,36 @@
 
 	    function redrawDeepCharts() {
 	    	 objectToArray(deepLevelData()).forEach(function(d, i) {
-		    	var data = [];
+	    	 	var data = [];
 		    	var key = topFilterValue == 'All'? 'group': 'type';
-		    	var data = objectToArray(d.value).map(function(d) { var res = {examinations: d.value.outside, key: d.key};return res; });
+	    	 	var recs = [{}, {}, {}];
+				
+	    	 		
+
+	    	 	for (var prop in d.value) {
+	    	 		recs[0].key = prop;
+		    	 	recs[1].key = prop;
+		    	 	recs[2].key = prop;
+
+	    	 		recs[0].category = 'ahead'
+	    	 		recs[1].category = 'onTime'
+	    	 		recs[2].category = 'outside'
+	    	 		recs[0].examinations = d.value[prop].ahead
+	    	 		recs[1].examinations = d.value[prop].onTime
+	    	 		recs[2].examinations = d.value[prop].outside
+
+	    	 		data.push(recs[0]);
+	    	 		data.push(recs[1]);
+	    	 		data.push(recs[2]);
+	    	 		recs = [{}, {}, {}];
+	    	 	}
+	    	 	// console.log(data);
+		    	// var data = [];
+		    	// var data = objectToArray(d.value).map(function(d) { var res = {examinations: d.value.outside, key: d.key};return res; });
 				var chart = deepLevelCharts[d.key];
 		    	chart.data = data;
 		    	// chart.setBounds(10, 15, chart.width - 10, chart.height - 70)
-		    	var h = data.length * 35;
+		    	var h = data.length * 10;
 		    	var container = chart.svg.node().parentNode
 
 		    	var margin = {
@@ -342,15 +365,17 @@ var onDeepClick = function(d) {
 					var svg = dimple.newSvg(this, 150, 250);
 					var chart = new dimple.chart(svg, []);
 					chart.defaultColors = [
-					    new dimple.color("red")
+					    new dimple.color("green"),
+					    new dimple.color("gray"),
+					    new dimple.color("red"),
 					];
 					// chart.setBounds(45, 20, 100, 80)
 					chart.addMeasureAxis("x", "examinations");
 			        var y = chart.addCategoryAxis("y", "key");
 			        y.addOrderRule("examinations");
-			        var shape = y.titleShape;
-
-					chart.addSeries(null, dimple.plot.bar);
+			        var series = chart.addSeries("category", dimple.plot.bar);
+			        series.addOrderRule('category')
+			        // chart.addSeries(null, dimple.plot.bar);
 					deepLevelCharts[d.key] = chart;
 				}
 			})			
@@ -403,7 +428,6 @@ var onDeepClick = function(d) {
 			    	.data(objectToArray(exGroups))
 			    	.redraw()
 			    	.callback(function(d) {
-			    		console.log(topLevelData())
 			    		topFilterValue = d == 'All'?null: d;
 			    		redrawAll();
 			    	});
