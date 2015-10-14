@@ -7,9 +7,33 @@ callback({
      {
             "name": "Process Insight",
             "settings": {
-                "measures": {
-                    "Booking": "min"
+                "steps": {
+                  "Booking": {
+                    "measure": "min",
+                    "link": "imgs/Booking.svg",
+                    "title": "=Booking="
                   },
+                  "Waiting": {
+                    "measure": "min",
+                    "title": "Waiting"
+                  },
+                  "Planning": {
+                    "measure": "day",
+                    "title": "Planning"
+                  },
+                  "Invoicing": {
+                    "measure": "day",
+                    "title": "Invoicing"
+                  },
+                  "Examination": {
+                    "measure": "min",
+                    "title": "Examination"
+                  },
+                  "Reporting": {
+                    "measure": "day",
+                    "title": "Reporting"
+                  }
+                },
                 "size": "large", //Can be small, medium or large
                 "tabTitle": "Process Insight", //Tab title of the widget
                 "header": "Examinations per steps",

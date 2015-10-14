@@ -322,10 +322,10 @@ var onDeepClick = function(d) {
 
 
 		topLevelSteps.select('.top .panel-heading > .h4')
-			.text(function(d) { return d.key})	
+			.text(function(d) { debugger; return config.steps[d.key].title})	
 
 		deepLevelSteps.select('.deep .panel-heading > .h4')
-			.html(function(d) { return d.key + '<small><br />Examinations outside</small>'})	
+			.html(function(d) { return config.steps[d.key].title + '<small><br />Examinations outside</small>'})	
 
 		topLevelSteps.select('.panel-heading')
 			.style('color', 'white')
@@ -345,7 +345,7 @@ var onDeepClick = function(d) {
 
 		topLevelSteps.select('.panel-body img')
 			.attr('src', function(d, i) {
-				return d.link || 'imgs/' + d.key + '.svg';
+				return config.steps[d.key].link || 'imgs/' + d.key + '.svg';
 			});
 
 		topLevelSteps.select('.top .panel-body .status-indicator')
@@ -380,7 +380,7 @@ var onDeepClick = function(d) {
 
 		topLevelSteps.select('.panel-body .text')
 			.html(function(d) {
-				return (d.value.totalDuration / d.value.total).toFixed(2) + '<br /><small>' + ((config.measures && config.measures[d.key]) || '') + '</small>';
+				return (d.value.totalDuration / d.value.total).toFixed(2) + '<br /><small>' + config.steps[d.key].measure + '</small>';
 				// return d.value[1] > 0? (d.value[1] + ' outside')
 				// 		: d.value[-1] > 0? (d.value[-1] + ' ahead')
 				// 		: (d.value[0] + ' on time');
