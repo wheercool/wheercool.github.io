@@ -169,32 +169,32 @@
 
 		var stepSettings = stepSettings || {
 			"APP": {
-                    "measure": "day",
+                    "measure": "days",
                     "link": "imgs/Booking.svg",
                     "title": "Booking"
                   },
                   "WAI": {
-                    "measure": "min",
+                    "measure": "mins",
                     "title": "Waiting",
                     "link": "imgs/Waiting.svg"
                   },
                   "PLA": {
-                    "measure": "day",
+                    "measure": "days",
                     "link": "imgs/Planning.svg",
                     "title": "Planning"
                   },
                   "BIL": {
-                    "measure": "day",
+                    "measure": "days",
                     "link": "imgs/Invoicing.svg",
                     "title": "Invoicing"
                   },
                   "EXA": {
-                    "measure": "min",
+                    "measure": "mins",
                     "link": "imgs/Examination.svg",
                     "title": "Examination"
                   },
                   "REP": {
-                    "measure": "day",
+                    "measure": "days",
                     "link": "imgs/Reporting.svg",
                     "title": "Reporting"
                   }
