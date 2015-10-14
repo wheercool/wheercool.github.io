@@ -126,6 +126,11 @@
 		    .minAngleForLabel(0.5)
 		    .slicesCap(perGroupSlices)			   
 		    .colors(d3.scale.ordinal().range(perGroupColorPalette))
+		    .filterPrinter(function(d) {
+		    	var group = perGroup.group().all().filter(function(t) { return t.key == d}),
+		    		examintionCount = (group && group[0]) ? group[0].value: '';
+		    	return d + '= ' + examintionCount;
+		    })
 		    // .label(function(d) {
 		    //     var names = d.key.split(' ');
 		    //     // return names[0][0] + '. ' + names[1][0] + '.';
@@ -140,6 +145,11 @@
 		    .slicesCap(perEmployeeSlices)
 		    .minAngleForLabel(0.5)			    
 		    .colors(d3.scale.ordinal().range(perEmployeeColorPalette))
+		    .filterPrinter(function(d) {
+		    	var group = perEmployee.group().all().filter(function(t) { return t.key == d}),
+		    		examintionCount = (group && group[0]) ? group[0].value: '';
+		    	return d + '= ' + examintionCount;
+		    })
 		    // .label(function(d) {
 		    //     var names = d.key.split(' ');
 		    //     // return names[0][0] + '. ' + names[1][0] + '.';
@@ -149,7 +159,11 @@
 		   
 
 
-				departamentDropdown = dc.dropdown('#department-selector');
+				departamentDropdown = dc.dropdown('#department-selector')
+										.callback(function() {
+											// perGroup.filter(perGroup.filter())
+											// perEmployee.filter(perEmployee.filter())
+										});
 
 		d3.select(window).on('resize', redraw);
 
@@ -274,6 +288,7 @@
     		var ok = updateChartsSizes();
     		if (!ok) return;
     		dc.renderAll();
+    		
     		drawResetButtons(el);
     	}
 
@@ -543,7 +558,7 @@
     function log(d) {
     }
 
-var levels = ['year', 'month', 'week', 'day']
+var levels = ['year', 'month', 'week', 'day', 'part of the day']
  var currentLevel = 0;
 
 function makeChart(el, service, callback) {

@@ -8,7 +8,7 @@ dc.dropdown = function (parent, chartGroup) {
 		return _chart._doRedraw();
     };
 
-    var _filter;
+    var _filter, _callback;
     _chart.filter = function(_) {
     	if (!arguments.length) {
     		return _filter;
@@ -20,8 +20,12 @@ dc.dropdown = function (parent, chartGroup) {
     	return _chart;
     }
 
+    _chart.callback = function(fn) {
+    	_callback = fn;
+    	return _chart;
+    };
+
     _chart._doRedraw = function () {
-    	debugger;
 		var select = _chart.root().select('select');
 		console.log(select.node())
         var data = [{ key: 'All', value: 0}].concat(_chart.group().all());
@@ -35,7 +39,7 @@ dc.dropdown = function (parent, chartGroup) {
 			options.text(function(d) { return d.key})
 			options.exit().remove();
 
-		select.node().value = _chart.filter() || 'All';
+		// select.node().value = _chart.filter() || 'All';
 
 		select.on('change', function(d) {
 			
@@ -44,6 +48,7 @@ dc.dropdown = function (parent, chartGroup) {
 				 dc.events.trigger(function () {
 				 	_chart.dimension().filterAll();
 		            dc.redrawAll();
+		            // dc.renderAll();
 		        })
 			} else {
 				 dc.events.trigger(function () {
@@ -53,8 +58,10 @@ dc.dropdown = function (parent, chartGroup) {
 		            // _chart.filters([filter]);
 		            _chart.redrawGroup();
 		            // dc.redrawAll();
+
 		        });
 			}
+			_callback()
 
 		});
 		return _chart;
