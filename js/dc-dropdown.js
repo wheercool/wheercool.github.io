@@ -46,7 +46,7 @@ dc.dropdown = function (parent, chartGroup) {
 			var filter = d3.event.target.value;
 			if (filter == 'All') {
 				 dc.events.trigger(function () {
-				 	_chart.dimension().filterAll();
+				 	_chart.filter(null)
 		            dc.redrawAll();
 		            // dc.renderAll();
 		        })

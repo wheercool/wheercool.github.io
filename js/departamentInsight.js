@@ -129,7 +129,7 @@
 		    .filterPrinter(function(d) {
 		    	var group = perGroup.group().all().filter(function(t) { return t.key == d}),
 		    		examintionCount = (group && group[0]) ? group[0].value: '';
-		    	return d + '= ' + examintionCount;
+		    	return d + ' (' + examintionCount + ')';
 		    })
 		    // .label(function(d) {
 		    //     var names = d.key.split(' ');
@@ -148,7 +148,7 @@
 		    .filterPrinter(function(d) {
 		    	var group = perEmployee.group().all().filter(function(t) { return t.key == d}),
 		    		examintionCount = (group && group[0]) ? group[0].value: '';
-		    	return d + '= ' + examintionCount;
+		    	return d + ' (' + examintionCount + ')';
 		    })
 		    // .label(function(d) {
 		    //     var names = d.key.split(' ');
@@ -288,7 +288,7 @@
     		var ok = updateChartsSizes();
     		if (!ok) return;
     		dc.renderAll();
-    		
+
     		drawResetButtons(el);
     	}
 
@@ -605,11 +605,12 @@ function makeChart(el, service, callback) {
     //   .height(300)
     //     .radius(100)
         
-
+    window.trendChart = chart;
 
    
 	
-    function drillDown(data) {   
+    function drillDown(data) {  
+    	debugger; 
         var crs = crossfilter(data),
             dimension = crs.dimension(function(d) { return d.timeValue}),
             perGroup = crs.dimension(prop('ExaminationGroup')),
@@ -654,7 +655,7 @@ function makeChart(el, service, callback) {
 
       }
      
-      chart.filterAll() 
+      chart.filterAll()
       callback.rollUp(peek(datas));  
     }
 
