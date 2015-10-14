@@ -1,10 +1,12 @@
 
-	function getCategory(d) { return d.duration < d.min? -1:
-				(d.duration > d.max? +1: 0);}
+	function getCategory(d) { return d.duration < d.min? 'ahead':
+				(d.duration > d.max? 'outside': 'onTime');}
 
 	function topLevelReducer(acc, next) {
-		if (!acc[next.step]) { acc[next.step] = { "-1": 0, "0": 0, "1": 0}}
+		if (!acc[next.step]) { acc[next.step] = { outside: 0, onTime: 0, ahead: 0, total: 0, totalDuration: 0}}
 		acc[next.step][next.category] += 1;
+		acc[next.step].total += 1;
+		acc[next.step].totalDuration += next.duration;
 		return acc;
 	}
 
@@ -16,8 +18,10 @@
 			if (!acc[next.step]) acc[next.step] = {};
 			var innerAcc = acc[next.step];
 			var byValue = next[by];
-			if (!innerAcc[byValue]) {innerAcc[byValue] = { "-1": 0, "0": 0, "1": 0}}
+			if (!innerAcc[byValue]) {innerAcc[byValue] = { outside: 0, onTime: 0, ahead: 0, total: 0, totalDuration: 0}}
 			innerAcc[byValue][next.category] += 1;
+			innerAcc[byValue].total += 1;
+			innerAcc[byValue].totalDuration += next.duration;
 			return acc; 		
 		};
 	}
@@ -70,7 +74,7 @@
 	    function redrawTopCharts() {
 			objectToArray(topLevelData()).forEach(function(d) {
 		    	topLevelCharts[d.key]
-		    	.data( objectToArray(d.value))
+		    	.data( [{ key: -1, value: d.value.ahead}, { key: 0, value: d.value.onTime}, {key: 1, value:d.value.outside}])
 		    	.redraw();
 
 		    });
@@ -80,7 +84,7 @@
 	    	 objectToArray(deepLevelData()).forEach(function(d, i) {
 		    	var data = [];
 		    	var key = topFilterValue == 'All'? 'group': 'type';
-		    	var data = objectToArray(d.value).map(function(d) { var res = {examinations: d.value[1], key: d.key};return res; });
+		    	var data = objectToArray(d.value).map(function(d) { var res = {examinations: d.value.outside, key: d.key};return res; });
 				var chart = deepLevelCharts[d.key];
 		    	chart.data = data;
 		    	// chart.setBounds(10, 15, chart.width - 10, chart.height - 70)
@@ -305,15 +309,15 @@ var onDeepClick = function(d) {
 		topLevelSteps.select('.panel-heading')
 			.style('color', 'white')
 			.style('background-color', function(d) {
-				return statusBackgroundColorTable[d.value[1] > 0? 'bad'
-									: d.value[-1] > 0? 'good'
+				return statusBackgroundColorTable[d.value.outside > 0? 'bad'
+									: d.value.ahead> 0? 'good'
 									: 'ok'];
 			})
 
 		topLevelSteps.select('.panel-body')
 			.style('background-color', function(d) {
-				return statusOpacityBackgroundColorTable[d.value[1] > 0? 'bad'
-													:d.value[-1] > 0? 'good'
+				return statusOpacityBackgroundColorTable[d.value.outside > 0? 'bad'
+													:d.ahead > 0? 'good'
 													: 'ok'];
 			})			
 
@@ -353,12 +357,13 @@ var onDeepClick = function(d) {
 
 		topLevelSteps.select('.panel-body .text')
 			.text(function(d) {
-				return d.value[1] > 0? (d.value[1] + ' outside')
-						: d.value[-1] > 0? (d.value[-1] + ' ahead')
-						: (d.value[0] + ' on time');
+				return (d.value.totalDuration / d.value.total).toFixed(2);
+				// return d.value[1] > 0? (d.value[1] + ' outside')
+				// 		: d.value[-1] > 0? (d.value[-1] + ' ahead')
+				// 		: (d.value[0] + ' on time');
 			})
 			.style('color', function(d, i) {
-				return statusColorTable[d.value[1] > 0? 'bad': d.value[-1]>0? 'good' :'ok'];
+				return statusColorTable[d.value.outside > 0? 'bad': d.value.ahead > 0? 'good' :'ok'];
 			})
 		}
 
@@ -398,6 +403,7 @@ var onDeepClick = function(d) {
 			    	.data(objectToArray(exGroups))
 			    	.redraw()
 			    	.callback(function(d) {
+			    		console.log(topLevelData())
 			    		topFilterValue = d == 'All'?null: d;
 			    		redrawAll();
 			    	});
