@@ -7,7 +7,7 @@
 		acc[next.step_id][next.category] += next.examinations;
 		acc[next.step_id].total += next.examinations;
 		acc[next.step_id].count += 1;
-		acc[next.step_id].totalDuration += next.duration;
+		acc[next.step_id].totalDuration += (next.duration  * next.examinations);
 		return acc;
 	}
 
@@ -22,7 +22,7 @@
 			if (!innerAcc[byValue]) {innerAcc[byValue] = { outside: 0, onTime: 0, ahead: 0, total: 0, totalDuration: 0}}
 			innerAcc[byValue][next.category] += next.examinations;
 			innerAcc[byValue].total += next.examinations;
-			innerAcc[byValue].totalDuration += next.duration;
+			innerAcc[byValue].totalDuration += (next.duration * next.examinations);
 			return acc; 		
 		};
 	}
@@ -425,7 +425,7 @@ var onDeepClick = function(d) {
 		topLevelSteps.select('.panel-body .text')
 			.html(function(d) {
 				var precission = stepSettings[d.key].measure == 'day' || stepSettings[d.key].measure == 'days' || stepSettings[d.key].measure == 'dagen'? 1: 0;
-				return (d.value.totalDuration / d.value.count).toFixed(precission) + '<br /><small>' + stepSettings[d.key].measure + '</small>';
+				return (d.value.totalDuration / d.value.total).toFixed(precission) + '<br /><small>' + stepSettings[d.key].measure + '</small>';
 			})
 			.style('color', function(d, i) {
 				return statusColorTable[d.value.outside > 0? 'bad': d.value.ahead > 0? 'good' :'ok'];
