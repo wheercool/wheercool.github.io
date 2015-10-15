@@ -214,7 +214,7 @@
 										.allValue(localization.departmentSection.all)
 										.callback(function() {
 											updateStatistic(yearChart.peek())
-											rebindData(yearChart.peek())
+											// rebindData(yearChart.peek())
 										});
 
 		d3.select(window).on('resize', redraw);
