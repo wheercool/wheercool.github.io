@@ -84,7 +84,7 @@
 	    function redrawDeepCharts() {
 	    	 objectToArray(deepLevelData()).forEach(function(d, i) {
 	    	 	var data = [];
-		    	var key = topFilterValue == localization.examinationGroupFilter.all? 'group': 'type';
+		    	var key = topFilterValue == localization.examinationGroupFilter.all? localization.group: localization.type;
 	    	 	var recs = [{}, {}, {}];
 				
 	    	 		
@@ -114,8 +114,8 @@
 		    	var h = data.length * 10;
 		    	var container = chart.svg.node().parentNode
 
-		    	var margin = {
-		    		left: 105,
+		    	var margin = config.margin || {
+		    		left: 165,
 		    		top: 5,
 		    		right: 5,
 		    		bottom: 55 
@@ -136,6 +136,10 @@
 
 		    	chart.svg.select('.dimple-axis.dimple-title.dimple-custom-axis-title.dimple-axis-y').text(localization[key]);
 		    	chart.svg.select('.dimple-axis.dimple-title.dimple-custom-axis-title.dimple-axis-x').text(localization.examinations);
+		    	// chart.svg
+		    		// .selectAll('.dimple-bar')
+		    		// .on('mouseover', function() {debugger;}) //.selectAll('.dimple-tooltip.dimple-custom-tooltip-label')
+		    		// .each(function(d) { debugger;})
 		    	
 		    }); 
 	    }
@@ -440,6 +444,16 @@ var onDeepClick = function(d) {
 			        y.addOrderRule("examinations");
 			        var series = chart.addSeries("category", dimple.plot.bar);
 			        series.addOrderRule('category')
+
+			        series.getTooltipText = function(e) {
+			        	var field = e.aggField[0];//ahed or ontime or
+			        	var value = e.cx;
+			        	var typeOrGroupValue = e.cy;
+			        	var typeOrGroupLabel = topFilterValue == localization.examinationGroupFilter.all? localization.group: localization.type;
+			        	return [typeOrGroupLabel + ' ' + typeOrGroupValue,
+			        			value + ' ' + localization.examinations
+			        			];
+			        }
 			        // chart.addSeries(null, dimple.plot.bar);
 					deepLevelCharts[d.key] = chart;
 				}
