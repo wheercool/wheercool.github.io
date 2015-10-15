@@ -134,7 +134,8 @@
 				chart.setBounds(margin.left, margin.top, width, height)				
 		    	chart.draw(2000);
 
-		    	chart.svg.select('.dimple-axis.dimple-title.dimple-custom-axis-title.dimple-axis-y').text(key);
+		    	chart.svg.select('.dimple-axis.dimple-title.dimple-custom-axis-title.dimple-axis-y').text(localization[key]);
+		    	chart.svg.select('.dimple-axis.dimple-title.dimple-custom-axis-title.dimple-axis-x').text(localization.examinations);
 		    	
 		    }); 
 	    }
@@ -206,6 +207,7 @@
         };
 
         var localization = config.localization || {
+        	
                     "legendText": {
                       "examinationsAhead": "examinations ahead",
                       "examinationsOnTime": "examinations on time",
@@ -214,7 +216,11 @@
                 	 "examinationGroupFilter": {
                       "label": "Examination Group:",
                       "all": "All"
-                    }
+                    },
+                    "totalExaminations": "Total examinations",
+                    "examinations": "examinations",
+                    "group": "group",
+                    "type": "type"
                   };
 		var topTpl = uncomment(function() {/*
 				<div class="top">	
@@ -376,7 +382,7 @@ var onDeepClick = function(d) {
 			.html(function(d) {  return stepSettings[d.key].title})	
 
 		deepLevelSteps.select('.deep .panel-heading > .h4')
-			.html(function(d) { return stepSettings[d.key].title + '<small><br />Total examinations</small>'})	
+			.html(function(d) { return stepSettings[d.key].title + '<small><br />' + localization.totalExaminations + '</small>'})	
 
 		topLevelSteps.select('.panel-heading')
 			// .transition()
