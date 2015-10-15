@@ -1,16 +1,10 @@
 All widgets
 
-settings: {
-	tabTitle: 'Tab title' // The title of the widget tab
-	header: 'Header' // the header of the widget panel. By default it is equal to the tabTitle
-}
+Was added localization field.
 
-Legend:
-+ Was added
-- Was deleted
-[no mark] - Wasn't changed
 
 Process Insight widget
+
 {
 "name": "Process Insight",
  "settings": {
@@ -18,7 +12,24 @@ Process Insight widget
         "Booking": "days",  //For each step in format [step]: [value]
         ...  
     },
-    +setps: {
+    + "barColors": {
+        "ok": "gray",
+        "bad": "#F44336",
+        "good": "#94E094"
+        },
+    +   "localization": {
+            "legendText": {
+              "examinationsAhead": "examinations ahead2",
+              "examinationsOnTime": "examinations on time",
+              "examinationsOutside": "examinations outside"
+            },
+            "examinationGroupFilter": {
+              "label": "Examination Group:",
+              "all": "All"
+            },
+
+      },  
+    setps: {
         "Waiting": {
             "link": "imgs/Waiting", //the url for the image
             "measure": "min, //duration measure
@@ -64,14 +75,35 @@ Department Insight
 			"settings": {
 				"tabTitle": "Department Insight",
 			    "header": "Examinations in Departments",
-			    -  "month"
-			    -  "year"
-			    -  "total"
-			    -  "avg": 
+                +"localization": {
+                    "departmentSection": {
+                      "department": "Department",
+                      "total": "Total",
+                      "average": "Average",
+                      "all": "All"          
+                    },
+                    "groupSection": {
+                        "title": "Examinations Per Group",
+                        "currentFilter": "Current filter:",
+                        "none": "none",
+                        "reset": "reset"
+                      },
+                    "employeeSection": {
+                        "title": "Examinations Per Employee",
+                        "currentFilter": "Current filter:",
+                        "none": "none",
+                        "reset": "reset"
+                     },
+                    "trendsSection": {
+                      "all": "All",
+                      "month": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ],
+                      "week": [ "week 1", "week 2", "week 3", "week 4", "week 5"]
+                    }   
+                  }
 			},
 
-			-dataset
-			+ datasetUrl: {
+			
+			datasetUrl: {
 				+url: 'http://someurl.com' //The url of the remove procecude to retrieve the data
 			}
 
@@ -93,11 +125,11 @@ Example of the data from url
 Waiting Room
 {
     "name": "Waiting Room",
-    "settings": {
-        -title
-        +"tabTitle": "Waiting Room",
-        +"header": "Waiting Room", 
-        +"rssUrl": 'http://www.nu.nl/rss/Gezondheid' //url of the rss feed
+    "settings": {      
+        "tabTitle": "Waiting Room",
+        "header": "Waiting Room", 
+        "rssUrl": 'http://www.nu.nl/rss/Gezondheid' //url of the rss feed
+        +"measure": "minutes"
     },
     
     "dataset": [

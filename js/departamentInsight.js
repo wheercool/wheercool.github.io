@@ -20,9 +20,9 @@
 									<table class="table">
 										<thead>
 											<tr>
-												<th>Department</th>
-												<th>Total</th>
-												<th>Average</th>
+												<th class="department-section-department"></th>
+												<th class="department-section-total"></th>
+												<th class="department-section-average"></th>
 											</tr>
 										<thead>
 										<tbody>
@@ -59,7 +59,7 @@
 
 					<div class="col-md-6">	
 						<div class="row">
-							<h5 class="text-center">Examinations Per Group</h5>
+							<h5 class="text-center group-section-title"></h5>
 						</div>
 
 						<div class="row">					
@@ -67,7 +67,7 @@
 								<div class="row departament-per-group departament-pie text-center">
 									<span class="h5">
 									<small>
-							          Current filter: <span class='default-value'>none</span><span class='filter'></span>	
+							          <span class="group-section-filter">Current filter:</span> <span class='default-value'></span><span class='advanced-filter'></span>	
 							          </small>			          
 							        </span>
 						        </div>
@@ -80,14 +80,14 @@
 
 					<div class="col-md-6">
 						<div class="row">
-							<h5 class="text-center">Examinations Per Employee</h5>
+							<h5 class="text-center employee-section-title"></h5>
 						</div>
 
 						<div class="row">
 							<div class="col-md-6">
 								<div class="row departament-per-employee departament-pie text-center">
 									<span class="h5">
-									<small>Current filter: <span class="default-value">none</span> <span class='filter'></span></small>			          
+									<small><span class="employee-section-filter">Current filter:</span> <span class="default-value"></span> <span class='advanced-filter'></span></small>			          
 							        </span>
 							    </div>
 							</div>
@@ -108,6 +108,44 @@
 				.attr('src', config.iconPath);
 		}
 
+		var localization = config.localization || {
+			 "departmentSection": {
+		          "department": "Department",
+		          "total": "Total",
+		          "average": "Average",
+		          "all": "All"          
+	        },
+	        "groupSection": {
+	            "title": "Examinations Per Group",
+	            "currentFilter": "Current filter:",
+	            "none": "none",
+	            "reset": "reset"
+	          }, 
+	        "employeeSection": {
+	            "title": "Examinations Per Employee",
+	            "currentFilter": "Current filter:",
+	            "none": "none",
+	             "reset": "reset"
+	         },
+	         "trendsSection": {
+		          "all": "every",
+		          "month": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ],
+		          "week": [ "week 1", "week 2", "week 3", "week 4", "week 5"]
+	        }   
+		};
+
+		d3.select('.department-section-department').text(localization.departmentSection.departament);
+		d3.select('.department-section-total').text(localization.departmentSection.total);
+		d3.select('.department-section-average').text(localization.departmentSection.average);
+
+		d3.select('.group-section-title').text(localization.groupSection.title)
+		d3.select('.employee-section-title').text(localization.employeeSection.title)
+		d3.select('.group-section-filter').text(localization.groupSection.currentFilter)
+		d3.select('.employee-section-filter').text(localization.employeeSection.currentFilter)
+
+		d3.select('.departament-per-group .default-value').text(localization.groupSection.none)
+		d3.select('.departament-per-employee .default-value').text(localization.employeeSection.none)
+
 		var onFiltered = seq(drawResetButtons, makeRadioButton(), addDefaultFilterValue);
 
 		var perGroupLegendSvg = d3.select('.department-per-group-legend').append('svg');
@@ -121,6 +159,17 @@
 		
 
 		//CreateCharts
+
+		var addAdvancedFilterValue = function(chart, filter) {
+	   			var svg = chart.svg();
+	   			if (chart.hasFilter()) {
+		   			chart.svg().selectAll('g.pie-slice').each(function(d){ 
+		   				if (d.data.key == chart.filter()) {
+		   					chart.root().select('.advanced-filter').text(d.data.key + ' (' + d.data.value + ')')
+		   				} 
+		   			}) 
+		   		} else  chart.root().select('.advanced-filter').text('')
+	   		};
 
 		perGroup = dc.pieChart(d3.select(el).select('.departament-per-group.departament-pie').node())		   
 		    .minAngleForLabel(0.5)
@@ -137,7 +186,7 @@
 		    //     return d.value || '';
 		    // }) 
 		    .on('filtered', onFiltered)
-	   
+	   		.on('pretransition', addAdvancedFilterValue)
 
 	   
 
@@ -145,21 +194,24 @@
 		    .slicesCap(perEmployeeSlices)
 		    .minAngleForLabel(0.5)			    
 		    .colors(d3.scale.ordinal().range(perEmployeeColorPalette))
-		    .filterPrinter(function(d) {
-		    	var group = perEmployee.group().all().filter(function(t) { return t.key == d}),
-		    		examintionCount = (group && group[0]) ? group[0].value: '';
-		    	return d + ' (' + examintionCount + ')';
-		    })
+		    // .filterPrinter(function(d) {
+		    // 	var group = perEmployee.group().all().filter(function(t) { return t.key == d}),
+		    // 		examintionCount = (group && group[0]) ? group[0].value: '';
+		    // 	return d + ' (' + examintionCount + ')';
+		    // })
 		    // .label(function(d) {
 		    //     var names = d.key.split(' ');
 		    //     // return names[0][0] + '. ' + names[1][0] + '.';
 		    //     return d.timeValue || '';
 		    // })
  			.on('filtered', onFiltered)
+	   		.on('pretransition', addAdvancedFilterValue)
+
 		   
 
 
-				departamentDropdown = dc.dropdown('#department-selector')
+			departamentDropdown = dc.dropdown('#department-selector')
+										.allValue(localization.departmentSection.all)
 										.callback(function() {
 											updateStatistic(yearChart.peek())
 											rebindData(yearChart.peek())
@@ -209,7 +261,7 @@
 		  },
 		  drillDown: updateStatistic,
 		  rollUp: updateStatistic
-		});
+		}, localization);
 
 		updateChartsSizes();
 		render();
@@ -312,7 +364,7 @@
 				.attr('font-weight', 'bold')
 				.attr('fill', '#066784')
 				.attr('cursor', 'pointer')
-				.text('reset')
+				.text(localization.employeeSection.reset)
 				.on('click', function() {
 					perEmployee.filterAll();
 					redraw();
@@ -333,7 +385,7 @@
 				.attr('font-weight', 'bold')
 				.attr('fill', '#066784')
 				.attr('cursor', 'pointer')
-				.text('reset')
+				.text(localization.groupSection.reset)
 				.on('click', function() {
 					perGroup.filterAll();
 					redraw();
@@ -563,16 +615,12 @@
 var levels = ['year', 'month', 'week', 'day', 'part of the day']
  var currentLevel = 0;
 
-function makeChart(el, service, callback) {
+function makeChart(el, service, callback, localization) {
     var filter = {}; //parameter to the query and to display
 
      //, 'partOfDay']; // ->
    
-    var beautifyAxis = {
-      month: ['0', "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ],
-      // month: ["nothing", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ],
-      week: ['week 0', 'week 1', 'week 2', 'week 3', 'week 4', 'week 5']
-    };
+    var beautifyAxis = localization.trendsSection;
 
     var datas = [];
     var chart = dc.barChart(el)
@@ -676,10 +724,10 @@ function makeChart(el, service, callback) {
         var filterBy = levels[currentLevel]; 
         self.xAxis().tickFormat(function(d) {
 
-        	return beautifyAxis[filterBy] && beautifyAxis[filterBy][d]? beautifyAxis[filterBy][d]: d;
+        	return beautifyAxis[filterBy] && beautifyAxis[filterBy][d - 1]? beautifyAxis[filterBy][d - 1]: d;
         }) //rec.keyAccessor)
         self.title(function(d) {
-        	var axisLabel = beautifyAxis[filterBy] && beautifyAxis[filterBy][d.key]? beautifyAxis[filterBy][d.key]: d.key;
+        	var axisLabel = beautifyAxis[filterBy] && beautifyAxis[filterBy][d.key - 1]? beautifyAxis[filterBy][d.key - 1]: d.key;
         	return d.value + ' examinations';
         }) //rec.keyAccessor)
 
@@ -702,11 +750,11 @@ function makeChart(el, service, callback) {
 
         // self.stack();
 
-        var value, filterValue = ['All'], lastFilterValue = 'All';
+        var value, filterValue = [localization.trendsSection.all], lastFilterValue = localization.trendsSection.all;
         levels.forEach(function(d) {
         	 if (filter[d]) {
         	 	
-        		lastFilterValue = beautifyAxis[d]? beautifyAxis[d][filter[d]]: filter[d];
+        		lastFilterValue = beautifyAxis[d]? beautifyAxis[d][filter[d] - 1]: filter[d];
         		filterValue.push(lastFilterValue);
         	}
         });

@@ -84,7 +84,7 @@
 	    function redrawDeepCharts() {
 	    	 objectToArray(deepLevelData()).forEach(function(d, i) {
 	    	 	var data = [];
-		    	var key = topFilterValue == 'All'? 'group': 'type';
+		    	var key = topFilterValue == localization.examinationGroupFilter.all? 'group': 'type';
 	    	 	var recs = [{}, {}, {}];
 				
 	    	 		
@@ -205,6 +205,17 @@
         	"good": "#94E094"
         };
 
+        var localization = config.localization || {
+                    "legendText": {
+                      "examinationsAhead": "examinations ahead",
+                      "examinationsOnTime": "examinations on time",
+                      "examinationsOutside": "examinations outside"
+                    },
+                	 "examinationGroupFilter": {
+                      "label": "Examination Group:",
+                      "all": "All"
+                    }
+                  };
 		var topTpl = uncomment(function() {/*
 				<div class="top">	
 					<div class="panel panel-default">
@@ -362,12 +373,15 @@ var onDeepClick = function(d) {
 
 
 		topLevelSteps.select('.top .panel-heading > .h4')
-			.text(function(d) {  return stepSettings[d.key].title})	
+			.html(function(d) {  return stepSettings[d.key].title})	
 
 		deepLevelSteps.select('.deep .panel-heading > .h4')
 			.html(function(d) { return stepSettings[d.key].title + '<small><br />Total examinations</small>'})	
 
 		topLevelSteps.select('.panel-heading')
+			// .transition()
+			// .delay(function(d, i) {return i * 300})
+			// .duration(1000)
 			.style('color', 'white')
 			.style('background-color', function(d) {
 				return statusBackgroundColorTable[d.value.outside > 0? 'bad'
@@ -376,6 +390,9 @@ var onDeepClick = function(d) {
 			})
 
 		topLevelSteps.select('.panel-body')
+			// .transition()
+			// .delay(function(d, i) {return i * 300})
+			// .duration(1000)
 			.style('background-color', function(d) {
 				return statusOpacityBackgroundColorTable[d.value.outside > 0? 'bad'
 													:d.ahead > 0? 'good'
@@ -428,7 +445,8 @@ var onDeepClick = function(d) {
 				return (d.value.totalDuration / d.value.total).toFixed(precission) + '<br /><small>' + stepSettings[d.key].measure + '</small>';
 			})
 			.style('color', function(d, i) {
-				return statusColorTable[d.value.outside > 0? 'bad': d.value.ahead > 0? 'good' :'ok'];
+				// return statusColorTable[d.value.outside > 0? 'bad': d.value.ahead > 0? 'good' :'ok'];
+				return 'black';
 			})
 		}
 
@@ -445,7 +463,7 @@ var onDeepClick = function(d) {
 			.attr('class', 'col-md-4 text-center')
 			.style('padding', '6px')
 
-			.text('Examination Group:')
+			.text(localization.examinationGroupFilter.label)
 
 			var secondColumn = firstRow.append('div')
 			.attr('class', 'col-md-4 text-center')			
@@ -466,9 +484,10 @@ var onDeepClick = function(d) {
 
 				processTopFilter(self.node())
 			    	.data(objectToArray(exGroups))
+			    	.allValue(localization.examinationGroupFilter.all)
 			    	.redraw()
 			    	.callback(function(d) {
-			    		topFilterValue = d == 'All'?null: d;
+			    		topFilterValue = d == localization.examinationGroupFilter.all?null: d;
 			    		redrawAll();
 			    	});
 			})
@@ -494,17 +513,17 @@ var onDeepClick = function(d) {
 						this.append('text')
 							.attr('y', '0em')
 							.attr('x', '1em')
-							.text('examinations ahead')
+							.text(localization.legendText.examinationsAhead)
 
 						this.append('text')
 							.attr('y', '1.1em')
 							.attr('x', '1em')
-							.text('examinations on time')
+							.text(localization.legendText.examinationsOnTime)
 
 						this.append('text')
 							.attr('y', '2.2em')
 							.attr('x', '1em')
-							.text('examinations outside')
+							.text(localization.legendText.examinationsOutside)
 
 						this.append('circle')
 							.attr('cy', '-0.35em')

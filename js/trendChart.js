@@ -75,6 +75,7 @@ trendChart = function(root) {
 					return  _colors(key);
 				})
 				.attr('stroke', 'black')
+				.attr('stroke-width', 0.5)
 				.select('title')
 				.text( function(d) {return _chart.valueAccessor(d);})
 
@@ -94,6 +95,7 @@ trendChart = function(root) {
 			.attr('y1', _height)
 			.attr('y2', _height)
 			.attr('stroke', 'black')
+			
 
 			bars.exit().remove();
 			return _chart;

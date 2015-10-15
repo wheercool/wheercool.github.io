@@ -1,7 +1,7 @@
 
 processTopFilter = function(root) {
 	var select = d3.select(root).append('select'),
-		_data = [], _callback = function() {}
+		_data = [], _callback = function() {}, _allValue = 'All';
 
 	var _chart = {
 		data: function(d) {
@@ -15,9 +15,13 @@ processTopFilter = function(root) {
 		valueAccessor: function(d) {
 			return d.value;
 		},
+		allValue: function(_) {
+			_allValue = _;
+			return _chart;
+		},
 		redraw: function() {
 			
-	        var data = [{ key: 'All', value: 0}].concat(_data);
+	        var data = [{ key: _allValue, value: 0}].concat(_data);
 			var options = select.selectAll('option')
 				.data(data);
 

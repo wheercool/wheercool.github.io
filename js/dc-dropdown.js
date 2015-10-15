@@ -1,5 +1,5 @@
 dc.dropdown = function (parent, chartGroup) {
-	var _chart = dc.baseMixin({});
+	var _chart = dc.baseMixin({}), _allValue = 'All';
 	
 	_chart._doRender = function () {
 		if (!_chart.root().select('select').node())
@@ -24,11 +24,14 @@ dc.dropdown = function (parent, chartGroup) {
     	_callback = fn;
     	return _chart;
     };
-
+    _chart.allValue = function(_) {
+    	_allValue = _;
+    	return _chart;
+    }
     _chart._doRedraw = function () {
 		var select = _chart.root().select('select');
 		console.log(select.node())
-        var data = [{ key: 'All', value: 0}].concat(_chart.group().all());
+        var data = [{ key: _allValue, value: 0}].concat(_chart.group().all());
 
 		var options = select.selectAll('option')
 			.data(data)
@@ -44,7 +47,7 @@ dc.dropdown = function (parent, chartGroup) {
 		select.on('change', function(d) {
 			
 			var filter = d3.event.target.value;
-			if (filter == 'All') {
+			if (filter == _allValue) {
 				 dc.events.trigger(function () {
 				 	_chart.filter(null)
 		            dc.redrawAll();
