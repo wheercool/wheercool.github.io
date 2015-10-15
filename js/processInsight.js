@@ -84,7 +84,8 @@
 	    function redrawDeepCharts() {
 	    	 objectToArray(deepLevelData()).forEach(function(d, i) {
 	    	 	var data = [];
-		    	var key = topFilterValue == localization.examinationGroupFilter.all? localization.group: localization.type;
+		    	var key = !topFilterValue? localization.group: localization.type;
+		    	debugger;
 	    	 	var recs = [{}, {}, {}];
 				
 	    	 		
@@ -449,7 +450,7 @@ var onDeepClick = function(d) {
 			        	var field = e.aggField[0];//ahed or ontime or
 			        	var value = e.cx;
 			        	var typeOrGroupValue = e.cy;
-			        	var typeOrGroupLabel = topFilterValue == localization.examinationGroupFilter.all? localization.group: localization.type;
+			        	var typeOrGroupLabel = !topFilterValue? localization.group: localization.type;
 			        	return [typeOrGroupLabel + ' ' + typeOrGroupValue,
 			        			value + ' ' + localization.examinations
 			        			];
