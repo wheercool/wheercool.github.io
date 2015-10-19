@@ -1,9 +1,0 @@
-callback1([{
-	"ExaminationGroup": "Name", 
-	"Radiologist": "Someone", 
-	"Department": "Dep 1", 
-	"timeType": "year",
-	"Examination": 21,
-	"timeValue":  2018
-
-}])
