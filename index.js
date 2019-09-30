@@ -114,12 +114,14 @@ window.onload = () => {
   var hLightHelper = new THREE.HemisphereLightHelper(hLight);
   scene.add(hLightHelper)
 
-  const geometry = new THREE.SphereGeometry(200, 12, 12);
-  const material = new THREE.MeshPhongMaterial({ color: 0xffffff, vertexColors: THREE.FaceColors });
+  var geometry = new THREE.PlaneGeometry( 2000, 2000, 2 );
+  var material = new THREE.MeshBasicMaterial( {color: 0x948880, side: THREE.DoubleSide} );
+  var plane = new THREE.Mesh( geometry, material );
+  plane.rotation.x = Math.PI / 2;
+  plane.position.y = -1;
 
-  for (let i = 0; i < geometry.faces.length; i++) {
-    geometry.faces[i].color.setRGB(Math.random(), Math.random(), Math.random());
-  }
+  scene.add( plane );
+
 
   // const mesh = new THREE.Mesh(geometry, material);
   // scene.add(mesh);
@@ -145,6 +147,16 @@ window.onload = () => {
     console.error(error);
 
   });
+
+  var r = "skybox/";
+  var urls = [
+    r + "px.jpg", r + "nx.jpg",
+    r + "py.jpg", r + "ny.jpg",
+    r + "pz.jpg", r + "nz.jpg"
+  ];
+  var textureCube = new THREE.CubeTextureLoader().load( urls );
+  scene.background = textureCube;
+
 
   controls.update();
 
