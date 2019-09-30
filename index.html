@@ -1,11 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Document</title>
+    <meta charset="UTF-8">
+    <title>WebGL</title>
+    <style> 
+        html, body{
+            position: relative;
+            margin: 0;  
+            padding: 0;
+            height: 100%; 
+        }
+        .row {
+            display: flex;
+        }
+        .col {
+            flex: 1;
+        }
+        #canvas {
+            width: 100%;
+        }
+    </style>
+    <script src="dat.gui.min.js"></script>
 </head>
 <body>
-
-	Moved to <a href="http://wheercool.bitbucket.org/remote.html">bitbucket</a>
+    <div class="row">
+        <div class="col">
+            <canvas id="canvas"></canvas>
+        </div>
+        <div class="col"></div>
+    </div>
+    
+    <script src="three.min.js"></script>
+    <script src="GLTFLoader.js"></script>
+    <script src="OrbitControls.js"></script>
+    <script type="module" src="index.js"></script>
 </body>
-</html> 
+</html>
